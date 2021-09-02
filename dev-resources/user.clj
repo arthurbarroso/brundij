@@ -48,7 +48,15 @@
 
 (comment
   (go)
+  (auto-reset)
   (reset-all)
   (->
     (app {:request-method :post :uri "/v1/healths"})
+    (m/decode-response-body))
+  (reset-all)
+  (->
+    (app {:request-method :post
+          :uri "/v1/questions"
+          :body-params {:content "Chiclete"
+                        :health-id "a64b81c4-501d-4923-affe-6d0f5f903262"}})
     (m/decode-response-body)))
