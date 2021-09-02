@@ -28,7 +28,7 @@
     (d/create-database config)))
 
 {:global-fixture (fn [f]
-                   (clear-database!)
                    (reset-all)
                    (f))
+
  :selectors {:integration :integration}}
