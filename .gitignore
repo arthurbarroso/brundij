@@ -1,0 +1,30 @@
+/out/
+/resources/public/js/
+/target/
+/*-init.clj
+/*.log
+/classes
+/checkouts
+profiles.clj
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+
+
+# Leiningen
+/.lein-*
+/.nrepl-port
+
+# Node.js dependencies
+/node_modules/
+
+# shadow-cljs cache, port files
+/.shadow-cljs/
+
+.lsp
+.clj-kondo
+.cpcache
+/startrepl.sh
+/starttest.sh
+/startfront.sh
