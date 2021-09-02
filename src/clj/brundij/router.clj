@@ -1,5 +1,6 @@
 (ns brundij.router
-  (:require [brundij.healths.routes :as healths]
+  (:require [brundij.answers.routes :as answers]
+            [brundij.healths.routes :as healths]
             [brundij.questions.routes :as questions]
             [muuntaja.core :as m]
             [reitit.coercion.spec :as coercion-spec]
@@ -39,7 +40,8 @@
         [swagger-docs
          ["/v1"
           (healths/routes environment)
-          (questions/routes environment)]]
+          (questions/routes environment)
+          (answers/routes environment)]]
         router-config)
       (ring/routes
         (swagger-ui/create-swagger-ui-handler {:path "/"}))
