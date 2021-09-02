@@ -10,7 +10,7 @@
            :password password
            :path (str "/" dbname)}})
 
-(def schema [;healt-check
+(def schema [;health-check
              {:db/ident :health/uuid
               :db/valueType :db.type/uuid
               :db/unique :db.unique/identity
@@ -40,7 +40,7 @@
               :db/valueType :db.type/uuid
               :db/unique :db.unique/identity
               :db/cardinality :db.cardinality/one}
-             {:db/ident :answer/rate
+             {:db/ident :answer/rating
               :db/valueType :db.type/bigint
               :db/cardinality :db.cardinality/one}
              {:db/ident :answer/created_at

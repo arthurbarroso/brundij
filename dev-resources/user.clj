@@ -1,10 +1,13 @@
 (ns user
-  (:require [brundij.server]
+  (:require [brundij.date :as date]
+            [brundij.server]
+            [brundij.uuids :as uuids]
             [environ.core :refer [env]]
             [hawk.core :as hawk]
             [integrant.core :as ig]
             [integrant.repl :as ig-repl]
-            [integrant.repl.state :as state]))
+            [integrant.repl.state :as state]
+            [muuntaja.core :as m]))
 
 (def config-map
   {:server/jetty {:handler (ig/ref :brundij/app)
@@ -44,4 +47,16 @@
                  :handler auto-reset-handler}]))
 
 (comment
-  (go))
+  (go)
+  (auto-reset)
+  (reset-all)
+  (->
+    (app {:request-method :post :uri "/v1/healths"})
+    (m/decode-response-body))
+  (reset-all)
+  (->
+    (app {:request-method :post
+          :uri "/v1/questions"
+          :body-params {:content "Chiclete"
+                        :health-id "a64b81c4-501d-4923-affe-6d0f5f903262"}})
+    (m/decode-response-body)))

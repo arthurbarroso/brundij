@@ -1,8 +1,7 @@
 (require '[integrant.core :as ig]
          '[integrant.repl :as ig-repl]
          '[environ.core :refer [env]]
-         '[datahike.api :as d]
-         '[brundij.test-system :refer [endpoint-test sec-test-user-body]])
+         '[datahike.api :as d])
 
 (def config-map
   {:server/jetty {:handler (ig/ref :brundij/app)
@@ -29,8 +28,7 @@
     (d/create-database config)))
 
 {:global-fixture (fn [f]
-                   (clear-database!)
                    (reset-all)
-                   (endpoint-test :post "/v1/users" sec-test-user-body)
                    (f))
+
  :selectors {:integration :integration}}
