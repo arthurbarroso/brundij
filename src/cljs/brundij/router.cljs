@@ -1,7 +1,7 @@
 (ns brundij.router
   (:require [brundij.events :as events]
             [brundij.subs :as subs]
-            [brundij.view.checks.create :refer [create-check-view]]
+            [brundij.views.checks.create :refer [create-check-view]]
             [re-frame.core :refer [dispatch subscribe]]
             [reitit.coercion.spec :as rss]
             [reitit.frontend :as rf]

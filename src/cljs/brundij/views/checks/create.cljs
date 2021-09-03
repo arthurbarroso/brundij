@@ -1,4 +1,4 @@
-(ns brundij.view.checks.create
+(ns brundij.views.checks.create
   (:require [brundij.components.button :refer [button]]
             [brundij.events :as events]
             [brundij.styles :refer [font-family]]
@@ -33,7 +33,9 @@
    [:div (use-style left-column-style)]
    [:form (use-style right-column-style)
     [:h3 (use-style {:font-size "3rem" :margin 0}) "Create a new health check 🍀"]
-    [:p (use-style {:max-width "75%"}) "Get started on running health checks by creating one. It is as simple as clicking the button below. It is easy, fast and simple"]
+    [:p (use-style {:max-width "75%"})
+     "Get started on running health checks by creating one. 
+     It is as simple as clicking the button below. It is easy and fast"]
     [button {:on-click #(re-frame/dispatch [::events/create-health])
              :text "Create"
              :disabled false
