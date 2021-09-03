@@ -55,10 +55,10 @@ jobs:
 
        - name: Run tests
          env:
-           PORT: 4000
-           DATABASE_HOST: localhost
-           DATABASE_USER: postgres
-           DATABASE_PASSWORD: postgres
-           DATABASE_PORT: 5432
-           DATABASE_NAME: brundij
+          PORT: 4000
+          DATABASE_HOST: localhost
+          DATABASE_PORT: 5432
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: postgres
+          DATABASE_NAME: brundij
          run: lein test
