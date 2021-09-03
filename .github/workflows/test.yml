@@ -1,12 +1,6 @@
 name: build
 
-on:
-  push:
-    paths-ignore:
-      - '*.md'
-  pull_request:
-    paths-ignore:
-      - '*.md'
+on: [push, pull_request]
 
 jobs:
 
@@ -29,29 +23,27 @@ jobs:
            --health-retries 5
 
      steps:
-       - name: Git checkout
+       - name: Checkout
          uses: actions/checkout@v2
 
-       - name: Prepare java
+       - name: Setup Java
          uses: actions/setup-java@v1
          with:
            java-version: "11.0.8"
 
-       - name: Install leiningen
+       - name: Install Clojure
          uses: DeLaGuardo/setup-clojure@master
          with:
            lein: 2.9.4
 
-       - name: Cache deps
+       - name: Cache dependencies
          uses: actions/cache@v1
-         id: cache-deps
          with:
            path: ~/.m2/repository
            key: ${{ runner.os }}-maven-${{ hashFiles('project.clj') }}
            restore-keys: ${{ runner.os }}-maven-
 
-       - name: Fetch deps
-         if: steps.cache-deps.outputs.cache-hit != 'true'
+       - name: Fetch dependencies
          run: lein deps
 
        - name: Run tests
