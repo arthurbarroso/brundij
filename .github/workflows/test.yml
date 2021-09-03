@@ -15,11 +15,11 @@ jobs:
 
      services:
        postgres:
-         image: postgres:12
+         image: postgres:13-alpine
          env:
            POSTGRES_USER: postgres
            POSTGRES_PASSWORD: potgres
-           POSTGRES_DB: brundij
+           POSTGRES_DB: postgres 
          ports:
            - 5432:5432
          options: >-
@@ -27,6 +27,7 @@ jobs:
            --health-interval 10s
            --health-timeout 5s
            --health-retries 5
+
      steps:
        - name: Git checkout
          uses: actions/checkout@v2
@@ -55,10 +56,10 @@ jobs:
 
        - name: Run tests
          env:
-          PORT: 4000
-          DATABASE_HOST: localhost
-          DATABASE_PORT: 5432
-          DATABASE_USER: postgres
-          DATABASE_PASSWORD: postgres
-          DATABASE_NAME: brundij
+           PORT: 4000
+           DATABASE_HOST: localhost
+           DATABASE_PORT: 5432
+           DATABASE_USER: postgres
+           DATABASE_PASSWORD: postgres
+           DATABASE_NAME: postgres
          run: lein test
