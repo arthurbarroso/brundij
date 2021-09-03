@@ -4,4 +4,5 @@
   {:name "brundij"
    :current-route nil
    :loading false
-   :error nil})
+   :error nil
+   :health-uuid nil})
