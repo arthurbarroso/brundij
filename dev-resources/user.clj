@@ -11,7 +11,7 @@
 
 (def config-map
   {:server/jetty {:handler (ig/ref :brundij/app)
-                  :port (Integer/parseInt (env :port))}
+                  :port 5432}
    :brundij/app {:database (ig/ref :db/postgres)}
    :db/postgres {:host (env :database-host)
                  :port (env :database-port)

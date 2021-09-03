@@ -5,11 +5,11 @@
 
 (def config-map
   {:server/jetty {:handler (ig/ref :brundij/app)
-                  :port (Integer/parseInt (env :port))}
+                  :port 5432}
    :brundij/app {:database (ig/ref :db/postgres)
                  :auth (ig/ref :auth/env)}
    :db/postgres {:host (env :database-host)
-                 :port (env :database-port)
+                 :port 5432
                  :user (env :database-user)
                  :password (env :database-password)
                  :dbname (env :database-name)}
@@ -28,6 +28,7 @@
     (d/create-database config)))
 
 {:global-fixture (fn [f]
+                   (clojure.pprint/pprint config-map)
                    (reset-all)
                    (f))
 

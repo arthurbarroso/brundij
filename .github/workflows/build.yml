@@ -1,0 +1,65 @@
+name: build
+
+on:
+  push:
+    paths-ignore:
+      - '*.md'
+  pull-request:
+    paths-ignore:
+      - '*.md'
+
+jobs:
+
+   test:
+     runs-on: ubuntu-latest
+     env:
+       PORT: 4000
+       DATABASE_HOST: localhost 
+       DATABASE_USER: postgres
+       DATABASE_PASSWORD: postgres
+       DATABASE_PORT: 5432
+       DATABASE_NAME: brundij
+
+     services:
+       postgres:
+         image: postgres:12
+         env:
+           POSTGRES_USER: postgres
+           POSTGRES_PASSWORD: potgres
+           POSTGRES_DB: brundij
+         ports:
+           - 5432:5432
+         options: >-
+           --health-cmd pg_isready
+           --health-interval 10s
+           --health-timeout 5s
+           --health-retries 5
+
+     steps:
+       - name: Git checkout
+         uses: actions/checkout@v2
+
+       - name: Prepare java
+         uses: actions/setup-java@v1
+         with:
+           java-version: "11.0.8"
+
+       - name: Install leiningen
+         uses: DeLaGuardo/setup-clojure@master
+         with:
+           lein: 2.9.4
+
+       - name: Cache deps
+         uses: actions/cache@v1
+         id: cache-deps
+         with:
+           path: ~/.m2/repository
+           key: ${{ runner.os }}-maven-${{ hashFiles('project.clj') }}
+           restore-keys: ${{ runner.os }}-maven-
+
+       - name: Fetch deps
+         if: steps.cache-deps.outputs.cache-hit != 'true'
+         run: lein deps
+
+       - name: Run tests
+         run: lein test 

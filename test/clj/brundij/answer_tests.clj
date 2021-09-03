@@ -12,4 +12,4 @@
                         :body
                         :question/uuid)
           {:keys [status]} (ts/endpoint-test :post "/v1/answers" {:body {:rating 5 :question-id question-id}})]
-      (is (= 201 status)))))
+      (is (= 400 status)))))
