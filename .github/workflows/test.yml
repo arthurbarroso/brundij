@@ -9,8 +9,8 @@ on:
       - '*.md'
 
 jobs:
-
    test:
+     name: test
      runs-on: ubuntu-latest
 
      services:
