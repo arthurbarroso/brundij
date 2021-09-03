@@ -1,7 +1,5 @@
 (ns user
-  (:require [brundij.date :as date]
-            [brundij.server]
-            [brundij.uuids :as uuids]
+  (:require [brundij.server]
             [environ.core :refer [env]]
             [hawk.core :as hawk]
             [integrant.core :as ig]
@@ -23,12 +21,10 @@
   (fn [] config-map))
 
 (def go ig-repl/go)
-(def halt ig-repl/halt)
 (def reset ig-repl/reset)
 (def reset-all ig-repl/reset-all)
 
 (def app (-> state/system :brundij/app))
-(def db (-> state/system :db/postgres))
 
 (defn- clojure-file? [_ {:keys [file]}]
   (re-matches #"[^.].*(\.clj|\.edn)$" (.getName file)))
