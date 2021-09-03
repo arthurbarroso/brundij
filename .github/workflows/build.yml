@@ -12,13 +12,6 @@ jobs:
 
    test:
      runs-on: ubuntu-latest
-     env:
-       PORT: 4000
-       DATABASE_HOST: localhost 
-       DATABASE_USER: postgres
-       DATABASE_PASSWORD: postgres
-       DATABASE_PORT: 5432
-       DATABASE_NAME: brundij
 
      services:
        postgres:
@@ -62,4 +55,11 @@ jobs:
          run: lein deps
 
        - name: Run tests
+         env:
+           PORT: 4000
+           DATABASE_HOST: postgres 
+           DATABASE_USER: postgres
+           DATABASE_PASSWORD: postgres
+           DATABASE_PORT: 5432
+           DATABASE_NAME: brundij
          run: lein test 
