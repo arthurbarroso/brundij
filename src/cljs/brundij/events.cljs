@@ -31,18 +31,6 @@
           controllers (apply-controllers (:controllers old-match) new-match)]
       (assoc db :current-route (assoc new-match :controllers controllers)))))
 
-(re-frame/reg-event-db
-  ::toggle-sidebar
-  (fn [db [_ _]]
-    (let [current-sidebar-state (:sidebar-open? db)]
-      (assoc db :sidebar-open? (not current-sidebar-state)))))
-
-(re-frame/reg-event-db
-  ::toggle-modal
-  (fn [db [_ _]]
-    (let [current-modal-state (:modal-open? db)]
-      (assoc db :modal-open? (not current-modal-state)))))
-
 ;; Http
 (re-frame/reg-event-fx
   ::create-health
@@ -67,3 +55,23 @@
   ::health-creation-failure
   (fn [_]
     (println "Request failed")))
+
+(defn remove-from-vec [vect uuid]
+  (filter #(not (= uuid (:id %))) vect))
+
+(re-frame/reg-event-db
+  ::add-question
+  (fn [db [_ question]]
+    (let [current-questions (:questions db)]
+      (assoc db :questions (conj current-questions question)))))
+
+(re-frame/reg-event-db
+  ::remove-question-by-uuid
+  (fn [db [_ uuid]]
+    (let [current-questions (:questions db)]
+      (assoc db :questions (remove-from-vec current-questions uuid)))))
+
+(re-frame/reg-event-db
+  ::change-question-input
+  (fn [db [_ new-input]]
+    (assoc db :question-input new-input)))

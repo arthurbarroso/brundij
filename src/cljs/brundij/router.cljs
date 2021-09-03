@@ -2,6 +2,7 @@
   (:require [brundij.events :as events]
             [brundij.subs :as subs]
             [brundij.views.checks.create :refer [create-check-view]]
+            [brundij.views.questions.create :refer [create-questions-view]]
             [re-frame.core :refer [dispatch subscribe]]
             [reitit.coercion.spec :as rss]
             [reitit.frontend :as rf]
@@ -13,8 +14,11 @@
    [""
     {:name :home
      :view create-check-view
-     :link-text "Home"
-     :requires-authentication? false}]])
+     :link-text "Home"}]
+   ["questions"
+    {:name :register
+     :view create-questions-view
+     :link-text "Create question"}]])
 
 (def router
   (rf/router routes {:data {:coercion rss/coercion}}))

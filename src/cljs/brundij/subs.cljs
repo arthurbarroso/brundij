@@ -15,3 +15,13 @@
   ::loading
   (fn [db]
     (:loading db)))
+
+(re-frame/reg-sub
+  ::questions
+  (fn [db]
+    (:questions db)))
+
+(re-frame/reg-sub
+  ::question-input
+  (fn [db]
+    (:question-input db)))
