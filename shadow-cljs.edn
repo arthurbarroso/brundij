@@ -23,4 +23,4 @@
          :test-dir "resources/public/js/test"
          :devtools {:http-port 8016
                     :http-root "resources/public/js/test"}}}
- :lein true}
+ :lein {:profile "cljs"}}
