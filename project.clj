@@ -33,13 +33,14 @@
                  [thheller/shadow-cljs "2.15.3" :scope "provided"]]
 
   :profiles {:uberjar {:aot :all}
-             :dev {:source-paths ["dev-resources" "src/clj" "src/cljc" "test/clj"]
+             :dev {:source-paths ["dev-resources"
+                                  "src/clj" "src/cljc" "test/clj"]
                    :resource-paths ["dev-resources/resources"]
                    :dependencies [[ring/ring-mock "0.4.0"]
                                   [integrant/repl "0.3.1"]
                                   [hawk "0.2.11"]
                                   [circleci/circleci.test "0.5.0"]]}
-             :cljs {:source-paths ["src/cljs" "src/cljc" "test/cljs"]
+             :cljs {:source-paths ["src/cljs" "src/cljc"]
                     :resource-paths ["dev-resources/resources"]
                     :dependencies [[binaryage/devtools "1.0.2"]]}}
 
