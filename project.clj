@@ -42,7 +42,8 @@
                                   [circleci/circleci.test "0.5.0"]]}
              :cljs {:source-paths ["src/cljs" "src/cljc"]
                     :resource-paths ["dev-resources/resources"]
-                    :dependencies [[binaryage/devtools "1.0.2"]]}}
+                    :dependencies [[binaryage/devtools "1.0.2"]
+                                   [prismatic/dommy "1.1.0"]]}}
 
   :aliases {"test" ["run" "-m" "circleci.test/dir" :project/test-paths]
             "tests" ["run" "-m" "circleci.test"]
