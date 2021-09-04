@@ -49,7 +49,8 @@
   (fn [{:keys [db]} [_ response]]
     {:db (assoc db
            :loading false
-           :health-uuid (:health/uuid response))}))
+           :health-uuid (:health/uuid response))
+     ::navigate! [:questions]}))
 
 (re-frame/reg-event-fx
   ::health-creation-failure

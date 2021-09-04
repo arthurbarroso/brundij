@@ -16,7 +16,7 @@
      :view create-check-view
      :link-text "Home"}]
    ["questions"
-    {:name :register
+    {:name :questions
      :view create-questions-view
      :link-text "Create question"}]])
 

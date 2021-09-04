@@ -9,12 +9,12 @@
             [stylefy.core :as stylefy :refer [use-style]]))
 
 (def list-style {:list-style "none"
-                 :height "53%"
+                 :height "56%"
                  :width "70%"
                  :margin-top "3%"
                  :overflow "auto"})
 
-(def list-item-style {:background "#d3e6d8"
+(def list-item-style {:background "#ebf5ee"
                       :margin-top "1%"
                       :width "98%"
                       :padding "2% 1%"
@@ -67,4 +67,11 @@
               {:on-click
                  #(re-frame/dispatch [::events/remove-question-by-uuid
                                       (:id question)])})
-            "❌"]]))]]))
+            "❌"]]))]
+     [button {:on-click #(println "hi")
+              :text "Create questions"
+              :extra-styles {:color "#333"
+                             :width "70%"
+                             :margin-top "1%"
+                             :font-weight 700}
+              :disabled false}]]))
