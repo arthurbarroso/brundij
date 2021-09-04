@@ -16,7 +16,6 @@
                                             :outline-width "0px"}}})
 
 (defn button [{:keys [on-click text disabled extra-styles]}]
-  (println {:e extra-styles})
   [:button (use-style (merge button-styles extra-styles)
                       {:type "button"
                        :disabled disabled
