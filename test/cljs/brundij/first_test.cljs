@@ -1,5 +1,7 @@
 (ns cljs.brundij.first-test
-  (:require [cljs.test :refer-macros [deftest is testing]]))
+  (:require [brundij.components.title :refer [title]]
+            [cljs.test :refer-macros [deftest is testing]]
+            [reagent.dom :as rdom]))
 
 (deftest first-test
   (testing "first test"
@@ -8,3 +10,8 @@
 (deftest second-test
   (testing "chiclete"
     (is (= 2 2))))
+
+(deftest title-component-test
+  (let [comp (rdom/render [title] (.getElementById js/document "app"))]
+    (println {:comp comp})
+    (is (= true true))))
