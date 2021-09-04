@@ -40,12 +40,12 @@
                                   [hawk "0.2.11"]
                                   [circleci/circleci.test "0.5.0"]]}
              :cljs {:source-paths ["src/cljs" "src/cljc" "test/cljs"]
-                    :resource-paths ["dev-resources/resources"]}}
+                    :resource-paths ["dev-resources/resources"]
+                    :dependencies [[binaryage/devtools "1.0.2"]]}}
 
   :aliases {"test" ["run" "-m" "circleci.test/dir" :project/test-paths]
             "tests" ["run" "-m" "circleci.test"]
             "retest" ["run" "-m" "circleci.test.retest"]}
 
-  :project/dev {:dependencies [[binaryage/devtools "1.0.2"]]}
   :test-selectors {:integration :integration}
   :uberjar-name "brundij.jar")
