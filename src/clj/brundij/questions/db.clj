@@ -15,3 +15,18 @@
          (first)
          (second)
          (d/pull @db '[*]))))
+
+(defn bulk-create-questions! [db health-id questions]
+  (let [to-add (map-indexed
+                 (fn [index question]
+                   {:question/uuid (uuids/generate-uuid)
+                    :question/created_at (date/get-inst)
+                    :question/content (:content question)
+                    :db/id (+ index 1)})
+                 questions)
+        temporary-ids (map #(+ 1 %) (range (count questions)))
+        transaction (conj to-add {:db/id [:health/uuid health-id]
+                                  :health/question temporary-ids})]
+    (d/transact db transaction)
+    (d/pull @db '[* {:health/question [:question/content :question/uuid]}]
+            [:health/uuid health-id])))

@@ -2,8 +2,8 @@ name: build
 
 on:
   push:
-    paths-ignore:
-      - '*.md'
+    branches:
+      - master
   pull_request:
     paths-ignore:
       - '*.md'

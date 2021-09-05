@@ -7,4 +7,9 @@
      [""
       {:post {:handler (handlers/create-question! database)
               :parameters {:body {:content string?
-                                  :health-id string?}}}}]]))
+                                  :health-id string?}}}}]
+     ["/bulk"
+      ["/:health-id"
+       {:post {:handler (handlers/bulk-create-questions! database)
+               :parameters {:body {:questions [{:content string?}]}
+                            :path {:health-id string?}}}}]]]))

@@ -33,17 +33,21 @@
                  [thheller/shadow-cljs "2.15.3" :scope "provided"]]
 
   :profiles {:uberjar {:aot :all}
-             :dev {:source-paths ["dev-resources" "src/clj" "src/cljc" "src/cljs" "test/clj"]
+             :dev {:source-paths ["dev-resources"
+                                  "src/clj" "src/cljc" "test/clj"]
                    :resource-paths ["dev-resources/resources"]
                    :dependencies [[ring/ring-mock "0.4.0"]
                                   [integrant/repl "0.3.1"]
                                   [hawk "0.2.11"]
-                                  [circleci/circleci.test "0.5.0"]]}}
+                                  [circleci/circleci.test "0.5.0"]]}
+             :cljs {:source-paths ["src/cljs" "src/cljc"]
+                    :resource-paths ["dev-resources/resources"]
+                    :dependencies [[binaryage/devtools "1.0.2"]
+                                   [prismatic/dommy "1.1.0"]]}}
 
   :aliases {"test" ["run" "-m" "circleci.test/dir" :project/test-paths]
             "tests" ["run" "-m" "circleci.test"]
             "retest" ["run" "-m" "circleci.test.retest"]}
 
-  :project/dev {:dependencies [[binaryage/devtools "1.0.2"]]}
   :test-selectors {:integration :integration}
   :uberjar-name "brundij.jar")

@@ -22,15 +22,8 @@ With the REPL running, start the server using Integrant's `go` function. I usual
 
 #### Client
 
-Since this project uses shadow-clj's `:lein true` you'll also need the environment variables above to run shadow-related commands. This happens because the clojure `user` namespace will get started and will access these variables through `environ`. To start the web client in development mode run:
+To start the web client in development mode run:
 ```
-PORT=4000 \
-DATABASE_HOST=localhost \
-DATABASE_PORT=5432 \
-DATABASE_USER=postgres \
-DATABASE_PASSWORD=postgres \
-DATABASE_NAME=brundij \
-JWT_SECRET="something" \
 yarn watch
 ```
 
@@ -52,13 +45,6 @@ It is also possible to run tests by namespace. This can done by `, t n` in Conju
 
 It is also possible to run the client's tests using the script below.
 ```
-PORT=4000 \
-DATABASE_HOST=localhost \
-DATABASE_PORT=5432 \
-DATABASE_USER=postgres \
-DATABASE_PASSWORD=postgres \
-DATABASE_NAME=brundij \
-JWT_SECRET="something" \
 npx shadow-cljs watch test
 ```
 
