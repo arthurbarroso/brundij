@@ -22,4 +22,5 @@
    :questions base-questions
    :question-input nil
    :health-id-input nil
-   :pre-existing-input? false})
+   :pre-existing-input? false
+   :pre-existing-questions []})

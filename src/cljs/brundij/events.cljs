@@ -72,11 +72,35 @@
 
 (re-frame/reg-event-fx
   ::question-creation-success
-  (fn [_ [_ _]]
-    {::navigate! [:success]}))
+  (fn [{:keys [db]} [_ _]]
+    {:db (assoc db :loading false)
+     ::navigate! [:success]}))
 
 (re-frame/reg-event-fx
   ::question-creation-failure
+  (fn [data]
+    (println {:kind "Failure" :response data})))
+
+(re-frame/reg-event-fx
+  ::fetch-health-questions
+  (fn [{:keys [db]} [_ health-id]]
+    {:db (assoc db :loading true)
+     :http-xhrio {:method :get
+                  :uri (str "http://localhost:4000/v1/healths/" health-id)
+                  :format (ajax/json-request-format)
+                  :timeout 8000
+                  :response-format (ajax/json-response-format {:keywords? true})
+                  :on-success [::fetch-health-questions-success]
+                  :on-failure [::fetch-health-questions-failure]}}))
+
+(re-frame/reg-event-fx
+  ::fetch-health-questions-success
+  (fn [{:keys [db]} [_ response]]
+    (println {:respnse response})
+    {:db (assoc db :loading false)}))
+
+(re-frame/reg-event-fx
+  ::fetch-health-questions-failure
   (fn [data]
     (println {:kind "Failure" :response data})))
 

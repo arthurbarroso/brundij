@@ -7,4 +7,5 @@
      [""
       {:post {:handler (handlers/create-health! database)}}]
      ["/:health-id"
-      {:get {:handler (handlers/get-health-questions database)}}]]))
+      {:get {:handler (handlers/get-health-questions database)
+             :parameters {:path {:health-id string?}}}}]]))

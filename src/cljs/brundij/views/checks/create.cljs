@@ -33,7 +33,7 @@
                 :type "text"
                 :placeholder "Your health check's id"
                 :extra-styles {:max-width "75%"}}]
-        [button {:on-click #(println "hi")
+        [button {:on-click #(re-frame/dispatch [::events/fetch-health-questions @health-id-input])
                  :text "Answer existing health check"
                  :disabled false
                  :extra-styles {:margin-top "1%"
