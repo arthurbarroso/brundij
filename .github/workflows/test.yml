@@ -91,9 +91,6 @@ jobs:
            key: ${{ runner.os }}-maven-${{ hashFiles('project.clj') }}
            restore-keys: ${{ runner.os }}-maven-
 
-       - name: Fetch Clojure dependencies
-         run: lein deps
-
        - name: Fetch js dependencies
          run: npm i
 
