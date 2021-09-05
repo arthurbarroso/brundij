@@ -49,8 +49,9 @@
       [input {:value @question-input
               :on-change #(re-frame/dispatch [::events/change-question-input %])
               :disabled false
-              :extra-style {:width "100%"
-                            :margin-right "3%"}
+              :type "text"
+              :extra-styles {:width "100%"
+                             :margin-right "3%"}
               :placeholder "New question"}]
       [button {:on-click #(add-question @question-input)
                :text "➕" :disabled false

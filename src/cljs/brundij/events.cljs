@@ -100,3 +100,15 @@
   ::change-question-input
   (fn [db [_ new-input]]
     (assoc db :question-input new-input)))
+
+;; health page
+(re-frame/reg-event-db
+  ::change-health-id-input
+  (fn [db [_ new-input]]
+    (assoc db :health-id-input new-input)))
+
+(re-frame/reg-event-db
+  ::toggle-pre-existing-input?
+  (fn [db [_ _]]
+    (let [current-input-state (:pre-existing-input? db)]
+      (assoc db :pre-existing-input? (not current-input-state)))))

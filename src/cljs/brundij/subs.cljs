@@ -30,3 +30,13 @@
   ::health-uuid
   (fn [db]
     (:health-uuid db)))
+
+(re-frame/reg-sub
+  ::health-id-input
+  (fn [db]
+    (:health-id-input db)))
+
+(re-frame/reg-sub
+  ::pre-existing-input?
+  (fn [db]
+    (:pre-existing-input? db)))
