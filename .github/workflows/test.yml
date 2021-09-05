@@ -62,8 +62,9 @@ jobs:
            DATABASE_NAME: postgres
          run: lein test
 
+
    test-client:
-     name: test client
+     name: test-client
      runs-on: ubuntu-latest
 
      steps:
@@ -96,8 +97,8 @@ jobs:
        - name: Fetch js dependencies
          run: npm i
 
-      - name: Compile client application
-        run: npx shadow-cljs compile ci
-
-       - name: Run client tests
-         run: npx karm start --single-run
+       - name: Compile frontend
+         run: npx shadow-cljs compile ci
+       
+       - name: Run karma tests
+         run: npx karma start --single-run
