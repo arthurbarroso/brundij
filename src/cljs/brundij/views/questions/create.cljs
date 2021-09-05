@@ -32,12 +32,13 @@
 
 (defn add-question [question-text]
   (re-frame/dispatch [::events/add-question {:id (random-uuid)
-                                             :title question-text}])
+                                             :content question-text}])
   (re-frame/dispatch [::events/change-question-input nil]))
 
 (defn create-questions-view []
   (let [questions (re-frame/subscribe [::subs/questions])
-        question-input (re-frame/subscribe [::subs/question-input])]
+        question-input (re-frame/subscribe [::subs/question-input])
+        health-id (re-frame/subscribe [::subs/health-uuid])]
     [template
      [:h3 (use-style {:font-size "3rem" :margin 0})
       "Health check questions 🍃"]
@@ -60,7 +61,7 @@
           ^{:key (:id question)}
           [:li (use-style list-item-style)
            [:p (use-style item-text-style-base)
-            (:title question)]
+            (:content question)]
            [:p
             (use-style
               remove-item-text-style
@@ -68,7 +69,7 @@
                  #(re-frame/dispatch [::events/remove-question-by-uuid
                                       (:id question)])})
             "❌"]]))]
-     [button {:on-click #(println "hi")
+     [button {:on-click #(re-frame/dispatch [::events/create-questions @health-id @questions])
               :text "Create questions"
               :extra-styles {:color "#333"
                              :width "70%"

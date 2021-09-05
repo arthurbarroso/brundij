@@ -3,6 +3,7 @@
             [brundij.subs :as subs]
             [brundij.views.checks.create :refer [create-check-view]]
             [brundij.views.questions.create :refer [create-questions-view]]
+            [brundij.views.questions.success :refer [success-view]]
             [re-frame.core :refer [dispatch subscribe]]
             [reitit.coercion.spec :as rss]
             [reitit.frontend :as rf]
@@ -18,7 +19,11 @@
    ["questions"
     {:name :questions
      :view create-questions-view
-     :link-text "Create question"}]])
+     :link-text "Create question"}]
+   ["success"
+    {:name :success
+     :view success-view
+     :link-text "Success"}]])
 
 (def router
   (rf/router routes {:data {:coercion rss/coercion}}))

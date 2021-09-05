@@ -1,17 +1,17 @@
 (ns brundij.db)
 
 (def base-questions
-  [{:title "Support" :id (random-uuid)}
-   {:title "Teamwork" :id (random-uuid)}
-   {:title "Pawns or Players" :id (random-uuid)}
-   {:title "Mission" :id (random-uuid)}
-   {:title "Codebase health" :id (random-uuid)}
-   {:title "Suitable process" :id (random-uuid)}
-   {:title "Delivering value" :id (random-uuid)}
-   {:title "Learning" :id (random-uuid)}
-   {:title "Speed" :id (random-uuid)}
-   {:title "Easy to release" :id (random-uuid)}
-   {:title "Fun" :id (random-uuid)}])
+  [{:content "Support" :id (random-uuid)}
+   {:content "Teamwork" :id (random-uuid)}
+   {:content "Pawns or Players" :id (random-uuid)}
+   {:content "Mission" :id (random-uuid)}
+   {:content "Codebase health" :id (random-uuid)}
+   {:content "Suitable process" :id (random-uuid)}
+   {:content "Delivering value" :id (random-uuid)}
+   {:content "Learning" :id (random-uuid)}
+   {:content "Speed" :id (random-uuid)}
+   {:content "Easy to release" :id (random-uuid)}
+   {:content "Fun" :id (random-uuid)}])
 
 (def default-db
   {:name "brundij"

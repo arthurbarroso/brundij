@@ -57,6 +57,30 @@
   (fn [_]
     (println "Request failed")))
 
+(re-frame/reg-event-fx
+  ::create-questions
+  (fn [{:keys [db]} [_ health-id questions]]
+    {:db (assoc db :loading true)
+     :http-xhrio {:method :post
+                  :uri (str "http://localhost:4000/v1/questions/bulk/" health-id)
+                  :format (ajax/json-request-format)
+                  :timeout 8000
+                  :params {:questions questions}
+                  :response-format (ajax/json-response-format {:keywords? true})
+                  :on-success [::question-creation-success]
+                  :on-failure [::question-creation-failure]}}))
+
+(re-frame/reg-event-fx
+  ::question-creation-success
+  (fn [_ [_ _]]
+    {::navigate! [:success]}))
+
+(re-frame/reg-event-fx
+  ::question-creation-failure
+  (fn [data]
+    (println {:kind "Failure" :response data})))
+
+;; questions page
 (defn remove-from-vec [vect uuid]
   (filter #(not (= uuid (:id %))) vect))
 

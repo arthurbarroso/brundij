@@ -25,3 +25,8 @@
   ::question-input
   (fn [db]
     (:question-input db)))
+
+(re-frame/reg-sub
+  ::health-uuid
+  (fn [db]
+    (:health-uuid db)))
