@@ -5,4 +5,6 @@
   (let [database (:database environment)]
     ["/healths"
      [""
-      {:post {:handler (handlers/create-health! database)}}]]))
+      {:post {:handler (handlers/create-health! database)}}]
+     ["/:health-id"
+      {:get {:handler (handlers/get-health-questions database)}}]]))

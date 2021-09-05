@@ -11,4 +11,9 @@
   (testing "Health check creation"
     (let [health (health-db/create-health! (-> state/system :db/postgres))]
       (is (integer? (:db/id health)))
-      (is (inst? (:health/created_at health))))))
+      (is (inst? (:health/created_at health)))))
+  (testing "Listing a health's questions"
+    (let [health-id (-> (ts/endpoint-test :post "/v1/healths") :body :health/uuid)
+          {:keys [status]} (ts/endpoint-test
+                             :get (str "/v1/healths/" health-id))]
+      (is (= 200 status)))))

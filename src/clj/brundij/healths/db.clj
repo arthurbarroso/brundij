@@ -12,3 +12,12 @@
          (first)
          (second)
          (d/pull @db '[*]))))
+
+(defn get-health-questions [db health-id]
+  (->>
+    (d/q '[:find (pull ?e [* {:health/question [:question/uuid :question/content]}])
+           :in $ ?health_id
+           :where
+           [?e :health/uuid ?health_id]]
+         @db health-id)
+    (map first)))

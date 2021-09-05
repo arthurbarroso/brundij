@@ -6,3 +6,8 @@
   (fn [_request]
     (let [health (db/create-health! database)]
       (rr/created "" health))))
+
+(defn get-health-questions [database]
+  (fn [request]
+    (let [health-id (-> request :parameters :path :health-id)]
+      (rr/response (db/get-health-questions database health-id)))))
