@@ -15,6 +15,11 @@
 		"react-dom": "17.0.2"
 	},
 	"devDependencies": {
-		"shadow-cljs": "2.14.5"
+		"jsdom": "^17.0.0",
+		"shadow-cljs": "2.14.5",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jsdom-launcher": "^8.0.2",
+    "karma-cljs-test": "^0.1.0"
 	}
 }

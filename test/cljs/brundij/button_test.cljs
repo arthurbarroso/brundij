@@ -4,10 +4,17 @@
             [dommy.core :as d]
             [reagent.dom :as rdom]))
 
+(defn create-app-element [f]
+  (.appendChild (.-body js/document)
+                (doto (.createElement js/document "div")
+                  (-> (.setAttribute "id" "app"))))
+  (f))
+
 (defn dom-cleanup [f]
   (d/clear! (.getElementById js/document "app"))
   (f))
 
+(use-fixtures :once create-app-element)
 (use-fixtures :each dom-cleanup)
 
 (defn appended-container [target id]
