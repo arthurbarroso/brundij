@@ -1,6 +1,7 @@
 (ns brundij.router
   (:require [brundij.events :as events]
             [brundij.subs :as subs]
+            [brundij.views.answers.create :refer [create-answers]]
             [brundij.views.checks.create :refer [create-check-view]]
             [brundij.views.questions.create :refer [create-questions-view]]
             [brundij.views.questions.success :refer [success-view]]
@@ -23,7 +24,11 @@
    ["success"
     {:name :success
      :view success-view
-     :link-text "Success"}]])
+     :link-text "Success"}]
+   ["answers"
+    {:name :answers
+     :view create-answers
+     :link-text "Create answers"}]])
 
 (def router
   (rf/router routes {:data {:coercion rss/coercion}}))

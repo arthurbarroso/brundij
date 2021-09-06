@@ -23,4 +23,5 @@
    :question-input nil
    :health-id-input nil
    :pre-existing-input? false
-   :pre-existing-questions []})
+   :pre-existing-questions []
+   :current-question-index 0})

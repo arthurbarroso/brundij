@@ -96,8 +96,14 @@
 (re-frame/reg-event-fx
   ::fetch-health-questions-success
   (fn [{:keys [db]} [_ response]]
-    (println {:respnse response})
-    {:db (assoc db :loading false)}))
+    (let [parsed-questions (map-indexed
+                             (fn [index item]
+                               {:content (:question/content item)
+                                :index index
+                                :uuid (:question/uuid item)})
+                             (:health/question (first response)))]
+      {:db (assoc db :loading false :pre-existing-questions (vec parsed-questions))
+       ::navigate! [:answers]})))
 
 (re-frame/reg-event-fx
   ::fetch-health-questions-failure
@@ -136,3 +142,32 @@
   (fn [db [_ _]]
     (let [current-input-state (:pre-existing-input? db)]
       (assoc db :pre-existing-input? (not current-input-state)))))
+
+(re-frame/reg-event-db
+  ::increment-current-question-index
+  (fn [db [_ _]]
+    (let [current-question-index (:current-question-index db)]
+      (assoc db :current-question-index (inc current-question-index)))))
+
+(re-frame/reg-event-db
+  ::decrement-current-question-index
+  (fn [db [_ _]]
+    (let [current-question-index (:current-question-index db)]
+      (assoc db :current-question-index (dec current-question-index)))))
+
+(re-frame/reg-event-db
+  ::update-question-rating-at-index
+  (fn [db [_ {:keys [index rating]}]]
+    (let [current-questions (:pre-existing-questions db)
+          question-to-update (nth current-questions index)]
+      (println {:index index
+                :rating rating
+                :question-to-update question-to-update})
+      (assoc
+        db
+        :pre-existing-questions
+          (assoc
+            current-questions
+            index
+              (assoc question-to-update :rating rating))))))
+
