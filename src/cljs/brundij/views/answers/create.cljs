@@ -13,6 +13,9 @@
     (merge question-link-base {:cursor "pointer"})
     (merge question-link-base {:color "#ccc"})))
 
+(defn parse-questions-for-handler [questions]
+  (map (fn [q] {:question-id (:uuid q) :rating (:rating q)}) questions))
+
 (defn create-answers []
   (let [questions @(re-frame/subscribe [::subs/pre-existing-questions])
         max-index (count questions)
@@ -62,7 +65,7 @@
            {:on-click #(when (< current-index max-index)
                          (re-frame/dispatch [::events/increment-current-question-index]))})
          "Next question"]]
-       [button {:on-click #(println "x")
+       [button {:on-click #(re-frame/dispatch [::events/create-answers (parse-questions-for-handler questions)])
                 :text "Submit answers"
                 :extra-styles {:max-width "40%"
                                :color "#333"}}]])))

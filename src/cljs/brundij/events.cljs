@@ -100,13 +100,38 @@
                              (fn [index item]
                                {:content (:question/content item)
                                 :index index
-                                :uuid (:question/uuid item)})
+                                :uuid (:question/uuid item)
+                                :rating 1})
                              (:health/question (first response)))]
       {:db (assoc db :loading false :pre-existing-questions (vec parsed-questions))
        ::navigate! [:answers]})))
 
 (re-frame/reg-event-fx
   ::fetch-health-questions-failure
+  (fn [data]
+    (println {:kind "Failure" :response data})))
+
+(re-frame/reg-event-fx
+  ::create-answers
+  (fn [{:keys [db]} [_ answers]]
+    {:db (assoc db :loading true)
+     :http-xhrio {:method :post
+                  :uri "http://localhost:4000/v1/answers/bulk"
+                  :format (ajax/json-request-format)
+                  :timeout 8000
+                  :params {:answers answers}
+                  :response-format (ajax/json-response-format {:keywords? true})
+                  :on-success [::answer-creation-success]
+                  :on-failure [::answer-creation-failure]}}))
+
+(re-frame/reg-event-fx
+  ::answer-creation-success
+  (fn [{:keys [db]} [_ response]]
+    (println {:response response :kind "success-answer"})
+    {:db (assoc db :loading false)}))
+
+(re-frame/reg-event-fx
+  ::answer-creation-failure
   (fn [data]
     (println {:kind "Failure" :response data})))
 

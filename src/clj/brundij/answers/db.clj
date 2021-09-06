@@ -30,8 +30,10 @@
                 :question/answer (nth answer-ids index)}])
             answers)]
     (d/transact db (flatten answer-transactions))
-    (d/q '[:find (pull ?e [*])
-           :in $ ?question-id
-           :where [?e :health/question ?q]
-           [?q :question/uuid ?question-id]]
-         @db (:question-id (first answers)))))
+    (d/q
+      '[:find (pull ?e [*])
+        :in $ ?question-id
+        :where
+        [?e :health/question ?q]
+        [?q :question/uuid ?question-id]]
+      @db (uuids/uuid-from-string (:question-id (first answers))))))
