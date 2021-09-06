@@ -126,9 +126,9 @@
 
 (re-frame/reg-event-fx
   ::answer-creation-success
-  (fn [{:keys [db]} [_ response]]
-    (println {:response response :kind "success-answer"})
-    {:db (assoc db :loading false)}))
+  (fn [{:keys [db]} [_ _response]]
+    {:db (assoc db :loading false)
+     ::navigate! [:answers-success]}))
 
 (re-frame/reg-event-fx
   ::answer-creation-failure
