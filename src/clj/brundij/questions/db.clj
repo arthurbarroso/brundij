@@ -10,7 +10,7 @@
                             :db/id -1}
                            {:db/id [:health/uuid (uuids/uuid-from-string health-id)]
                             :health/question -1}])]
-    (->> @tx
+    (->> tx
          :tempids
          (first)
          (second)

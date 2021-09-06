@@ -10,7 +10,7 @@
                             :db/id -1}
                            {:db/id [:question/uuid (uuids/uuid-from-string question-id)]
                             :question/answer -1}])]
-    (->> @tx
+    (->> tx
          :tempids
          (first)
          (second)
@@ -22,17 +22,16 @@
           (map-indexed
             (fn [index item]
               [
-               {:question/uuid (uuids/generate-uuid)
-                :question/content (:content item)
-                :question/created_at (java.util.Date.)
+               {:answer/uuid (uuids/generate-uuid)
+                :answer/rating (:rating item)
+                :answer/created_at (java.util.Date.)
                 :db/id (nth answer-ids index)}
-               {:db/id [:question/uuid (:question-id item)]
-                :health/question (nth answer-ids index)}])
-            answers)
-        health (d/q '[:find (pull ?e [*])
-                      :in $ ?question-id
-                      :where [?e :health/question ?q]
-                      [?q :question/uuid ?question-id]]
-                    @db (:question-id (first answers)))]
+               {:db/id [:question/uuid (uuids/uuid-from-string (:question-id item))]
+                :question/answer (nth answer-ids index)}])
+            answers)]
     (d/transact db (flatten answer-transactions))
-    health))
+    (d/q '[:find (pull ?e [*])
+           :in $ ?question-id
+           :where [?e :health/question ?q]
+           [?q :question/uuid ?question-id]]
+         @db (:question-id (first answers)))))

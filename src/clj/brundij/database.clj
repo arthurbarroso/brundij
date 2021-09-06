@@ -63,6 +63,7 @@
 (defn create-connection [environment]
   (let [config (create-config environment)]
     (when-not (d/database-exists? config)
-      (create-database (merge config {:initial-tx schema})))
+      (create-database config))
     (let [connection (d/connect config)]
+      (d/transact connection schema)
       connection)))

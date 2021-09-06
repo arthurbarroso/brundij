@@ -5,7 +5,10 @@
 (deftest ^:integration question-tests
   (testing "Creating a question"
     (let [health-id (-> (ts/endpoint-test :post "/v1/healths") :body :health/uuid)
-          {:keys [status]} (ts/endpoint-test :post "/v1/questions" {:body {:content "Test question" :health-id health-id}})]
+          {:keys [status body]} (ts/endpoint-test :post "/v1/questions" {:body {:content "Test question" :health-id health-id}})]
+      (clojure.pprint/pprint {:test "QUESTION-TEST"
+                              :health-id health-id
+                              :body body})
       (is (= 201 status))))
   (testing "Creating bulk questions"
     (let [health-id (-> (ts/endpoint-test :post "/v1/healths") :body :health/uuid)
