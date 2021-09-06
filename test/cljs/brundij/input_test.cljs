@@ -5,7 +5,8 @@
             [reagent.core :as r]
             [reagent.dom :as rdom]
             [stylefy.core :as stylefy]
-            [stylefy.reagent :as stylefy-reagent]))
+            [stylefy.reagent :as stylefy-reagent]
+            ["react-dom/test-utils" :as dom-test-utils]))
 
 (defn create-app-element [f]
   (.appendChild (.-body js/document)

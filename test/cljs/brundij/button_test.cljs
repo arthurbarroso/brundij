@@ -2,9 +2,11 @@
   (:require [brundij.components.button :refer [button]]
             [cljs.test :refer-macros [deftest is testing use-fixtures]]
             [dommy.core :as d]
+            [reagent.core :as r]
             [reagent.dom :as rdom]
             [stylefy.core :as stylefy]
-            [stylefy.reagent :as stylefy-reagent]))
+            [stylefy.reagent :as stylefy-reagent]
+            ["react-dom/test-utils" :as dom-test-utils]))
 
 (defn create-app-element [f]
   (.appendChild (.-body js/document)
@@ -57,3 +59,17 @@
                                      "button2"))
     (is (= (d/html (d/sel1 :button)) "Click me"))
     (is (= (d/style (d/sel1 :button) :font-weight) "700"))))
+
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
+(deftest button-component-click-test
+  (testing "Passes on-click prop to the component"
+    (let [ra (r/atom 1)]
+      (rdom/render [button {:on-click #(swap! ra inc)
+                            :text "Click me"
+                            :disabled false
+                            :extra-styles {:font-weight 700}}]
+                   (appended-container (.getElementById js/document "app")
+                                       "button2"))
+      (.click dom-test-utils/Simulate (d/sel1 :button))
+      (is (= (d/html (d/sel1 :button)) "Click me"))
+      (is (= 2 @ra)))))
