@@ -13,7 +13,6 @@
     (merge question-link-base {:cursor "pointer"})
     (merge question-link-base {:color "#ccc"})))
 
-;497ecbb7-5cf7-483a-8fb9-29f7fd87db2f
 (defn create-answers []
   (let [questions @(re-frame/subscribe [::subs/pre-existing-questions])
         max-index (count questions)
