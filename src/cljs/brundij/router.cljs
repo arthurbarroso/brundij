@@ -1,5 +1,6 @@
 (ns brundij.router
-  (:require [brundij.events :as events]
+  (:require [brundij.components.error-boundary :refer [err-boundary]]
+            [brundij.events :as events]
             [brundij.subs :as subs]
             [brundij.views.answers.create :refer [create-answers]]
             [brundij.views.answers.success :refer [answers-success-view]]
@@ -53,6 +54,7 @@
 
 (defn router-component []
   (let [current-route @(subscribe [::subs/current-route])]
-    (when current-route
-      [:div (use-style app-base-style)
-       [(-> current-route :data :view)]])))
+    [err-boundary
+     (when current-route
+       [:div (use-style app-base-style)
+        [(-> current-route :data :view)]])]))
