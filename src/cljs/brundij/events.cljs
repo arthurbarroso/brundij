@@ -185,9 +185,6 @@
   (fn [db [_ {:keys [index rating]}]]
     (let [current-questions (:pre-existing-questions db)
           question-to-update (nth current-questions index)]
-      (println {:index index
-                :rating rating
-                :question-to-update question-to-update})
       (assoc
         db
         :pre-existing-questions
@@ -195,4 +192,3 @@
             current-questions
             index
               (assoc question-to-update :rating rating))))))
-

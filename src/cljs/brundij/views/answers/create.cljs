@@ -13,6 +13,21 @@
     (merge question-link-base {:cursor "pointer"})
     (merge question-link-base {:color "#ccc"})))
 
+(def option-base-style
+  {:width "40px" :height "40px"
+   :border-radius "50%"
+   :display "flex" :align-items "center"
+   :justify-content "center" :cursor "pointer"})
+
+(defn option-styles [current-rating option]
+  (if (= current-rating option)
+    (merge option-base-style
+           {:background "#333"
+            :color "#fff"})
+    (merge option-base-style
+           {:background "#ff"
+            :color "#333"})))
+
 (defn parse-questions-for-handler [questions]
   (map (fn [q] {:question-id (:uuid q) :rating (:rating q)}) questions))
 
@@ -40,15 +55,13 @@
         (doall
           (for [option (range 5)]
             ^{:key (str option "-" (:uuid (nth questions current-index)) "-" current-index)}
-            [:div (use-style {:width "40px" :height "40px"
-                              :background "#333" :border-radius "50%"
-                              :display "flex" :align-items "center"
-                              :justify-content "center" :cursor "pointer"}
+            [:div (use-style (option-styles (:rating (nth questions current-index))
+                                            (inc option))
                              {:on-click
                                 #(re-frame/dispatch [::events/update-question-rating-at-index
                                                      {:rating (inc option)
                                                       :index current-index}])})
-             [:p (use-style {:color "#fff"}) (inc option)]]))]
+             [:p (inc option)]]))]
        [:div (use-style {:display "flex"
                          :align-items "center"
                          :max-width "40%"
