@@ -13,6 +13,6 @@
   (fn [request]
     (let [questions (-> request :parameters :body :questions)
           health-id (-> request :parameters :path :health-id)]
-      (rr/created "" (db/bulk-create-questions!
+      (rr/created "" (db/create-questions!
                        database
                        (uuids/uuid-from-string health-id) questions)))))

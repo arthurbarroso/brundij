@@ -20,4 +20,8 @@
    :error nil
    :health-uuid nil
    :questions base-questions
-   :question-input nil})
+   :question-input nil
+   :health-id-input nil
+   :pre-existing-input? false
+   :pre-existing-questions []
+   :current-question-index 0})

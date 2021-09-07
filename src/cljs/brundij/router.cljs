@@ -1,6 +1,9 @@
 (ns brundij.router
-  (:require [brundij.events :as events]
+  (:require [brundij.components.error-boundary :refer [err-boundary]]
+            [brundij.events :as events]
             [brundij.subs :as subs]
+            [brundij.views.answers.create :refer [create-answers]]
+            [brundij.views.answers.success :refer [answers-success-view]]
             [brundij.views.checks.create :refer [create-check-view]]
             [brundij.views.questions.create :refer [create-questions-view]]
             [brundij.views.questions.success :refer [success-view]]
@@ -23,7 +26,15 @@
    ["success"
     {:name :success
      :view success-view
-     :link-text "Success"}]])
+     :link-text "Success"}]
+   ["answers"
+    {:name :answers
+     :view create-answers
+     :link-text "Create answers"}]
+   ["answers-success"
+    {:name :answers-success
+     :view answers-success-view
+     :link-text "Answers success"}]])
 
 (def router
   (rf/router routes {:data {:coercion rss/coercion}}))
@@ -43,6 +54,7 @@
 
 (defn router-component []
   (let [current-route @(subscribe [::subs/current-route])]
-    (when current-route
-      [:div (use-style app-base-style)
-       [(-> current-route :data :view)]])))
+    [err-boundary
+     (when current-route
+       [:div (use-style app-base-style)
+        [(-> current-route :data :view)]])]))

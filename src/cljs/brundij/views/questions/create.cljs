@@ -12,7 +12,8 @@
                  :height "56%"
                  :width "70%"
                  :margin-top "3%"
-                 :overflow "auto"})
+                 :overflow "auto"
+                 :padding 0})
 
 (def list-item-style {:background "#ebf5ee"
                       :margin-top "1%"
@@ -49,13 +50,14 @@
       [input {:value @question-input
               :on-change #(re-frame/dispatch [::events/change-question-input %])
               :disabled false
-              :extra-style {:width "100%"
-                            :margin-right "3%"}
+              :type "text"
+              :extra-styles {:width "100%"
+                             :margin-right "3%"}
               :placeholder "New question"}]
       [button {:on-click #(add-question @question-input)
                :text "➕" :disabled false
                :extra-styles {:color "#333"}}]]
-     [:div (use-style list-style)
+     [:ul (use-style list-style)
       (doall
         (for [question @questions]
           ^{:key (:id question)}

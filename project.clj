@@ -7,7 +7,7 @@
                  [environ "1.2.0"]
                  [metosin/reitit "0.5.5"]
                  [org.postgresql/postgresql "42.2.14"]
-                 [io.replikativ/datahike "0.3.6"]
+                 [io.replikativ/datahike "0.3.7-SNAPSHOT"]
                  [io.replikativ/datahike-postgres "0.1.0"]
                  [tick/tick "0.4.32"]
                  [buddy/buddy-auth "2.2.0"]

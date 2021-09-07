@@ -12,4 +12,14 @@
                         :body
                         :question/uuid)
           {:keys [status]} (ts/endpoint-test :post "/v1/answers" {:body {:rating 5 :question-id question-id}})]
+      (is (= 201 status))))
+  (testing "Creating bulk answers"
+    (let [health-id (-> (ts/endpoint-test :post "/v1/healths") :body :health/uuid)
+          question-id (->
+                        (ts/endpoint-test :post "/v1/questions"
+                                          {:body
+                                             {:content "Test question" :health-id health-id}})
+                        :body
+                        :question/uuid)
+          {:keys [status]} (ts/endpoint-test :post "/v1/answers/bulk" {:body {:answers [{:rating 5 :question-id question-id}]}})]
       (is (= 201 status)))))
