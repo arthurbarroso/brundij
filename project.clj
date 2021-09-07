@@ -35,7 +35,7 @@
   :profiles {:uberjar {:aot :all}
              :dev {:source-paths ["dev-resources"
                                   "src/clj" "src/cljc" "test/clj"]
-                   :resource-paths ["dev-resources/resources"]
+                   :resource-paths ["dev-resources/resources" "resources"]
                    :dependencies [[ring/ring-mock "0.4.0"]
                                   [integrant/repl "0.3.1"]
                                   [hawk "0.2.11"]
