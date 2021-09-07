@@ -2,6 +2,7 @@
   (:require [brundij.answers.routes :as answers]
             [brundij.healths.routes :as healths]
             [brundij.questions.routes :as questions]
+            [clojure.java.io :as io]
             [muuntaja.core :as m]
             [reitit.coercion.spec :as coercion-spec]
             [reitit.dev.pretty :as pretty]
@@ -18,11 +19,14 @@
           :exception pretty/exception
           :muuntaja m/instance
           :middleware [muuntaja/format-middleware
-                       swagger/swagger-feature
                        exception/exception-middleware
+                       swagger/swagger-feature
                        coercion/coerce-request-middleware
                        coercion/coerce-response-middleware
                        coercion/coerce-exceptions-middleware]}})
+
+(defn index-handler [_req]
+  {:body (slurp (io/resource "public/index.html"))})
 
 (def swagger-docs
   ["/swagger.json"
@@ -37,14 +41,20 @@
   (wrap-cors
     (ring/ring-handler
       (ring/router
-        [swagger-docs
-         ["/v1"
-          (healths/routes environment)
-          (questions/routes environment)
-          (answers/routes environment)]]
+        [
+         [swagger-docs ;{:middleware [swagger/swagger-feature]}
+          ["/v1"
+           (healths/routes environment)
+           (questions/routes environment)
+           (answers/routes environment)]]
+         ["/"
+          {:get index-handler
+           :no-doc true}]
+         ["/js/*" {:no-doc true :handler
+                     (ring/create-resource-handler {:root "public/js/" :no-doc true})}]]
         router-config)
       (ring/routes
-        (swagger-ui/create-swagger-ui-handler {:path "/"}))
+        (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))
       (ring/create-default-handler))
     :access-control-allow-origin [#".*"]
     :access-control-allow-methods [:get :put :post :delete]))
