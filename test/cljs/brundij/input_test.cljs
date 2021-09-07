@@ -5,8 +5,7 @@
             [reagent.core :as r]
             [reagent.dom :as rdom]
             [stylefy.core :as stylefy]
-            [stylefy.reagent :as stylefy-reagent]
-            ["react-dom/test-utils" :as dom-test-utils]))
+            [stylefy.reagent :as stylefy-reagent]))
 
 (defn create-app-element [f]
   (.appendChild (.-body js/document)
@@ -45,7 +44,7 @@
                            :type "text"
                            :placeholder "Input placeholder"
                            :extra-styles {}}]
-                   (appended-container (.getElementById js/document "app")
+                   (appended-container (d/sel1 :#app)
                                        "input"))
       (is (= (d/attr (d/sel1 :input) :placeholder) "Input placeholder"))
       (is (= (d/value (d/sel1 :input)) "chiclete")))))
