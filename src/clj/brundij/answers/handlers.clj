@@ -9,7 +9,6 @@
 
 (defn bulk-create-answers! [database]
   (fn [request]
-    (clojure.pprint/pprint "\n\n\n RODAND O OBULK")
     (let [answers (-> request :parameters :body :answers)]
       (rr/created "" (db/bulk-create-answers!
                        database
