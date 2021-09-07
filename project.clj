@@ -25,7 +25,7 @@
                                   [hawk "0.2.11"]
                                   [circleci/circleci.test "0.5.0"]]}
 
-             :cljs {:source-paths ["src/cljs" "src/cljc"]
+             :cljs {:source-paths ["src/cljs"]
                     :resource-paths ["dev-resources/resources"]
                     :dependencies [[binaryage/devtools "1.0.2"]
                                    [prismatic/dommy "1.1.0"]
