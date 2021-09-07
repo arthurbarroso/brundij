@@ -10,8 +10,6 @@
                  [io.replikativ/datahike "0.3.7-SNAPSHOT"]
                  [io.replikativ/datahike-postgres "0.1.0"]
                  [tick/tick "0.4.32"]
-                 [buddy/buddy-auth "2.2.0"]
-                 [buddy/buddy-hashers "1.6.0"]
                  [ring-cors "0.1.13"]
                  ;; Frontend
                  [org.clojure/clojurescript "1.10.879"]
@@ -23,13 +21,10 @@
                  [day8.re-frame/http-fx "0.2.3"]
                  [stylefy/reagent "3.0.0"]
                  [stylefy "3.0.0"]
-                 [metosin/reitit "0.5.11"]
                  [metosin/reitit-spec "0.5.11"]
                  [metosin/reitit-frontend "0.5.11"]
                  [datascript "1.1.0"]
                  [datascript-transit "0.3.0"]
-                 [instaparse "1.4.10"]
-                 [cljfmt "0.8.0"]
                  [thheller/shadow-cljs "2.15.3" :scope "provided"]]
 
   :profiles {:uberjar {:aot :all}
