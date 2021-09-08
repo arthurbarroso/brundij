@@ -32,7 +32,14 @@
   [_ jetty]
   (.stop jetty))
 
-(defn -main
-  [config-file]
-  (let [config (-> config-file slurp ig/read-string)]
-    (-> config ig/prep ig/init)))
+(defn -main []
+  (let [config-map
+          {:server/jetty {:handler (ig/ref :brundij/app)
+                          :port (Integer/parseInt (env :port))}
+           :brundij/app {:database (ig/ref :db/postgres)}
+           :db/postgres {:host (env :database-host)
+                         :port (env :database-port)
+                         :user (env :database-user)
+                         :password (env :database-password)
+                         :dbname (env :database-name)}}]
+    (-> config-map ig/prep ig/init)))
