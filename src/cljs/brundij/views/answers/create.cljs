@@ -53,7 +53,7 @@
                          :justify-content "space-between"
                          :max-width "40%"})
         (doall
-          (for [option (range 5)]
+          (for [option (range 3)]
             ^{:key (str option "-" (:uuid (nth questions current-index)) "-" current-index)}
             [:div (use-style (option-styles (:rating (nth questions current-index))
                                             (inc option))
