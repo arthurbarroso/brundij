@@ -14,7 +14,6 @@ DATABASE_PORT=5432 \
 DATABASE_USER=postgres \
 DATABASE_PASSWORD=postgres \
 DATABASE_NAME=brundij \
-JWT_SECRET="something" \
 lein repl
 ```
 
@@ -37,7 +36,6 @@ DATABASE_PORT=5432 \
 DATABASE_USER=postgres \
 DATABASE_PASSWORD=postgres \
 DATABASE_NAME=brundij \
-JWT_SECRET="something" \
 lein test
 ```
 
