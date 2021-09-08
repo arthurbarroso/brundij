@@ -33,11 +33,14 @@
     option-base))
 
 (def options [{:rating 1
-               :symbol "🔴"}
+               :symbol "🔴"
+               :title "Bad"}
               {:rating 2
-               :symbol "🟡"}
+               :symbol "🟡"
+               :title "Ok"}
               {:rating 3
-               :symbol "🟢"}])
+               :symbol "🟢"
+               :title "Good"}])
 
 (def trend-options [{:symbol "⬇️"
                      :title "Trending down"
@@ -82,7 +85,8 @@
                        (option-styles
                          (:rating (nth questions current-index))
                          (:rating option))
-                       {:on-click
+                       {:title (:title option)
+                        :on-click
                           #(re-frame/dispatch
                              [::events/update-question-rating-at-index
                               {:rating (:rating option)
