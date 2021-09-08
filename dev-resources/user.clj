@@ -3,9 +3,7 @@
             [environ.core :refer [env]]
             [hawk.core :as hawk]
             [integrant.core :as ig]
-            [integrant.repl :as ig-repl]
-            [integrant.repl.state :as state]
-            [muuntaja.core :as m]))
+            [integrant.repl :as ig-repl]))
 
 (def config-map
   {:server/jetty {:handler (ig/ref :brundij/app)
@@ -23,8 +21,6 @@
 (def go ig-repl/go)
 (def reset ig-repl/reset)
 (def reset-all ig-repl/reset-all)
-
-(def app (-> state/system :brundij/app))
 
 (defn- clojure-file? [_ {:keys [file]}]
   (re-matches #"[^.].*(\.clj|\.edn)$" (.getName file)))
@@ -44,15 +40,4 @@
 
 (comment
   (go)
-  (auto-reset)
-  (reset-all)
-  (->
-    (app {:request-method :post :uri "/v1/healths"})
-    (m/decode-response-body))
-  (reset-all)
-  (->
-    (app {:request-method :post
-          :uri "/v1/questions"
-          :body-params {:content "Chiclete"
-                        :health-id "a64b81c4-501d-4923-affe-6d0f5f903262"}})
-    (m/decode-response-body)))
+  (auto-reset))
