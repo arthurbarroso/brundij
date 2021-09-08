@@ -2,6 +2,8 @@
 /resources/public/js/compiled/
 /resources/public/js/test/js/
 /resources/public/js/*.js
+/resources/public/js/cljs-runtime/
+/resources/public/js/manifest.edn
 /target/
 /*-init.clj
 /*.log
