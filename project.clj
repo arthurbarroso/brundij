@@ -1,6 +1,10 @@
 (defproject brundij "0.1.0"
   :description "Brundij"
   :min-lein-version "2.0.0"
+  :license {:name "Eclipse Public License - v 1.0"
+            :url "http://www.eclipse.org/legal/epl-v10.html"
+            :distribution :repo
+            :comments "The same license as CLojure"}
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [ring "1.8.1"]
