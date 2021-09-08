@@ -101,7 +101,8 @@
                                {:content (:question/content item)
                                 :index index
                                 :uuid (:question/uuid item)
-                                :rating 1})
+                                :rating 2
+                                :trend "stable"})
                              (:health/question (first response)))]
       {:db (assoc db :loading false :pre-existing-questions (vec parsed-questions))
        ::navigate! [:answers]})))
@@ -192,3 +193,16 @@
             current-questions
             index
               (assoc question-to-update :rating rating))))))
+
+(re-frame/reg-event-db
+  ::update-question-trend-at-index
+  (fn [db [_ {:keys [index trend]}]]
+    (let [current-questions (:pre-existing-questions db)
+          question-to-update (nth current-questions index)]
+      (assoc
+        db
+        :pre-existing-questions
+          (assoc
+            current-questions
+            index
+              (assoc question-to-update :trend trend))))))
