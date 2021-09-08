@@ -11,7 +11,10 @@
                                              {:content "Test question" :health-id health-id}})
                         :body
                         :question/uuid)
-          {:keys [status]} (ts/endpoint-test :post "/v1/answers" {:body {:rating 5 :question-id question-id}})]
+          {:keys [status]} (ts/endpoint-test :post "/v1/answers"
+                                             {:body
+                                                {:rating 5 :trend "up"
+                                                 :question-id question-id}})]
       (is (= 201 status))))
   (testing "Creating bulk answers"
     (let [health-id (-> (ts/endpoint-test :post "/v1/healths") :body :health/uuid)
@@ -21,5 +24,11 @@
                                              {:content "Test question" :health-id health-id}})
                         :body
                         :question/uuid)
-          {:keys [status]} (ts/endpoint-test :post "/v1/answers/bulk" {:body {:answers [{:rating 5 :question-id question-id}]}})]
+          {:keys [status]} (ts/endpoint-test :post "/v1/answers/bulk"
+                                             {:body
+                                                {:answers
+                                                   [
+                                                    {:rating 5
+                                                     :trend "down"
+                                                     :question-id question-id}]}})]
       (is (= 201 status)))))

@@ -13,23 +13,47 @@
     (merge question-link-base {:cursor "pointer"})
     (merge question-link-base {:color "#ccc"})))
 
-(def option-base-style
-  {:width "40px" :height "40px"
-   :border-radius "50%"
-   :display "flex" :align-items "center"
-   :justify-content "center" :cursor "pointer"})
+(def option-base
+  {:cursor "pointer"
+   :font-size "1.5rem"
+   :background "none"
+   :padding 0
+   :border "none"})
 
 (defn option-styles [current-rating option]
   (if (= current-rating option)
-    (merge option-base-style
-           {:background "#333"
-            :color "#fff"})
-    (merge option-base-style
-           {:background "#ff"
-            :color "#333"})))
+    (merge option-base
+           {:border "1px solid red"
+            :border-radius "50%"})
+    option-base))
+
+(defn trend-styles [current-trend trend]
+  (if (= current-trend trend)
+    (merge option-base {:border "1px solid red"})
+    option-base))
+
+(def options [{:rating 1
+               :symbol "🔴"
+               :title "Bad"}
+              {:rating 2
+               :symbol "🟡"
+               :title "Ok"}
+              {:rating 3
+               :symbol "🟢"
+               :title "Good"}])
+
+(def trend-options [{:symbol "⬇️"
+                     :title "Trending down"
+                     :trend "down"}
+                    {:symbol "➡️"
+                     :title "Stable"
+                     :trend "stable"}
+                    {:symbol "⬆️"
+                     :title "Trending up"
+                     :tren "up"}])
 
 (defn parse-questions-for-handler [questions]
-  (map (fn [q] {:question-id (:uuid q) :rating (:rating q)}) questions))
+  (map (fn [q] {:question-id (:uuid q) :rating (:rating q) :trend (:trend q)}) questions))
 
 (defn create-answers []
   (let [questions @(re-frame/subscribe [::subs/pre-existing-questions])
@@ -53,15 +77,41 @@
                          :justify-content "space-between"
                          :max-width "40%"})
         (doall
-          (for [option (range 5)]
-            ^{:key (str option "-" (:uuid (nth questions current-index)) "-" current-index)}
-            [:div (use-style (option-styles (:rating (nth questions current-index))
-                                            (inc option))
-                             {:on-click
-                                #(re-frame/dispatch [::events/update-question-rating-at-index
-                                                     {:rating (inc option)
-                                                      :index current-index}])})
-             [:p (inc option)]]))]
+          (for [option options]
+            ^{:key (str (:rating option) "-"
+                        (:uuid (nth questions current-index)) "-"
+                        current-index)}
+            [:button (use-style
+                       (option-styles
+                         (:rating (nth questions current-index))
+                         (:rating option))
+                       {:title (:title option)
+                        :on-click
+                          #(re-frame/dispatch
+                             [::events/update-question-rating-at-index
+                              {:rating (:rating option)
+                               :index current-index}])})
+             [:p (use-style {:margin 0}) (:symbol option)]]))]
+       [:p "The trend for this rating:"]
+       [:div (use-style {:display "flex"
+                         :align-items "center"
+                         :justify-content "space-between"
+                         :max-width "40%"})
+        (doall
+          (for [trend trend-options]
+            ^{:key (str (:title trend) "-"
+                        (:uuid (nth questions current-index)) "-"
+                        current-index)}
+            [:button
+             (use-style
+               (trend-styles (:trend (nth questions current-index))
+                             (:trend trend))
+               {:title (:title trend)
+                :on-click #(re-frame/dispatch
+                             [::events/update-question-trend-at-index
+                              {:trend (:trend trend)
+                               :index current-index}])})
+             (:symbol trend)]))]
        [:div (use-style {:display "flex"
                          :align-items "center"
                          :max-width "40%"
@@ -70,15 +120,20 @@
          (use-style
            (question-link-styles (> current-index 0))
            {:on-click #(when (> current-index 0)
-                         (re-frame/dispatch [::events/decrement-current-question-index]))})
+                         (re-frame/dispatch
+                           [::events/decrement-current-question-index]))})
          "Prior question"]
         [:p
          (use-style
            (question-link-styles (< current-index max-index))
            {:on-click #(when (< current-index max-index)
-                         (re-frame/dispatch [::events/increment-current-question-index]))})
+                         (re-frame/dispatch
+                           [::events/increment-current-question-index]))})
          "Next question"]]
-       [button {:on-click #(re-frame/dispatch [::events/create-answers (parse-questions-for-handler questions)])
+       [button {:on-click
+                  #(re-frame/dispatch
+                     [::events/create-answers
+                      (parse-questions-for-handler questions)])
                 :text "Submit answers"
                 :extra-styles {:max-width "40%"
                                :color "#333"}}]])))

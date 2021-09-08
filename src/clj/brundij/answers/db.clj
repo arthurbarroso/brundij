@@ -3,9 +3,10 @@
             [brundij.uuids :as uuids]
             [datahike.api :as d]))
 
-(defn create-answer! [db {:keys [rating question-id]}]
+(defn create-answer! [db {:keys [rating trend question-id]}]
   (let [tx (d/transact db [{:answer/uuid (uuids/generate-uuid)
                             :answer/rating rating
+                            :answer/trend trend
                             :answer/created_at (date/get-inst)
                             :db/id -1}
                            {:db/id [:question/uuid (uuids/uuid-from-string question-id)]
@@ -24,6 +25,7 @@
               [
                {:answer/uuid (uuids/generate-uuid)
                 :answer/rating (:rating item)
+                :answer/trend (:trend item)
                 :answer/created_at (java.util.Date.)
                 :db/id (nth answer-ids index)}
                {:db/id [:question/uuid (uuids/uuid-from-string (:question-id item))]
