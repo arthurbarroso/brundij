@@ -42,7 +42,7 @@
     (ring/ring-handler
       (ring/router
         [
-         [swagger-docs ;{:middleware [swagger/swagger-feature]}
+         [swagger-docs
           ["/v1"
            (healths/routes environment)
            (questions/routes environment)
@@ -51,7 +51,7 @@
           {:get index-handler
            :no-doc true}]
          ["/js/*" {:no-doc true :handler
-                     (ring/create-resource-handler {:root "public/js/" :no-doc true})}]]
+                     (ring/create-resource-handler {:root "public/js" :no-doc true})}]]
         router-config)
       (ring/routes
         (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))

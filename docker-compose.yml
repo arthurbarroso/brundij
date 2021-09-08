@@ -18,4 +18,18 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: brundij 
+      POSTGRES_DB: brundij
+  app:
+    container_name: brundij-app-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 4000:4000
+    environment:
+     PORT: 4000
+     DATABASE_HOST: db 
+     DATABASE_USER: postgres
+     DATABASE_PASSWORD: postgres
+     DATABASE_NAME: brundij 
+     DATABASE_PORT: 5432
