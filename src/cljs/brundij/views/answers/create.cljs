@@ -13,20 +13,22 @@
     (merge question-link-base {:cursor "pointer"})
     (merge question-link-base {:color "#ccc"})))
 
-(def option-base-style
-  {:width "40px" :height "40px"
-   :border-radius "50%"
-   :display "flex" :align-items "center"
-   :justify-content "center" :cursor "pointer"})
-
 (defn option-styles [current-rating option]
+  (println {:option-current current-rating
+            :option-option option})
   (if (= current-rating option)
-    (merge option-base-style
-           {:background "#333"
-            :color "#fff"})
-    (merge option-base-style
-           {:background "#ff"
-            :color "#333"})))
+    {:cursor "pointer" :font-size "1.5rem"
+     :border "1px solid red"
+     :border-radius "50%"}
+    {:cursor "pointer" :font-size "1.5rem"
+     :border "none"}))
+
+(def options [{:rating 1
+               :symbol "🔴"}
+              {:rating 2
+               :symbol "🟡"}
+              {:rating 3
+               :symbol "🟢"}])
 
 (defn parse-questions-for-handler [questions]
   (map (fn [q] {:question-id (:uuid q) :rating (:rating q)}) questions))
@@ -53,15 +55,17 @@
                          :justify-content "space-between"
                          :max-width "40%"})
         (doall
-          (for [option (range 3)]
-            ^{:key (str option "-" (:uuid (nth questions current-index)) "-" current-index)}
-            [:div (use-style (option-styles (:rating (nth questions current-index))
-                                            (inc option))
-                             {:on-click
-                                #(re-frame/dispatch [::events/update-question-rating-at-index
-                                                     {:rating (inc option)
-                                                      :index current-index}])})
-             [:p (inc option)]]))]
+          (for [option options]
+            ^{:key (str (:rating option) "-" (:uuid (nth questions current-index)) "-" current-index)}
+            [:div (use-style
+                    (option-styles
+                      (:rating (nth questions current-index))
+                      (:rating option))
+                    {:on-click
+                       #(re-frame/dispatch [::events/update-question-rating-at-index
+                                            {:rating (:rating option)
+                                             :index current-index}])})
+             [:p (use-style {:margin 0}) (:symbol option)]]))]
        [:div (use-style {:display "flex"
                          :align-items "center"
                          :max-width "40%"
