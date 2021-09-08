@@ -11,6 +11,7 @@
             [reitit.coercion.spec :as rss]
             [reitit.frontend :as rf]
             [reitit.frontend.easy :as rfe]
+            [spec-tools.data-spec :as ds]
             [stylefy.core :refer [use-style]]))
 
 (def routes
@@ -18,7 +19,8 @@
    [""
     {:name :home
      :view create-check-view
-     :link-text "Home"}]
+     :link-text "Home"
+     :parameters {:query {(ds/opt :id) string?}}}]
    ["questions"
     {:name :questions
      :view create-questions-view
@@ -55,6 +57,10 @@
 (defn router-component []
   (let [current-route @(subscribe [::subs/current-route])]
     [err-boundary
+     (when (and (= (-> current-route :data :name) :home)
+                (not (nil? (-> current-route :parameters :query :id))))
+       (dispatch [::events/fetch-health-questions
+                  (-> current-route :parameters :query :id)]))
      (when current-route
        [:div (use-style app-base-style)
         [(-> current-route :data :view)]])]))
