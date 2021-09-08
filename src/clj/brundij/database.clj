@@ -52,6 +52,14 @@
              {:db/ident :answer/rating
               :db/valueType :db.type/bigint
               :db/cardinality :db.cardinality/one}
+             ;;answer/rating
+             {:db/ident :answer/rating
+              :db/valueType :db.type/bigint
+              :db/cardinality :db.cardinality/one}
+             ;;answer/trend
+             {:db/ident :answer/trend
+              :db/valueType :db.type/string
+              :db/cardinality :db.cardinality/one}
              ;;answer/created_at
              {:db/ident :answer/created_at
               :db/valueType :db.type/instant
