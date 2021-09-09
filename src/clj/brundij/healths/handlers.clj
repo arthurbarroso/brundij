@@ -11,4 +11,11 @@
 (defn get-health-questions [database]
   (fn [request]
     (let [health-id (-> request :parameters :path :health-id)]
-      (rr/response (db/get-health-questions database (uuids/uuid-from-string health-id))))))
+      (rr/response (db/get-health-questions
+                     database (uuids/uuid-from-string health-id))))))
+
+(defn get-health-questions-and-answers [database]
+  (fn [request]
+    (let [health-id (-> request :parameters :path :health-id)]
+      (rr/response (db/get-health-questions-and-answers
+                     database (uuids/uuid-from-string health-id))))))

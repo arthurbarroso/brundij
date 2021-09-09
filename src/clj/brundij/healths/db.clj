@@ -21,3 +21,23 @@
            [?e :health/uuid ?health_id]]
          @db health-id)
     (map first)))
+
+(defn get-health-questions-and-answers [db health-id]
+  (->>
+    (d/q '[:find (pull ?e
+                       [*
+                        {:health/question
+                           [:question/uuid
+                            :db/id
+                            :question/content
+                            :question/created_at
+                            {:question/answer [:answer/uuid
+                                               :answer/created_at
+                                               :answer/rating
+                                               :db/id
+                                               :answer/trend]}]}])
+           :in $ ?health_id
+           :where
+           [?e :health/uuid ?health_id]]
+         @db health-id)
+    (map first)))

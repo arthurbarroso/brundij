@@ -7,5 +7,9 @@
      [""
       {:post {:handler (handlers/create-health! database)}}]
      ["/:health-id"
-      {:get {:handler (handlers/get-health-questions database)
-             :parameters {:path {:health-id string?}}}}]]))
+      [""
+       {:get {:handler (handlers/get-health-questions database)
+              :parameters {:path {:health-id string?}}}}]
+      ["/answers"
+       {:get {:handler (handlers/get-health-questions-and-answers database)
+              :parameters {:path {:health-id string?}}}}]]]))
