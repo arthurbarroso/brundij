@@ -1,6 +1,8 @@
 # Brundij
 _Santirix Gremioni's robot_
 
+![Brundij in action](https://user-images.githubusercontent.com/48794198/132617903-a1556a2e-8ec2-45a7-a96c-d77726ab8258.gif)
+
 ### About
 An open source tool to help teams host squad health checks. Written in Clojure and Clojurescript and powered by awesome libraries such as datahike and re-frame.
 
