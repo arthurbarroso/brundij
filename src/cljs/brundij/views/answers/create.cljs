@@ -50,7 +50,7 @@
                      :trend "stable"}
                     {:symbol "⬆️"
                      :title "Trending up"
-                     :tren "up"}])
+                     :trend "up"}])
 
 (defn parse-questions-for-handler [questions]
   (map (fn [q] {:question-id (:uuid q) :rating (:rating q) :trend (:trend q)}) questions))
