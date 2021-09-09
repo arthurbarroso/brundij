@@ -5,6 +5,7 @@
             [brundij.views.answers.create :refer [create-answers]]
             [brundij.views.answers.success :refer [answers-success-view]]
             [brundij.views.checks.create :refer [create-check-view]]
+            [brundij.views.checks.download :refer [download-check-results-view]]
             [brundij.views.questions.create :refer [create-questions-view]]
             [brundij.views.questions.success :refer [success-view]]
             [re-frame.core :refer [dispatch subscribe]]
@@ -36,7 +37,11 @@
    ["answers-success"
     {:name :answers-success
      :view answers-success-view
-     :link-text "Answers success"}]])
+     :link-text "Answers success"}]
+   ["results"
+    {:name :export-results
+     :view download-check-results-view
+     :link-text "Export results"}]])
 
 (def router
   (rf/router routes {:data {:coercion rss/coercion}}))
