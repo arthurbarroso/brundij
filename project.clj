@@ -6,6 +6,8 @@
             :distribution :repo
             :comments "The same license as CLojure"}
 
+  :test-paths ["test/clj" "test/cljs"]
+
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [ring "1.8.1"]
                  [integrant "0.8.0"]

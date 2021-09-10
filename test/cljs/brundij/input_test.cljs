@@ -1,4 +1,4 @@
-(ns cljs.brundij.input-test
+(ns brundij.input-test
   (:require [brundij.components.input :refer [input]]
             [cljs.test :refer-macros [deftest is testing use-fixtures]]
             [dommy.core :as d]

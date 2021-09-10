@@ -1,4 +1,4 @@
-(ns cljs.brundij.button-test
+(ns brundij.button-test
   (:require [brundij.components.button :refer [button]]
             [cljs.test :refer-macros [deftest is testing use-fixtures]]
             [dommy.core :as d]

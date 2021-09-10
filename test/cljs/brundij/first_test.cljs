@@ -1,4 +1,4 @@
-(ns cljs.brundij.first-test
+(ns brundij.first-test
   (:require [cljs.test :refer-macros [deftest is testing]]))
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
