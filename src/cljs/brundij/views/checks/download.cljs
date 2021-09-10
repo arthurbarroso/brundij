@@ -2,8 +2,8 @@
   (:require [brundij.components.button :refer [button]]
             [brundij.components.input :refer [input]]
             [brundij.components.template :refer [template]]
-            [brundij.events :as events]
             [brundij.subs :as subs]
+            [brundij.views.checks.events :as cevts]
             [re-frame.core :as re-frame]
             [stylefy.core :as stylefy :refer [use-style]]))
 
@@ -15,11 +15,11 @@
      [:p (use-style {:max-width "75%"})
       "Type in your health check's id and press the button to download it's results"]
      [input {:value @health-id-input
-             :on-change #(re-frame/dispatch [::events/change-health-id-input %])
+             :on-change #(re-frame/dispatch [::cevts/change-health-id-input %])
              :type "text"
              :placeholder "Your health check's id"
              :extra-styles {:max-width "75%"}}]
-     [button {:on-click #(re-frame/dispatch [::events/fetch-results @health-id-input])
+     [button {:on-click #(re-frame/dispatch [::cevts/fetch-results @health-id-input])
               :text "Download health check's results"
               :disabled false
               :extra-styles {:margin-top "1%"
