@@ -1,6 +1,6 @@
 (ns brundij.views.questions.success
   (:require [brundij.components.template :refer [template]]
-            [brundij.subs :as subs]
+            [brundij.views.questions.subs :as subs]
             [re-frame.core :as re-frame]
             [stylefy.core :as stylefy :refer [use-style]]))
 

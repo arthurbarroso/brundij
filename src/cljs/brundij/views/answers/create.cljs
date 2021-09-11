@@ -2,7 +2,8 @@
   (:require [brundij.components.button :refer [button]]
             [brundij.components.template :refer [template]]
             [brundij.events :as events]
-            [brundij.subs :as subs]
+            [brundij.views.answers.events :as aevts]
+            [brundij.views.answers.subs :as subs]
             [re-frame.core :as re-frame]
             [stylefy.core :as stylefy :refer [use-style]]))
 
@@ -88,7 +89,7 @@
                        {:title (:title option)
                         :on-click
                           #(re-frame/dispatch
-                             [::events/update-question-rating-at-index
+                             [::aevts/update-question-rating-at-index
                               {:rating (:rating option)
                                :index current-index}])})
              [:p (use-style {:margin 0}) (:symbol option)]]))]
@@ -108,7 +109,7 @@
                              (:trend trend))
                {:title (:title trend)
                 :on-click #(re-frame/dispatch
-                             [::events/update-question-trend-at-index
+                             [::aevts/update-question-trend-at-index
                               {:trend (:trend trend)
                                :index current-index}])})
              (:symbol trend)]))]
@@ -121,18 +122,18 @@
            (question-link-styles (> current-index 0))
            {:on-click #(when (> current-index 0)
                          (re-frame/dispatch
-                           [::events/decrement-current-question-index]))})
+                           [::aevts/decrement-current-question-index]))})
          "Prior question"]
         [:p
          (use-style
            (question-link-styles (< current-index max-index))
            {:on-click #(when (< current-index max-index)
                          (re-frame/dispatch
-                           [::events/increment-current-question-index]))})
+                           [::aevts/increment-current-question-index]))})
          "Next question"]]
        [button {:on-click
                   #(re-frame/dispatch
-                     [::events/create-answers
+                     [::aevts/create-answers
                       (parse-questions-for-handler questions)])
                 :text "Submit answers"
                 :extra-styles {:max-width "40%"
