@@ -2,9 +2,9 @@
   (:require [brundij.components.button :refer [button]]
             [brundij.components.input :refer [input]]
             [brundij.components.template :refer [template]]
-            [brundij.events :as events]
             [brundij.styles :refer [font-family]]
-            [brundij.subs :as subs]
+            [brundij.views.questions.events :as qevts]
+            [brundij.views.questions.subs :as subs]
             [re-frame.core :as re-frame]
             [stylefy.core :as stylefy :refer [use-style]]))
 
@@ -32,9 +32,9 @@
          {:cursor "pointer"}))
 
 (defn add-question [question-text]
-  (re-frame/dispatch [::events/add-question {:id (random-uuid)
-                                             :content question-text}])
-  (re-frame/dispatch [::events/change-question-input nil]))
+  (re-frame/dispatch [::qevts/add-question {:id (random-uuid)
+                                            :content question-text}])
+  (re-frame/dispatch [::qevts/change-question-input nil]))
 
 (defn create-questions-view []
   (let [questions (re-frame/subscribe [::subs/questions])
@@ -48,7 +48,7 @@
       questions as you wish"]
      [:div (use-style {:display "flex" :width "70%"})
       [input {:value @question-input
-              :on-change #(re-frame/dispatch [::events/change-question-input %])
+              :on-change #(re-frame/dispatch [::qevts/change-question-input %])
               :disabled false
               :type "text"
               :extra-styles {:width "100%"
@@ -68,10 +68,10 @@
             (use-style
               remove-item-text-style
               {:on-click
-                 #(re-frame/dispatch [::events/remove-question-by-uuid
+                 #(re-frame/dispatch [::qevts/remove-question-by-uuid
                                       (:id question)])})
             "❌"]]))]
-     [button {:on-click #(re-frame/dispatch [::events/create-questions @health-id @questions])
+     [button {:on-click #(re-frame/dispatch [::qevts/create-questions @health-id @questions])
               :text "Create questions"
               :extra-styles {:color "#333"
                              :width "70%"

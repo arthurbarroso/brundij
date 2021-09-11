@@ -2,8 +2,8 @@
   (:require [brundij.components.button :refer [button]]
             [brundij.components.input :refer [input]]
             [brundij.components.template :refer [template]]
-            [brundij.subs :as subs]
             [brundij.views.checks.events :as cevts]
+            [brundij.views.checks.subs :as subs]
             [re-frame.core :as re-frame]
             [stylefy.core :as stylefy :refer [use-style]]))
 
