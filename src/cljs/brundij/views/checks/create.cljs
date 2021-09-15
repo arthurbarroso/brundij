@@ -2,6 +2,7 @@
   (:require [brundij.components.button :refer [button]]
             [brundij.components.input :refer [input]]
             [brundij.components.template :refer [template]]
+            [brundij.events :as events]
             [brundij.views.checks.events :as cevts]
             [brundij.views.checks.subs :as subs]
             [re-frame.core :as re-frame]
@@ -38,4 +39,7 @@
                  :disabled false
                  :extra-styles {:margin-top "1%"
                                 :max-width "75%"
-                                :color "#333"}}]])]))
+                                :color "#333"}}]])
+     [:p (use-style {:max-width "75%" :cursor "pointer"}
+                    {:on-click #(re-frame/dispatch [::events/navigate :export-results])})
+      "Download a health check's results"]]))
