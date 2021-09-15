@@ -2,7 +2,6 @@
   (:require [brundij.answers.routes :as answers]
             [brundij.healths.routes :as healths]
             [brundij.questions.routes :as questions]
-            [clojure.java.io :as io]
             [muuntaja.core :as m]
             [reitit.coercion.spec :as coercion-spec]
             [reitit.dev.pretty :as pretty]
@@ -25,9 +24,6 @@
                        coercion/coerce-response-middleware
                        coercion/coerce-exceptions-middleware]}})
 
-(defn index-handler [_req]
-  {:body (slurp (io/resource "public/index.html"))})
-
 (def swagger-docs
   ["/swagger.json"
    {:get {:no-doc true
@@ -46,12 +42,7 @@
           ["/v1"
            (healths/routes environment)
            (questions/routes environment)
-           (answers/routes environment)]]
-         ["/"
-          {:get index-handler
-           :no-doc true}]
-         ["/js/*" {:no-doc true :handler
-                     (ring/create-resource-handler {:root "public/js" :no-doc true})}]]
+           (answers/routes environment)]]]
         router-config)
       (ring/routes
         (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))

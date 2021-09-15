@@ -20,7 +20,7 @@
                  [ring-cors "0.1.13"]]
 
   :profiles {:uberjar {:aot :all
-                       :resource-paths ["resources"]}
+                       :source-paths ["src/clj"]}
 
              :dev {:source-paths ["dev-resources"
                                   "src/clj" "test/clj"]

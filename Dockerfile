@@ -1,9 +1,7 @@
-FROM theasp/clojurescript-nodejs:latest as build
+FROM clojure:openjdk-8-lein as build
 WORKDIR /app
-COPY package.json shadow-cljs.edn project.clj /app/
-RUN npm install
+COPY project.clj /app/
 COPY ./ /app/
-RUN npm run release
 ENV LEIN_SNAPSHOTS_IN_RELEASE=true
 RUN lein uberjar
 
@@ -16,5 +14,4 @@ ENV DATABASE_USER="$DATABASE_USER"
 ENV DATABASE_PASSWORD="$DATABASE_PASSWORD"
 ENV DATABASE_NAME="$DATABASE_NAME"
 ENV DATABASE_HOST="$DATABSE_HOST"
-RUN echo $DATABASE_HOST
 CMD java -cp brundij.jar clojure.main -m brundij.server
