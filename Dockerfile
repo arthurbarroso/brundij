@@ -14,4 +14,4 @@ ENV DATABASE_USER="$DATABASE_USER"
 ENV DATABASE_PASSWORD="$DATABASE_PASSWORD"
 ENV DATABASE_NAME="$DATABASE_NAME"
 ENV DATABASE_HOST="$DATABSE_HOST"
-CMD java -cp brundij.jar clojure.main -m brundij.server
+CMD java -Xms500M -Xmx500M -cp brundij.jar clojure.main -m brundij.server
