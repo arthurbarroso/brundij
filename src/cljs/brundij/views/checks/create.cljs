@@ -12,6 +12,13 @@
                           :color "#333"
                           :max-width "75%"})
 
+(def custom-link-style {:color "#3b782e"
+                        :cursor "pointer"})
+
+(def link-p-style {:max-width "75%"
+                   :margin 0
+                   :margin-top "1%"})
+
 (defn create-check-view []
   (let [health-id-input (re-frame/subscribe [::subs/health-id-input])
         pre-existing-input? (re-frame/subscribe [::subs/pre-existing-input?])]
@@ -24,22 +31,27 @@
               :text "Create"
               :disabled false
               :extra-styles custom-buttom-style}]
-     [:p (use-style {:max-width "75%" :cursor "pointer"}
-                    {:on-click #(re-frame/dispatch [::cevts/toggle-pre-existing-input?])})
-      "Want to answer a pre-existing health check instead? Click here!"]
-     (when @pre-existing-input?
-       [:<>
-        [input {:value @health-id-input
-                :on-change #(re-frame/dispatch [::cevts/change-health-id-input %])
-                :type "text"
-                :placeholder "Your health check's id"
-                :extra-styles {:max-width "75%"}}]
-        [button {:on-click #(re-frame/dispatch [::events/fetch-health-questions @health-id-input])
-                 :text "Answer existing health check"
-                 :disabled false
-                 :extra-styles {:margin-top "1%"
-                                :max-width "75%"
-                                :color "#333"}}]])
-     [:p (use-style {:max-width "75%" :cursor "pointer"}
+     ; [:p (use-style link-p-style)
+     ;  "Want to answer a pre-existing health check instead? "
+     ;  [:a (use-style
+     ;        custom-link-style
+     ;        {:on-click #(re-frame/dispatch [::cevts/toggle-pre-existing-input?])})
+     ;   "Click here!"]]
+     ; (when @pre-existing-input?
+     ;   [:<>
+     ;    [input {:value @health-id-input
+     ;            :on-change #(re-frame/dispatch [::cevts/change-health-id-input %])
+     ;            :type "text"
+     ;            :placeholder "Your health check's id"
+     ;            :extra-styles {:max-width "75%"}}]
+     ;    [button {:on-click #(re-frame/dispatch [::events/fetch-health-questions @health-id-input])
+     ;             :text "Answer existing health check"
+     ;             :disabled false
+     ;             :extra-styles {:margin-top "1%"
+     ;                            :max-width "75%"
+     ;                            :color "#333"}}]])
+     [:p (use-style link-p-style
                     {:on-click #(re-frame/dispatch [::events/navigate :export-results])})
-      "Download a health check's results"]]))
+      "Want to download a health check's results instead? "
+      [:a (use-style custom-link-style)
+       "Click here!"]]]))

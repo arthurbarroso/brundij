@@ -31,6 +31,7 @@
                                   [circleci/circleci.test "0.5.0"]]}
 
              :cljs {:source-paths ["src/cljs"]
+                    :jvm-opts ["-Xmx6G"]
                     :resource-paths ["dev-resources/resources"]
                     :dependencies [[binaryage/devtools "1.0.2"]
                                    [prismatic/dommy "1.1.0"]

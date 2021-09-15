@@ -17,12 +17,13 @@
                                           :outline-width "0px"}}})
 
 (defn input
-  [{:keys [value on-change type disabled extra-styles placeholder]}]
+  [{:keys [value on-change type disabled extra-styles placeholder on-click]}]
   [:input
    (use-style
      (merge input-style extra-styles)
      {:type type
       :value value
+      :on-click #(on-click)
       :placeholder placeholder
       :disabled disabled
       :on-change #(on-change (-> % .-target .-value))})])
