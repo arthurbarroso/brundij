@@ -36,7 +36,7 @@
   (fn [{:keys [db]} [_ health-id]]
     {:db (assoc db :loading true)
      :http-xhrio {:method :get
-                  :uri (str "http://localhost:4000/v1/healths/" health-id)
+                  :uri (str "https://brundij-api-demo.herokuapp.com/v1/healths/" health-id)
                   :format (ajax/json-request-format)
                   :timeout 8000
                   :response-format (ajax/json-response-format {:keywords? true})

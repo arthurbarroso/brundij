@@ -19,7 +19,7 @@
   (fn [{:keys [db]} [_ health-id]]
     {:db (assoc db :loading true)
      :http-xhrio {:method :get
-                  :uri (str "http://localhost:4000/v1/healths/" health-id "/answers")
+                  :uri (str "https://brundij-api-demo.herokuapp.com/v1/healths/" health-id "/answers")
                   :format (ajax/json-request-format)
                   :timeout 8000
                   :response-format (ajax/json-response-format {:keywords? true})
@@ -59,7 +59,7 @@
   (fn [{:keys [db]} [_ _data]]
     {:db (assoc db :loading true)
      :http-xhrio {:method :post
-                  :uri "http://localhost:4000/v1/healths"
+                  :uri "https://brundij-api-demo.herokuapp.com/v1/healths"
                   :format (ajax/json-request-format)
                   :timeout 8000
                   :response-format (ajax/json-response-format {:keywords? true})

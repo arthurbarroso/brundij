@@ -47,7 +47,7 @@
   (fn [{:keys [db]} [_ answers]]
     {:db (assoc db :loading true)
      :http-xhrio {:method :post
-                  :uri "http://localhost:4000/v1/answers/bulk"
+                  :uri "https://brundij-api-demo.herokuapp.com/v1/answers/bulk"
                   :format (ajax/json-request-format)
                   :timeout 8000
                   :params {:answers answers}
