@@ -21,4 +21,9 @@
                            .-clipboard
                            (.writeText final-url))}
       [input {:value final-url :disabled true
-              :extra-styles {:width "75%"}}]]]))
+              :extra-styles {:width "75%"}}]]
+     [:p (use-style {:max-width "70%"})
+      "Your health check's ID is: "
+      [:p (use-style {:font-weight 700 :margin 0})
+       @health-id]
+      "Please save it as you'll need it to download results"]]))
