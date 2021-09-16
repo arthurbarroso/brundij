@@ -3,6 +3,24 @@
             [brundij.events :as events]
             [re-frame.core :as re-frame]))
 
+(defn download-file!
+  [data content-type file-name]
+  (let [data-blob (js/Blob. #js [data] #js {:type content-type})
+        link (js/document.createElement "a")]
+    (set! (.-href link) (js/URL.createObjectURL data-blob))
+    (.setAttribute link "download" file-name)
+    (js/document.body.appendChild link)
+    (.click link)
+    (js/document.body.removeChild link)))
+
+(re-frame/reg-fx
+  ::download!
+  (fn [response]
+    (download-file!
+      (.stringify js/JSON (clj->js response))
+      "application/json" "results.json")
+    {}))
+
 (re-frame/reg-event-db
   ::change-health-id-input
   (fn [db [_ new-input]]
@@ -25,23 +43,6 @@
                   :response-format (ajax/json-response-format {:keywords? true})
                   :on-success [::fetch-results-success]
                   :on-failure [::fetch-results-failure]}}))
-(defn download-file!
-  [data content-type file-name]
-  (let [data-blob (js/Blob. #js [data] #js {:type content-type})
-        link (js/document.createElement "a")]
-    (set! (.-href link) (js/URL.createObjectURL data-blob))
-    (.setAttribute link "download" file-name)
-    (js/document.body.appendChild link)
-    (.click link)
-    (js/document.body.removeChild link)))
-
-(re-frame/reg-fx
-  ::download!
-  (fn [response]
-    (download-file!
-      (.stringify js/JSON (clj->js response))
-      "application/json" "results.json")
-    {}))
 
 (re-frame/reg-event-fx
   ::fetch-results-success
@@ -51,8 +52,10 @@
 
 (re-frame/reg-event-fx
   ::fetch-results-failure
-  (fn [data]
-    (println {:kind "Failure" :response data})))
+  (fn [_]
+    {::events/show-failure-toast
+       {:toast-content
+          "Failure downloading your health check's results. Please try again later"}}))
 
 (re-frame/reg-event-fx
   ::create-health
@@ -77,4 +80,6 @@
 (re-frame/reg-event-fx
   ::health-creation-failure
   (fn [_]
-    (println "Request failed")))
+    {::events/show-failure-toast
+       {:toast-content
+          "Failure creating your health check. Please try again later"}}))

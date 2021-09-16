@@ -13,7 +13,8 @@
             [reitit.frontend :as rf]
             [reitit.frontend.easy :as rfe]
             [spec-tools.data-spec :as ds]
-            [stylefy.core :refer [use-style]]))
+            [stylefy.core :refer [use-style]]
+            ["react-toastify" :refer (ToastContainer)]))
 
 (def routes
   ["/"
@@ -67,5 +68,7 @@
        (dispatch [::events/fetch-health-questions
                   (-> current-route :parameters :query :id)]))
      (when current-route
-       [:div (use-style app-base-style)
-        [(-> current-route :data :view)]])]))
+       [:<>
+        [:> ToastContainer]
+        [:div (use-style app-base-style)
+         [(-> current-route :data :view)]]])]))
