@@ -63,5 +63,5 @@
 
 (re-frame/reg-event-fx
   ::answer-creation-failure
-  (fn [data]
-    (println {:kind "Failure" :response data})))
+  (fn [_]
+    {::events/show-failure-toast {:toast-content "Failure creating answers. Please try again later."}}))

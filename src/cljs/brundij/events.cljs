@@ -5,7 +5,8 @@
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [re-frame.core :as re-frame]
             [reitit.frontend.controllers :refer [apply-controllers]]
-            [reitit.frontend.easy :refer [push-state]]))
+            [reitit.frontend.easy :refer [push-state]]
+            ["react-toastify" :refer (toast)]))
 
 (re-frame/reg-event-db
   ::initialize-db
@@ -31,6 +32,28 @@
           controllers (apply-controllers (:controllers old-match) new-match)]
       (assoc db :current-route (assoc new-match :controllers controllers)))))
 
+;; toasts
+(re-frame/reg-fx
+  ::show-toast
+  (fn [{:keys [toast-content]}]
+    (toast toast-content)))
+
+(re-frame/reg-fx
+  ::show-success-toast
+  (fn [{:keys [toast-content]}]
+    (.success toast toast-content)))
+
+(re-frame/reg-fx
+  ::show-failure-toast
+  (fn [{:keys [toast-content]}]
+    (.error toast toast-content)))
+
+(re-frame/reg-fx
+  ::show-warn-toast
+  (fn [{:keys [toast-content]}]
+    (.warn toast toast-content)))
+
+;; http
 (re-frame/reg-event-fx
   ::fetch-health-questions
   (fn [{:keys [db]} [_ health-id]]
@@ -59,5 +82,5 @@
 
 (re-frame/reg-event-fx
   ::fetch-health-questions-failure
-  (fn [data]
-    (println {:kind "Failure" :response data})))
+  (fn [_]
+    {::show-failure-toast {:toast-content "Failure fetching your health check's questions"}}))

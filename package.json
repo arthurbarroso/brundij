@@ -1,6 +1,6 @@
 {
 	"name": "brundij",
-  "license": "EPL-1.0",
+	"license": "EPL-1.0",
 	"scripts": {
 		"watch": "npx shadow-cljs watch app",
 		"release": "npx shadow-cljs release app",
@@ -12,7 +12,8 @@
 		"@js-joda/timezone": "2.5.0",
 		"highlight.js": "10.7.2",
 		"react": "17.0.2",
-		"react-dom": "17.0.2"
+		"react-dom": "17.0.2",
+		"react-toastify": "^8.0.2"
 	},
 	"devDependencies": {
 		"karma": "^2.0.0",
