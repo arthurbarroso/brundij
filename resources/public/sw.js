@@ -2645,6 +2645,10 @@ if (workbox) {
   {
     "url": "workbox-config.js",
     "revision": "825bbeab3d92934c518581c254db35b9"
+  },
+  {
+    "url": "https://unpkg.com/react-toastify@8.0.2/dist/ReactToastify.css",
+    "revision": "825bbeab3190301909130990aafasf19"
   }
 ]);
 } else {
