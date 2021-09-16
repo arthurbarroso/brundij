@@ -5,7 +5,12 @@ importScripts(
 if (workbox) {
   console.log(`Yay! Workbox is loaded 🎉`);
 
-  workbox.routing.registerRoute("https://unpkg.com/react-toastify@8.0.2/dist/ReactToastify.css", new workbox.strategies.CacheFirst)
+  workbox.routing.registerRoute(
+    new RegExp('https:.*min\.(css|js)'),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'cdn-cache'
+    })
+  )
 
   workbox.precaching.precacheAndRoute([
   {
