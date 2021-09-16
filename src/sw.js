@@ -5,7 +5,10 @@ importScripts(
 if (workbox) {
   console.log(`Yay! Workbox is loaded 🎉`);
 
-  workbox.precaching.precacheAndRoute([]);
+  workbox.routing.registerRoute("https://unpkg.com/react-toastify@8.0.2/dist/ReactToastify.css", new workbox.stategies.CacheFirst)
+
+  workbox.precaching.precacheAndRoute([
+  ]);
 } else {
   console.log(`Boo! Workbox didn't load 😬`);
 }
