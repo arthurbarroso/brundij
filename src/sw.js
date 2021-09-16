@@ -6,7 +6,7 @@ if (workbox) {
   console.log(`Yay! Workbox is loaded 🎉`);
 
   workbox.routing.registerRoute(
-    new RegExp('https:.*min\.(css|js)'),
+    new RegExp('https:.*\.(css|js)'),
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'cdn-cache'
     })
