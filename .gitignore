@@ -32,3 +32,8 @@ pom.xml.asc
 /startrepl.sh
 /starttest.sh
 /startfront.sh
+
+# graal
+brundij.build_artifacts.txt
+brundij.server
+brundij.server.build_artifacts.txt

@@ -1,17 +1,16 @@
-FROM clojure:openjdk-8-lein as build
-WORKDIR /app
-COPY project.clj /app/
-COPY ./ /app/
-ENV LEIN_SNAPSHOTS_IN_RELEASE=true
-RUN lein uberjar
-
-FROM openjdk:11
-WORKDIR /app
-COPY --from=build /app/target/brundij.jar /app/brundij.jar
+FROM ghcr.io/graalvm/graalvm-ce:latest as native
+COPY ./target/brundij-0.1.0-standalone.jar /brundij.jar
+RUN gu install native-image
+RUN native-image --report-unsupported-elements-at-runtime --initialize-at-build-time --no-server -jar /brundij.jar -H:Name=brundij brundij.server
 ENV PORT=4000
 ENV DATABASE_PORT="$DATABASE_PORT"
 ENV DATABASE_USER="$DATABASE_USER"
 ENV DATABASE_PASSWORD="$DATABASE_PASSWORD"
 ENV DATABASE_NAME="$DATABASE_NAME"
 ENV DATABASE_HOST="$DATABSE_HOST"
-CMD java -Xms500M -Xmx500M -cp brundij.jar clojure.main -m brundij.server
+CMD ["./brundij.server", "-Xmx490m"]
+
+
+#FROM gcr.io/distroless/base:latest
+#WORKDIR /app
+#COPY --from=native /app/brundij.server app/brundij.server

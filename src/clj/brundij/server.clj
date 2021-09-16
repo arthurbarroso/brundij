@@ -3,7 +3,8 @@
             [brundij.router :as router]
             [environ.core :refer [env]]
             [integrant.core :as ig]
-            [ring.adapter.jetty :as jetty]))
+            [ring.adapter.jetty :as jetty])
+  (:gen-class))
 
 (defn app
   [environment]

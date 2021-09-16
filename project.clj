@@ -8,8 +8,7 @@
 
   :test-paths ["test/clj" "test/cljs"]
 
-  :dependencies [[org.clojure/clojure "1.10.1"]
-                 [ring "1.8.1"]
+  :dependencies [[ring "1.8.1"]
                  [integrant "0.8.0"]
                  [environ "1.2.0"]
                  [metosin/reitit "0.5.5"]
@@ -20,6 +19,7 @@
                  [ring-cors "0.1.13"]]
 
   :profiles {:uberjar {:aot :all
+                       :main brundij.server
                        :source-paths ["src/clj"]}
 
              :dev {:source-paths ["dev-resources"
@@ -54,5 +54,4 @@
             "tests" ["run" "-m" "circleci.test"]
             "retest" ["run" "-m" "circleci.test.retest"]}
 
-  :test-selectors {:integration :integration}
-  :uberjar-name "brundij.jar")
+  :test-selectors {:integration :integration})
