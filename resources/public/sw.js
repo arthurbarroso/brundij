@@ -8,7 +8,11 @@ if (workbox) {
   workbox.precaching.precacheAndRoute([
   {
     "url": "index.html",
-    "revision": "0bb118d76ddd33c96677614b32e06ae8"
+    "revision": "c6f0f1189311df13f9d2651a91dd3339"
+  },
+  {
+    "url": "js/app.js",
+    "revision": "adc844aa6c7fc0580254259bf6179825"
   },
   {
     "url": "js/cljs-runtime/ajax.core.js",
@@ -2632,7 +2636,7 @@ if (workbox) {
   },
   {
     "url": "js/manifest.edn",
-    "revision": "6b7a54646e315abc42611e82fa289fba"
+    "revision": "0b931d605f1038f4de0fce735fb1aa15"
   },
   {
     "url": "manifest.json",
@@ -2640,7 +2644,7 @@ if (workbox) {
   },
   {
     "url": "workbox-config.js",
-    "revision": "166cb7a947ce6a55698160b612cdbf4c"
+    "revision": "825bbeab3d92934c518581c254db35b9"
   }
 ]);
 } else {
