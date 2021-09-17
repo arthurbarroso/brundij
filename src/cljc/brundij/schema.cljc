@@ -61,7 +61,9 @@
        :db/cardinality :db.cardinality/one}]
      :cljs 
        {:health/uuid {:db/unique :db.unique/identity}
-        :health/question {:db/valueType :db.type/ref}
+        :health/question {:db/valueType :db.type/ref
+                          :db/cardinality :db.cardinality/many}
         :question/uuid {:db/unique :db.unique/identity}
-        :question/answer {:db/valueType :db.type/ref}
+        :question/answer {:db/valueType :db.type/ref
+                          :db/cardinality :db.cardinality/many}
         :answer/uuid {:db/unique :db.unique/identity}}))
