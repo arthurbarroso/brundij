@@ -28,3 +28,8 @@
   (if (seq? data)
     (d/transact database data)
     (d/transact database [data])))
+
+(defn get-health-checks []
+  (d/q '[:find (pull ?e [* {:question/uuid [:question/content]}])
+         :where [?e :health/uuid _]]
+       @database))

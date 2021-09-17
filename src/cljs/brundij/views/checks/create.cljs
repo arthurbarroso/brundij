@@ -19,7 +19,9 @@
                    :margin-top "1%"})
 
 (defn create-check-view []
-  (let [is-online? (re-frame/subscribe [::subs/is-online?])]
+  (let [is-online? (re-frame/subscribe [::subs/is-online?])
+        healths (re-frame/subscribe [::subs/get-local-health-checks])]
+    (println @healths)
     [template
      [:h3 (use-style {:font-size "3rem" :margin 0}) "Create a new health check 🍀"]
      [:p (use-style {:max-width "75%"})

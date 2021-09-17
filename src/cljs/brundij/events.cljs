@@ -108,8 +108,3 @@
   ::fetch-health-questions-failure
   (fn [_]
     {::show-failure-toast {:toast-content "Failure fetching your health check's questions"}}))
-
-(re-frame/reg-fx
-  ::transact!
-  (fn [item]
-    (ds/transact! item)))

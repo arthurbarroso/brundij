@@ -1,5 +1,7 @@
 (ns brundij.subs
-  (:require [re-frame.core :as re-frame]))
+  (:require [brundij.ds :as ds]
+            [re-frame.core :as re-frame]
+            [reagent.ratom :as ratom]))
 
 (re-frame/reg-sub
   ::current-route
@@ -15,3 +17,9 @@
   ::is-online?
   (fn [db]
     (:is-online? db)))
+
+;; raw subs for ds
+(re-frame/reg-sub-raw
+  ::get-local-health-checks
+  (fn [_]
+    (ratom/make-reaction ds/get-health-checks)))
