@@ -19,5 +19,5 @@
     (when-not (d/database-exists? config)
       (create-database config))
     (let [connection (d/connect config)]
-      (d/transact connection schema)
+      (d/transact connection (schema))
       connection)))

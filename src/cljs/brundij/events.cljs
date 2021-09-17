@@ -26,12 +26,6 @@
   (fn [_ [_ data]]
     {::transact! data}))
 
-;; online check
-(re-frame/reg-event-db
-  ::set-is-online
-  (fn [db [_ is-online?]]
-    (assoc db :is-online? is-online?)))
-
 ;; Reitit events and effects
 (re-frame/reg-event-fx
   ::navigate
@@ -71,6 +65,18 @@
   (fn [{:keys [toast-content]}]
     (.warn toast toast-content)))
 
+;; online check
+(re-frame/reg-event-fx
+  ::set-is-online
+  (fn [{:keys [db]} [_ is-online?]]
+    (if (true? is-online?)
+      {:db (assoc db :is-online? is-online?)}
+      {:db (assoc db :is-online? is-online?)
+       ::show-warn-toast {:toast-content "Looks like you're offline. 
+                                         All operations will be made 
+                                         locally and sent to the server 
+                                         whenever you get online again."}})))
+
 ;; http
 (re-frame/reg-event-fx
   ::fetch-health-questions
@@ -102,3 +108,8 @@
   ::fetch-health-questions-failure
   (fn [_]
     {::show-failure-toast {:toast-content "Failure fetching your health check's questions"}}))
+
+(re-frame/reg-fx
+  ::transact!
+  (fn [item]
+    (ds/transact! item)))

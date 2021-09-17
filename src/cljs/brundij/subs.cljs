@@ -12,6 +12,6 @@
     (:loading db)))
 
 (re-frame/reg-sub
-  ::loading
+  ::is-online?
   (fn [db]
     (:is-online? db)))

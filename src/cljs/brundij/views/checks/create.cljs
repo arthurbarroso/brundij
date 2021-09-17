@@ -1,10 +1,9 @@
 (ns brundij.views.checks.create
   (:require [brundij.components.button :refer [button]]
-            [brundij.components.input :refer [input]]
             [brundij.components.template :refer [template]]
             [brundij.events :as events]
+            [brundij.subs :as subs]
             [brundij.views.checks.events :as cevts]
-            [brundij.views.checks.subs :as subs]
             [re-frame.core :as re-frame]
             [stylefy.core :as stylefy :refer [use-style]]))
 
@@ -20,8 +19,7 @@
                    :margin-top "1%"})
 
 (defn create-check-view []
-  (let [health-id-input (re-frame/subscribe [::subs/health-id-input])
-        pre-existing-input? (re-frame/subscribe [::subs/pre-existing-input?])]
+  (let [is-online? (re-frame/subscribe [::subs/is-online?])]
     [template
      [:h3 (use-style {:font-size "3rem" :margin 0}) "Create a new health check 🍀"]
      [:p (use-style {:max-width "75%"})
@@ -50,8 +48,10 @@
      ;             :extra-styles {:margin-top "1%"
      ;                            :max-width "75%"
      ;                            :color "#333"}}]])
-     [:p (use-style link-p-style
-                    {:on-click #(re-frame/dispatch [::events/navigate :export-results])})
-      "Want to download a health check's results instead? "
-      [:a (use-style custom-link-style)
-       "Click here!"]]]))
+     (when (true? @is-online?)
+       [:p (use-style link-p-style
+                      {:on-click #(re-frame/dispatch
+                                    [::events/navigate :export-results])})
+        "Want to download a health check's results instead? "
+        [:a (use-style custom-link-style)
+         "Click here!"]])]))

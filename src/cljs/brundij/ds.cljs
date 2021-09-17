@@ -1,9 +1,10 @@
 (ns brundij.ds
-  (:require [datascript.core :as d]
+  (:require [brundij.schema :refer [schema]]
+            [datascript.core :as d]
             [datascript.transit :as dt]
             [reagent.core :as r]))
 
-(defonce database (r/atom (d/empty-db)
+(defonce database (r/atom (d/empty-db (schema))
                           :meta {:listeners (atom {})}))
 
 (defn persist!

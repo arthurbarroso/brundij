@@ -1,6 +1,8 @@
 (ns brundij.views.checks.events
   (:require [ajax.core :as ajax]
+            [brundij.date :as date]
             [brundij.events :as events]
+            [brundij.uuids :as uuids]
             [re-frame.core :as re-frame]))
 
 (defn download-file!
@@ -58,16 +60,29 @@
           "Failure downloading your health check's results. Please try again later"}}))
 
 (re-frame/reg-event-fx
+  ::add-health-check-to-ds
+  (fn [{:keys [db]} [_ _]]
+    (let [uuid (uuids/generate-uuid)]
+      {:db (assoc db :health-uuid uuid)
+       ::events/transact! {:db/id -1
+                           :health/uuid uuid
+                           :health/created_at (date/get-inst)}
+       ::events/navigate! [:questions]})))
+
+(re-frame/reg-event-fx
   ::create-health
   (fn [{:keys [db]} [_ _data]]
-    {:db (assoc db :loading true)
-     :http-xhrio {:method :post
-                  :uri "https://brundij-api-demo.herokuapp.com/v1/healths"
-                  :format (ajax/json-request-format)
-                  :timeout 8000
-                  :response-format (ajax/json-response-format {:keywords? true})
-                  :on-success [::health-creation-success]
-                  :on-failure [::health-creation-failure]}}))
+    (if (true? (:is-online? db))
+      {:db (assoc db :loading true)
+       :http-xhrio {:method :post
+                    :uri "https://brundij-api-demo.herokuapp.com/v1/healths"
+                    :format (ajax/json-request-format)
+                    :timeout 8000
+                    :response-format (ajax/json-response-format {:keywords? true})
+                    :on-success [::health-creation-success]
+                    :on-failure [::health-creation-failure]}}
+      {:db (assoc db :loading true)
+       :dispatch [::add-health-check-to-ds]})))
 
 (re-frame/reg-event-fx
   ::health-creation-success
