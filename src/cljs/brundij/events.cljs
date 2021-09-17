@@ -84,3 +84,8 @@
   ::fetch-health-questions-failure
   (fn [_]
     {::show-failure-toast {:toast-content "Failure fetching your health check's questions"}}))
+
+(re-frame/reg-event-db
+  ::set-is-online
+  (fn [db [_ is-online?]]
+    (assoc db :is-online? is-online?)))

@@ -10,3 +10,8 @@
   ::loading
   (fn [db]
     (:loading db)))
+
+(re-frame/reg-sub
+  ::loading
+  (fn [db]
+    (:is-online? db)))
