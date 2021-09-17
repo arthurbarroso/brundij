@@ -17,6 +17,9 @@
       }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/react-toastify@8.0.2/dist/ReactToastify.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <title>Brundij</title>
   </head>
   <body>
@@ -25,18 +28,18 @@
     </noscript>
     <div id="app"></div>
     <script src="/js/app.js"></script>
-    <!-- <script> -->
-    <!--   if ('serviceWorker' in navigator) { -->
-    <!--     window.addEventListener('load', () => { -->
-    <!--       navigator.serviceWorker.register('/sw.js') -->
-    <!--         .then(registration => { -->
-    <!--           console.log('Service Worker registered! Scope: ' + registration.scope); -->
-    <!--         }) -->
-    <!--         .catch(err => { -->
-    <!--           console.log('Service Worker registration failed: ' + err); -->
-    <!--         }); -->
-    <!--     }); -->
-    <!--   } -->
-    <!-- </script> -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('Service Worker registered! Scope: ' + registration.scope);
+            })
+            .catch(err => {
+              console.log('Service Worker registration failed: ' + err);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

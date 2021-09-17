@@ -1,0 +1,1 @@
+{"version":3,"sources":["brundij/date.cljc"],"mappings":";AAGA,wBAAA,xBAAMA;AAAN,AACE,OAACC,kDAAO,AAACC","names":["brundij.date/get-inst","tick.alpha.api.inst","tick.alpha.api/now"],"sourcesContent":["(ns brundij.date\n  (:require [tick.alpha.api :as t]))\n\n(defn get-inst []\n  (t/inst (t/now)))\n"]}
