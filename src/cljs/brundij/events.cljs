@@ -1,6 +1,7 @@
 (ns brundij.events
   (:require [ajax.core :as ajax]
             [brundij.db :as db]
+            [brundij.ds :as ds]
             [day8.re-frame.http-fx]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [re-frame.core :as re-frame]
@@ -13,6 +14,23 @@
   #_{:clj-kondo/ignore [:unresolved-symbol]}
   (fn-traced [_ _]
              db/default-db))
+
+;; ds
+(re-frame/reg-fx
+  ::transact!
+  (fn [data]
+    (ds/transact! data)))
+
+(re-frame/reg-event-fx
+  ::write-to-ds
+  (fn [_ [_ data]]
+    {::transact! data}))
+
+;; online check
+(re-frame/reg-event-db
+  ::set-is-online
+  (fn [db [_ is-online?]]
+    (assoc db :is-online? is-online?)))
 
 ;; Reitit events and effects
 (re-frame/reg-event-fx
@@ -84,8 +102,3 @@
   ::fetch-health-questions-failure
   (fn [_]
     {::show-failure-toast {:toast-content "Failure fetching your health check's questions"}}))
-
-(re-frame/reg-event-db
-  ::set-is-online
-  (fn [db [_ is-online?]]
-    (assoc db :is-online? is-online?)))

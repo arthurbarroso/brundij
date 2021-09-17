@@ -1,5 +1,6 @@
 (ns brundij.core
   (:require [brundij.config :as config]
+            [brundij.ds :refer [initialize-ds!]]
             [brundij.events :as events]
             [brundij.router :refer [init-routes! router-component]]
             [brundij.styles :refer [initialize-styles]]
@@ -29,6 +30,7 @@
 
 (defn init []
   (init-routes!)
+  (initialize-ds!)
   (re-frame/dispatch-sync [::events/initialize-db])
   (re-frame/dispatch-sync [::events/set-is-online (get-current-online-status!)])
   (initialize-styles)
