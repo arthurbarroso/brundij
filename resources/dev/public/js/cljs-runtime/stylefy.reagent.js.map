@@ -1,1 +1,0 @@
-{"version":3,"sources":["stylefy/reagent.cljs"],"mappings":";AAGA,uBAAA,vBAAMA;AAAN,AACE,OAACC","names":["stylefy.reagent/init","stylefy.reagent.dom/->ReagentDom"],"sourcesContent":["(ns stylefy.reagent\n  (:require [stylefy.reagent.dom :as stylefy-reagent-dom]))\n\n(defn init []\n  (stylefy-reagent-dom/->ReagentDom))"]}

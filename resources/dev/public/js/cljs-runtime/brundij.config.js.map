@@ -1,1 +1,0 @@
-{"version":3,"sources":["brundij/config.cljs"],"mappings":";AAEA,AAAKA,8BACMC","names":["brundij.config/debug?","js/goog.DEBUG"],"sourcesContent":["(ns brundij.config)\n\n(def debug?\n  ^boolean goog.DEBUG)\n"]}
