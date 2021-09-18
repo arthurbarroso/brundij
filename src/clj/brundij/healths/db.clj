@@ -43,4 +43,11 @@
     (map first)))
 
 (defn create-health-with-questions! [db health-with-questions]
-  (d/transact db [health-with-questions]))
+  (d/transact db [health-with-questions])
+  (d/pull
+    @db
+    '[* {:health/question [:question/uuid
+                           :question/created_at
+                           :question/content
+                           :db/id]}]
+    [:health/uuid (:health/uuid health-with-questions)]))

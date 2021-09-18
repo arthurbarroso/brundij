@@ -22,6 +22,6 @@
 
 (defn create-health-with-questions! [database]
   (fn [request]
-    (let [incoming-health (-> request :parameters :body :health)
+    (let [incoming-health (-> request :parameters :body)
           health (db/create-health-with-questions! database incoming-health)]
-      (rr/created "" {:ok true}))))
+      (rr/created "" health))))

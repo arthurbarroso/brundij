@@ -1,9 +1,13 @@
 (ns user
-  (:require [brundij.server]
+  (:require [brundij.date :as date]
+            [brundij.server]
+            [brundij.uuids :as uuids]
             [environ.core :refer [env]]
             [hawk.core :as hawk]
             [integrant.core :as ig]
-            [integrant.repl :as ig-repl]))
+            [integrant.repl :as ig-repl]
+            [integrant.repl.state :as state]
+            [muuntaja.core :as m]))
 
 (def config-map
   {:server/jetty {:handler (ig/ref :brundij/app)
@@ -18,6 +22,7 @@
 (ig-repl/set-prep!
   (fn [] config-map))
 
+(def app (-> state/system :brundij/app))
 (def go ig-repl/go)
 (def reset ig-repl/reset)
 (def reset-all ig-repl/reset-all)
@@ -38,6 +43,19 @@
                  :filter clojure-file?
                  :handler auto-reset-handler}]))
 
+(def health-with-question
+  {:health/uuid (uuids/generate-uuid)
+   :health/created_at (date/get-inst)
+   :health/question [{:question/uuid (uuids/generate-uuid)
+                      :question/content "Test question"
+                      :question/created_at (date/get-inst)}]})
+
 (comment
   (go)
+  (reset-all)
+  (->
+    (app {:request-method :post
+          :uri "/v1/health-with-questions"
+          :body-params health-with-question})
+    (m/decode-response-body))
   (auto-reset))
