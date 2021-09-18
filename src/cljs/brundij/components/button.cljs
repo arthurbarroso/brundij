@@ -15,9 +15,10 @@
                     ::stylefy/mode {:hover {:box-shadow "0 0 5pt 2pt #ededed"
                                             :outline-width "0px"}}})
 
-(defn button [{:keys [on-click text disabled extra-styles]}]
+(defn button [{:keys [on-click text disabled extra-styles title]}]
   [:button (use-style (merge button-styles extra-styles)
                       {:type "button"
                        :disabled disabled
+                       :title title
                        :on-click #(on-click)})
    text])

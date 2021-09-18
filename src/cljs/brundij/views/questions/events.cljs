@@ -1,5 +1,7 @@
 (ns brundij.views.questions.events
   (:require [ajax.core :as ajax]
+            [brundij.config :as config]
+            [brundij.date :as date]
             [brundij.events :as events]
             [brundij.uuids :as uuids]
             [datascript.core :as d]
@@ -32,6 +34,7 @@
            (fn [index item]
              [{:question/uuid (uuids/generate-uuid)
                :question/content (:content item)
+               :question/created_at (date/get-inst)
                :db/id (nth question-ids index)}
               {:db/id [:health/uuid health-id]
                :health/question (nth question-ids index)}]))
@@ -49,7 +52,7 @@
     (if (true? (:is-online? db))
       {:db (assoc db :loading true)
        :http-xhrio {:method :post
-                    :uri (str "https://brundij-api-demo.herokuapp.com/v1/questions/bulk/" health-id)
+                    :uri (str config/url "/v1/questions/bulk/" health-id)
                     :format (ajax/json-request-format)
                     :timeout 8000
                     :params {:questions questions}

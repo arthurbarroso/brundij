@@ -2,16 +2,15 @@
   (:require [brundij.components.input :refer [input]]
             [brundij.components.template :refer [template]]
             [brundij.subs :as bsubs]
+            [brundij.utils :as utils]
             [brundij.views.questions.subs :as subs]
-            [clojure.string :refer [replace]]
             [re-frame.core :as re-frame]
             [stylefy.core :as stylefy :refer [use-style]]))
 
 (defn success-view []
   (let [health-id (re-frame/subscribe [::subs/health-uuid])
         is-online? (re-frame/subscribe [::bsubs/is-online?])
-        uri (.-href js/window.location)
-        final-url (replace uri "/success" (str "/?id=" @health-id))]
+        final-url (utils/mount-shareable-link @health-id)]
     [template
      [:h3 (use-style {:font-size "3rem" :margin 0})
       "Success! 🍏"]

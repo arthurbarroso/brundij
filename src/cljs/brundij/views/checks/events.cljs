@@ -1,5 +1,6 @@
 (ns brundij.views.checks.events
   (:require [ajax.core :as ajax]
+            [brundij.config :as config]
             [brundij.date :as date]
             [brundij.events :as events]
             [brundij.uuids :as uuids]
@@ -39,7 +40,7 @@
   (fn [{:keys [db]} [_ health-id]]
     {:db (assoc db :loading true)
      :http-xhrio {:method :get
-                  :uri (str "https://brundij-api-demo.herokuapp.com/v1/healths/" health-id "/answers")
+                  :uri (str config/url "/v1/healths/" health-id "/answers")
                   :format (ajax/json-request-format)
                   :timeout 8000
                   :response-format (ajax/json-response-format {:keywords? true})
@@ -75,7 +76,7 @@
     (if (true? (:is-online? db))
       {:db (assoc db :loading true)
        :http-xhrio {:method :post
-                    :uri "https://brundij-api-demo.herokuapp.com/v1/healths"
+                    :uri (str config/url "/v1/healths")
                     :format (ajax/json-request-format)
                     :timeout 8000
                     :response-format (ajax/json-response-format {:keywords? true})

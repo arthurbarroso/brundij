@@ -1,7 +1,9 @@
 (ns brundij.events
   (:require [ajax.core :as ajax]
+            [brundij.config :as config]
             [brundij.db :as db]
             [brundij.ds :as ds]
+            [brundij.utils :as utils]
             [day8.re-frame.http-fx]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [re-frame.core :as re-frame]
@@ -21,10 +23,15 @@
   (fn [data]
     (ds/transact! data)))
 
+(re-frame/reg-fx
+  ::retract-health-entity!
+  (fn [uuid]
+    (ds/retract-health-entity! uuid)))
+
 (re-frame/reg-event-fx
-  ::write-to-ds
-  (fn [_ [_ data]]
-    {::transact! data}))
+  ::retract-health
+  (fn [_ [_ uuid]]
+    {::retract-health-entity! uuid}))
 
 ;; Reitit events and effects
 (re-frame/reg-event-fx
@@ -83,7 +90,7 @@
   (fn [{:keys [db]} [_ health-id]]
     {:db (assoc db :loading true)
      :http-xhrio {:method :get
-                  :uri (str "https://brundij-api-demo.herokuapp.com/v1/healths/" health-id)
+                  :uri (str config/url "/v1/healths/" health-id)
                   :format (ajax/json-request-format)
                   :timeout 8000
                   :response-format (ajax/json-response-format {:keywords? true})
@@ -108,3 +115,35 @@
   ::fetch-health-questions-failure
   (fn [_]
     {::show-failure-toast {:toast-content "Failure fetching your health check's questions"}}))
+
+(re-frame/reg-event-fx
+  ::publish-local-health
+  (fn [{:keys [db]} [_ data]]
+    (let [health-uuid (:health/uuid data)]
+      {:db (assoc db :loading true)
+       :http-xhrio {:method :post
+                    :uri (str config/url "/v1/health-with-questions")
+                    :format (ajax/transit-request-format)
+                    :params (utils/dissoc-local-health-db-ids data)
+                    :timeout 8000
+                    :response-format (ajax/json-response-format {:keywords? true})
+                    :on-success [::local-health-publish-success :health-uuid health-uuid]
+                    :on-failure [::local-health-failure]}})))
+
+(re-frame/reg-event-fx
+  ::local-health-publish-success
+  (fn [{:keys [db]} [_ _res health-uuid]]
+    {:db (assoc db
+           :loading false)
+     ::retract-health-entity! health-uuid
+     ::show-success-toast
+       {:toast-content
+          (str "Health check with UUID " health-uuid " successfully 
+        published and ready to be answered by navigating to " (utils/mount-shareable-link health-uuid))}}))
+
+(re-frame/reg-event-fx
+  ::local-health-publish-failure
+  (fn [_]
+    {::show-failure-toast
+       {:toast-content
+          "Failure creating your health check. Please try again later"}}))

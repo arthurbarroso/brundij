@@ -29,7 +29,12 @@
     (d/transact database data)
     (d/transact database [data])))
 
+(defn retract-health-entity! [uuid]
+  (d/transact database [[:db.fn/retractEntity [:health/uuid uuid]]]))
+
 (defn get-health-checks []
-  (d/q '[:find (pull ?e [* {:question/uuid [:question/content]}])
+  (d/q '[:find (pull ?e [* {:health/question [:question/uuid
+                                              :question/created_at
+                                              :question/content]}])
          :where [?e :health/uuid _]]
        @database))

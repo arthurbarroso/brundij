@@ -60,10 +60,13 @@
        :db/valueType :db.type/instant
        :db/cardinality :db.cardinality/one}]
      :cljs 
-       {:health/uuid {:db/unique :db.unique/identity}
+       {:health/uuid {:db/unique :db.unique/identity
+                      :db/type :db.type/uuid}
         :health/question {:db/valueType :db.type/ref
                           :db/cardinality :db.cardinality/many}
-        :question/uuid {:db/unique :db.unique/identity}
+        :question/uuid {:db/unique :db.unique/identity
+                        :db/type :db.type/uuid}
         :question/answer {:db/valueType :db.type/ref
                           :db/cardinality :db.cardinality/many}
-        :answer/uuid {:db/unique :db.unique/identity}}))
+        :answer/uuid {:db/unique :db.unique/identity
+                      :db/type :db.type/uuid}}))
