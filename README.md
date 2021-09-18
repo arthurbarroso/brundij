@@ -7,7 +7,7 @@ _Santirix Gremioni's robot, from Isaac's Asimov The Robots of Dawn_
 An open source tool to help teams host squad health checks. Written in Clojure and Clojurescript and powered by awesome libraries such as datahike and re-frame. An attempt on having a working, self-hosted and easy to use squad health check platform. Brundij tries to handle a few main features:
 
 - Users needed to be able to create health checks and share those using it's UUID
-- Health checks could be assigned questions (users could choose whether to use the pre-defined one or mix them with custom ones)
+- Health checks could be assigned questions (users could choose whether to use the pre-defined ones or mix them with custom ones)
 - Users should be able to answer a health check's questions by using the health check's UUID
 
 I also ended up deciding that I wanted users to be able to interact with the application while offline. In other words, this means:
@@ -53,6 +53,8 @@ It is also possible to create release/production builds of the server and the ap
 ```bash
 # for the server
 lein uberjar
+# a docker image can also be built for the server
+docker build .
 # for the client
 yarn release
 yarn workbox injectManifest workbox.config.js
