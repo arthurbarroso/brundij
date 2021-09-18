@@ -25,4 +25,5 @@
    :pre-existing-input? false
    :pre-existing-questions []
    :current-question-index 0
-   :results nil})
+   :results nil
+   :is-online? true})

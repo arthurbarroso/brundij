@@ -20,17 +20,19 @@
                  [ring-cors "0.1.13"]]
 
   :profiles {:uberjar {:aot :all
-                       :source-paths ["src/clj"]}
+                       :source-paths ["src/clj" "src/cljc"]}
 
              :dev {:source-paths ["dev-resources"
-                                  "src/clj" "test/clj"]
+                                  "src/clj"
+                                  "src/cljc"
+                                  "test/clj"]
                    :resource-paths ["dev-resources/resources" "resources"]
                    :dependencies [[ring/ring-mock "0.4.0"]
                                   [hawk "0.2.11"]
                                   [integrant/repl "0.3.1"]
                                   [circleci/circleci.test "0.5.0"]]}
 
-             :cljs {:source-paths ["src/cljs"]
+             :cljs {:source-paths ["src/cljs" "src/cljc"]
                     :jvm-opts ["-Xmx6G"]
                     :resource-paths ["dev-resources/resources"]
                     :dependencies [[binaryage/devtools "1.0.2"]

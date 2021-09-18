@@ -41,3 +41,6 @@
            [?e :health/uuid ?health_id]]
          @db health-id)
     (map first)))
+
+(defn create-health-with-questions! [db health-with-questions]
+  (d/transact db [health-with-questions]))

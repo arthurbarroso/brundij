@@ -4,4 +4,5 @@ module.exports = {
     "**/*.{html,js,edn,json}"
   ],
   "swDest": "resources/public/sw.js",
-  "swSrc": "sw.js"};
+  "swSrc": "sw.js"
+};

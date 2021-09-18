@@ -4,6 +4,10 @@
 /resources/public/js/*.js
 /resources/public/js/cljs-runtime/
 /resources/public/js/manifest.edn
+/resources/dev/public/js
+/resouces/test/public/js
+/resources/dev/public/js/*.js
+/resources/test/public/js*.js
 /target/
 /*-init.clj
 /*.log

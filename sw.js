@@ -12,6 +12,13 @@ if (workbox) {
     })
   )
 
+  workbox.routing.registerRoute(
+    new RegExp('https://fonts.*'),
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: 'cdn-font-cache'
+    })
+  )
+
   workbox.precaching.precacheAndRoute([
   ]);
 } else {
