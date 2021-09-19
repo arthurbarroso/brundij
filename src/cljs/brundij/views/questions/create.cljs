@@ -9,7 +9,7 @@
             [stylefy.core :as stylefy :refer [use-style]]))
 
 (def list-style {:list-style "none"
-                 :height "56%"
+                 :height "48%"
                  :width "70%"
                  :margin-top "3%"
                  :overflow "auto"
@@ -75,6 +75,5 @@
               :text "Create questions"
               :extra-styles {:color "#333"
                              :width "70%"
-                             :margin-top "1%"
                              :font-weight 700}
               :disabled false}]]))

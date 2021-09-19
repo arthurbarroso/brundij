@@ -123,7 +123,7 @@
            {:on-click #(when (> current-index 0)
                          (re-frame/dispatch
                            [::aevts/decrement-current-question-index]))})
-         "Prior question"]
+         "Previous question"]
         [:p
          (use-style
            (question-link-styles (< current-index max-index))
