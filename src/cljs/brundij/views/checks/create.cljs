@@ -1,5 +1,6 @@
 (ns brundij.views.checks.create
   (:require [brundij.components.button :refer [button]]
+            [brundij.components.link :refer [link]]
             [brundij.components.table :refer [healths-table]]
             [brundij.components.template :refer [template]]
             [brundij.events :as events]
@@ -10,45 +11,41 @@
 
 (def custom-buttom-style {:height "60px"
                           :color "#333"
-                          :width "100%"
-                          :max-width "75%"})
+                          :width "100%"})
 
-(def custom-link-style {:color "#3b782e"
-                        :cursor "pointer"})
-
-(def link-p-style {:max-width "75%"
-                   :margin 0
-                   :margin-top "1%"})
+(def link-p-style {:margin 0})
 
 (defn create-check-view []
   (let [is-online? (re-frame/subscribe [::subs/is-online?])
         local-health-checks (re-frame/subscribe [::subs/get-local-health-checks])]
     [template
-     [:h3 (use-style {:font-size "3rem" :margin 0}) "Create a new health check 🍀"]
-     [:p (use-style {:max-width "75%"})
+     [:div (use-style {:margin-top "10%"})]
+     [:h3 (use-style {:font-size "3rem" :margin 0})
+      "Create a new health check in two steps only! 🍀"]
+     [:p
       "Get started on running health checks by creating one. 
-           It is as simple as clicking the button below. It is easy and fast!"]
+        It is as simple as clicking the button below. It is easy and fast!"]
      [button {:on-click #(re-frame/dispatch [::cevts/create-health])
               :text "Create"
               :disabled false
               :extra-styles custom-buttom-style}]
      (when (true? @is-online?)
        [:<>
-        [:p (use-style link-p-style
-                       {:on-click #(re-frame/dispatch
-                                     [::events/navigate :export-results])})
+        [:p (use-style (merge link-p-style {:margin-top "1%"}))
          "Want to download a health check's results instead? "
-         [:a (use-style custom-link-style)
-          "Click here!"]]
-        [:p (use-style link-p-style
-                       {:on-click #(re-frame/dispatch
-                                     [::events/navigate :list-checks])})
+         [link
+          {:on-click #(re-frame/dispatch [::events/navigate :export-results])
+           :text "Click here!"
+           :title "Navigate to export resutls page"}]]
+        [:p (use-style link-p-style)
          "Want to list checks you have published instead? "
-         [:a (use-style custom-link-style)
-          "Click here!"]]])
+         [link
+          {:on-click #(re-frame/dispatch [::events/navigate :list-checks])
+           :text "Click here!"
+           :title "Navigate to my health check list"}]]])
      (when (> (count @local-health-checks) 0)
-       [:div (use-style {:max-width "85%"})
+       [:div
         [:h4 "Local health checks"]
         [:p "These health checks haven't been pushed to the web yet. 
-                You can choose to publish or delete them."]
+                  You can choose to publish or delete them."]
         [healths-table]])]))

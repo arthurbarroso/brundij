@@ -3,8 +3,8 @@
             [stylefy.core :as stylefy :refer [use-style]]))
 
 (def input-style {:color "#333"
-                  :padding "0.8%"
-                  :border-radius "2%"
+                  :padding "1%"
+                  :border-radius "12px"
                   :font-size "1rem"
                   :border "solid 1.5px #D3D3D3"
                   :font-weight 500

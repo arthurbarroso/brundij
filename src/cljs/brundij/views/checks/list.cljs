@@ -7,19 +7,19 @@
             [stylefy.core :as stylefy :refer [use-style]]))
 
 (def list-style {:list-style "none"
-                 :height "56%"
-                 :width "70%"
+                 :height "48%"
+                 :max-height "48%"
                  :margin-top "3%"
                  :overflow "auto"
                  :padding 0})
 
-(def list-item-style {:background "#ebf5ee"
+(def list-item-style {:background "#faf7e8"
                       :margin-top "1%"
                       :width "98%"
                       :padding "2% 1%"
                       :display "flex"
                       :align-items "center"
-                      :border-radius "2%"
+                      :border-radius "12px"
                       :justify-content "space-between"})
 
 (defn list-checks-view []
@@ -27,9 +27,9 @@
     [template
      [:h3 (use-style {:font-size "3rem" :margin 0})
       "Health checks you've published 🌎"]
-     [:p (use-style {:max-width "70%"})
-      "The health checks you've published can be accessed in here."]
-     [:div (use-style {:display "flex" :width "70%"})]
+     [:p (use-style {:margin 0})
+      "The health checks you've published can be accessed in here. Simply click 
+       one of those to grab the direct link to answer it."]
      [:ul (use-style list-style)
       (doall
         (for [check (flatten @checks)]
