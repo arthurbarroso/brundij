@@ -5,9 +5,8 @@
 /resources/public/js/manifest.edn
 
 /resources/dev/public/js
-/resources/dev/public/js/*.js
-
-/resources/test/public/js*.js
+/resources/dev/public/js/
+/resources/test/public/
 /resouces/test/public/js
 
 /target/
