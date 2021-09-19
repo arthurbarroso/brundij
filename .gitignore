@@ -1,6 +1,6 @@
 /out/
 
-/resources/public/js/*.js
+/resources/public/js/
 /resources/public/js/cljs-runtime/
 /resources/public/js/manifest.edn
 
