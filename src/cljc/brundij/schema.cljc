@@ -1,8 +1,5 @@
 (ns brundij.schema)
 
-(defn generate-uuid []
-  #?(:clj (. java.util.UUID randomUUID)
-      :cljs (random-uuid)))
 (defn schema []
   #?(:clj
      [;;healths
@@ -69,4 +66,5 @@
         :question/answer {:db/valueType :db.type/ref
                           :db/cardinality :db.cardinality/many}
         :answer/uuid {:db/unique :db.unique/identity
-                      :db/type :db.type/uuid}}))
+                      :db/type :db.type/uuid}
+        :published/uuid {:db/type :db.type/uuid}}))

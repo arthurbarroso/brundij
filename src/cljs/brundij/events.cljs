@@ -1,6 +1,7 @@
 (ns brundij.events
   (:require [ajax.core :as ajax]
             [brundij.config :as config]
+            [brundij.date :as date]
             [brundij.db :as db]
             [brundij.ds :as ds]
             [brundij.utils :as utils]
@@ -136,6 +137,8 @@
     {:db (assoc db
            :loading false)
      ::retract-health-entity! health-uuid
+     ::transact! {:published/uuid health-uuid
+                  :published/created_at (date/get-inst)}
      ::show-success-toast
        {:toast-content
           (str "Health check with UUID " health-uuid " successfully 
