@@ -9,19 +9,19 @@
             [stylefy.core :as stylefy :refer [use-style]]))
 
 (def list-style {:list-style "none"
-                 :height "56%"
-                 :width "70%"
+                 :height "48%"
+                 :max-height "48%"
                  :margin-top "3%"
                  :overflow "auto"
                  :padding 0})
 
-(def list-item-style {:background "#ebf5ee"
+(def list-item-style {:background "#faf7e8"
                       :margin-top "1%"
                       :width "98%"
                       :padding "2% 1%"
                       :display "flex"
                       :align-items "center"
-                      :border-radius "2%"
+                      :border-radius "12px"
                       :justify-content "space-between"})
 
 (def item-text-style-base {:margin 0
@@ -42,11 +42,11 @@
         health-id (re-frame/subscribe [::subs/health-uuid])]
     [template
      [:h3 (use-style {:font-size "3rem" :margin 0})
-      "Health check questions 🍃"]
+      "Add questions/topics to the health check 🍃"]
      [:p (use-style {:max-width "70%"})
       "Health checks come with a few default questions. You may add or remove 
-      questions as you wish"]
-     [:div (use-style {:display "flex" :width "70%"})
+        questions as you wish"]
+     [:div (use-style {:display "flex"})
       [input {:value @question-input
               :on-change #(re-frame/dispatch [::qevts/change-question-input %])
               :disabled false
@@ -74,7 +74,6 @@
      [button {:on-click #(re-frame/dispatch [::qevts/create-questions @health-id @questions])
               :text "Create questions"
               :extra-styles {:color "#333"
-                             :width "70%"
-                             :margin-top "1%"
+                             :width "100%"
                              :font-weight 700}
               :disabled false}]]))

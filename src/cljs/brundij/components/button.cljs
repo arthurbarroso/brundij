@@ -6,7 +6,7 @@
                     :font-size "1rem"
                     :cursor "pointer"
                     :padding "0.8%"
-                    :border-radius "2%"
+                    :border-radius "12px"
                     :border "solid 1.5px #D3D3D3"
                     :font-weight 500
                     :font-family font-family

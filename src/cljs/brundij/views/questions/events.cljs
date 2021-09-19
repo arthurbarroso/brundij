@@ -43,7 +43,10 @@
 (re-frame/reg-event-fx
   ::add-question-to-ds
   (fn [_cofx [_ health-id questions]]
-    {::events/transact! (mount-questions-txs health-id questions)
+    {::events/transact! (concat (mount-questions-txs health-id questions)
+                                [{:published/uuid health-id
+                                  :published/created_at (date/get-inst)}])
+
      ::events/navigate! [:success]}))
 
 (re-frame/reg-event-fx
@@ -57,14 +60,16 @@
                     :timeout 8000
                     :params {:questions questions}
                     :response-format (ajax/json-response-format {:keywords? true})
-                    :on-success [::question-creation-success]
+                    :on-success [::question-creation-success :health-uuid health-id]
                     :on-failure [::question-creation-failure]}}
       {:dispatch [::add-question-to-ds health-id questions]})))
 
 (re-frame/reg-event-fx
   ::question-creation-success
-  (fn [{:keys [db]} [_ _]]
+  (fn [{:keys [db]} [_ _res health-uuid]]
     {:db (assoc db :loading false)
+     ::events/transact! {:published/uuid health-uuid
+                         :published/created_at (date/get-inst)}
      ::events/navigate! [:success]}))
 
 (re-frame/reg-event-fx
