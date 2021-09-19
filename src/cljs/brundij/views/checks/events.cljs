@@ -91,6 +91,8 @@
     {:db (assoc db
            :loading false
            :health-uuid (:health/uuid response))
+     ::events/transact! {:published/uuid (:health/uuid response)
+                         :published/created_at (date/get-inst)}
      ::events/navigate! [:questions]}))
 
 (re-frame/reg-event-fx

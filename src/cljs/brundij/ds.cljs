@@ -38,3 +38,8 @@
                                               :question/content]}])
          :where [?e :health/uuid _]]
        @database))
+
+(defn get-published-health-checks []
+  (d/q '[:find (pull ?e [*])
+         :where [?e :published/uuid _]]
+       @database))

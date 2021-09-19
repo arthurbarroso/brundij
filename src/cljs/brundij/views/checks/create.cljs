@@ -32,12 +32,20 @@
               :disabled false
               :extra-styles custom-buttom-style}]
      (when (true? @is-online?)
-       [:p (use-style link-p-style
-                      {:on-click #(re-frame/dispatch
-                                    [::events/navigate :export-results])})
-        "Want to download a health check's results instead? "
-        [:a (use-style custom-link-style)
-         "Click here!"]])
+       [:<>
+        [:p (use-style link-p-style
+                       {:on-click #(re-frame/dispatch
+                                     [::events/navigate :export-results])})
+         "Want to download a health check's results instead? "
+         [:a (use-style custom-link-style)
+          "Click here!"]]
+        [:p (use-style link-p-style
+                       {:on-click #(re-frame/dispatch
+                                     [::events/navigate :list-checks])})
+         "Want to list checks you have published instead? "
+         [:a (use-style custom-link-style)
+          "Click here!"]]])
+
      (when (> (count @local-health-checks) 0)
        [:div (use-style {:max-width "85%"})
         [:h4 "Local health checks"]

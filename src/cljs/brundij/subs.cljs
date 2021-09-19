@@ -23,3 +23,8 @@
   ::get-local-health-checks
   (fn [_]
     (ratom/make-reaction ds/get-health-checks)))
+
+(re-frame/reg-sub-raw
+  ::get-local-published-health-checks
+  (fn [_]
+    (ratom/make-reaction ds/get-published-health-checks)))

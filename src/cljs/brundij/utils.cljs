@@ -10,7 +10,7 @@
 
 (defn mount-shareable-link [health-id]
   (let [local-url (.-href js/window.location)]
-    (if (includes? local-url "/success")
-      (-> local-url
-          (replace "/success" (str "?id=" health-id)))
+    (condp #(includes? %2 %1) local-url
+      "/success" (replace local-url "/success" (str "?id=" health-id))
+      "/list" (replace local-url "/list" (str "?id=" health-id))
       (str local-url "?id=" health-id))))

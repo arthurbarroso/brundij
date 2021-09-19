@@ -3,7 +3,6 @@
             [brundij.date :refer [format-inst]]
             [brundij.events :as events]
             [brundij.subs :as subs]
-            [brundij.utils :as utils]
             [re-frame.core :as re-frame]
             [stylefy.core :as stylefy :refer [use-style]]))
 
