@@ -3,10 +3,12 @@
             [brundij.components.input :refer [input]]
             [brundij.components.template :refer [template]]
             [brundij.styles :refer [font-family]]
+            [brundij.subs :as bsubs]
             [brundij.views.questions.events :as qevts]
             [brundij.views.questions.subs :as subs]
             [re-frame.core :as re-frame]
-            [stylefy.core :as stylefy :refer [use-style]]))
+            [stylefy.core :as stylefy :refer [use-style]]
+            ["react-loading-skeleton" :default Skeleton]))
 
 (def list-style {:list-style "none"
                  :height "48%"
@@ -38,6 +40,7 @@
 
 (defn create-questions-view []
   (let [questions (re-frame/subscribe [::subs/questions])
+        loading? (re-frame/subscribe [::bsubs/loading])
         question-input (re-frame/subscribe [::subs/question-input])
         health-id (re-frame/subscribe [::subs/health-uuid])]
     [template
@@ -45,7 +48,7 @@
       "Add questions/topics to the health check 🍃"]
      [:p (use-style {:max-width "70%"})
       "Health checks come with a few default questions. You may add or remove 
-        questions as you wish"]
+              questions as you wish"]
      [:div (use-style {:display "flex"})
       [input {:value @question-input
               :on-change #(re-frame/dispatch [::qevts/change-question-input %])
@@ -60,17 +63,20 @@
      [:ul (use-style list-style)
       (doall
         (for [question @questions]
-          ^{:key (:id question)}
-          [:li (use-style list-item-style)
-           [:p (use-style item-text-style-base)
-            (:content question)]
-           [:p
-            (use-style
-              remove-item-text-style
-              {:on-click
-                 #(re-frame/dispatch [::qevts/remove-question-by-uuid
-                                      (:id question)])})
-            "❌"]]))]
+          (if (true? @loading?)
+            [:> Skeleton {:height 50}]
+            ^{:key (:id question)}
+            [:<>
+             [:li (use-style list-item-style)
+              [:p (use-style item-text-style-base)
+               (:content question)]
+              [:p
+               (use-style
+                 remove-item-text-style
+                 {:on-click
+                    #(re-frame/dispatch [::qevts/remove-question-by-uuid
+                                         (:id question)])})
+               "❌"]]])))]
      [button {:on-click #(re-frame/dispatch [::qevts/create-questions @health-id @questions])
               :text "Create questions"
               :extra-styles {:color "#333"
