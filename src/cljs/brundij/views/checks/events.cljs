@@ -81,7 +81,8 @@
                     :timeout 8000
                     :response-format (ajax/json-response-format {:keywords? true})
                     :on-success [::health-creation-success]
-                    :on-failure [::health-creation-failure]}}
+                    :on-failure [::health-creation-failure]}
+       ::events/navigate! [:questions]}
       {:db (assoc db :loading true)
        :dispatch [::add-health-check-to-ds]})))
 
@@ -90,12 +91,12 @@
   (fn [{:keys [db]} [_ response]]
     {:db (assoc db
            :loading false
-           :health-uuid (:health/uuid response))
-     ::events/navigate! [:questions]}))
+           :health-uuid (:health/uuid response))}))
 
 (re-frame/reg-event-fx
   ::health-creation-failure
   (fn [_]
-    {::events/show-failure-toast
+    {::events/navigate! [:home]
+     ::events/show-failure-toast
        {:toast-content
           "Failure creating your health check. Please try again later"}}))

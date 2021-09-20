@@ -61,7 +61,8 @@
                     :params {:questions questions}
                     :response-format (ajax/json-response-format {:keywords? true})
                     :on-success [::question-creation-success :health-uuid health-id]
-                    :on-failure [::question-creation-failure]}}
+                    :on-failure [::question-creation-failure]}
+       ::events/navigate! [:success]}
       {:dispatch [::add-question-to-ds health-id questions]})))
 
 (re-frame/reg-event-fx
@@ -69,10 +70,12 @@
   (fn [{:keys [db]} [_ _res health-uuid]]
     {:db (assoc db :loading false)
      ::events/transact! {:published/uuid health-uuid
-                         :published/created_at (date/get-inst)}
-     ::events/navigate! [:success]}))
+                         :published/created_at (date/get-inst)}}))
 
 (re-frame/reg-event-fx
   ::question-creation-failure
-  (fn [data]
-    (println {:kind "Failure" :response data})))
+  (fn [{:keys [db]} [_ _res]]
+    {:db (assoc db :loading false)
+     ::events/show-failure-toast
+       {:toast-content "Failure creating questions. Please try again later."}
+     ::events/navigate! [:home]}))
