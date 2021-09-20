@@ -42,12 +42,12 @@
 
 (re-frame/reg-event-fx
   ::add-question-to-ds
-  (fn [_cofx [_ health-id questions]]
+  (fn [{:keys [db]} [_ health-id questions]]
     {::events/transact! (concat (mount-questions-txs health-id questions)
                                 [{:published/uuid health-id
                                   :published/created_at (date/get-inst)}])
-
-     ::events/navigate! [:success]}))
+     ::events/navigate! [:success]
+     :db (assoc db :loading false)}))
 
 (re-frame/reg-event-fx
   ::create-questions

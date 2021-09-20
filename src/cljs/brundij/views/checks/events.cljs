@@ -64,11 +64,11 @@
   ::add-health-check-to-ds
   (fn [{:keys [db]} [_ _]]
     (let [uuid (uuids/generate-uuid)]
-      {:db (assoc db :health-uuid uuid)
-       ::events/transact! {:db/id -1
+      {::events/transact! {:db/id -1
                            :health/uuid uuid
                            :health/created_at (date/get-inst)}
-       ::events/navigate! [:questions]})))
+       ::events/navigate! [:questions]
+       :db (assoc db :health-uuid uuid :loading false)})))
 
 (re-frame/reg-event-fx
   ::create-health

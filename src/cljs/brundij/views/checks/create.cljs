@@ -7,7 +7,8 @@
             [brundij.subs :as subs]
             [brundij.views.checks.events :as cevts]
             [re-frame.core :as re-frame]
-            [stylefy.core :as stylefy :refer [use-style]]))
+            [stylefy.core :as stylefy :refer [use-style]]
+            ["react-loading-skeleton" :default Skeleton]))
 
 (def custom-buttom-style {:height "60px"
                           :color "#333"
@@ -17,6 +18,7 @@
 
 (defn create-check-view []
   (let [is-online? (re-frame/subscribe [::subs/is-online?])
+        loading? (re-frame/subscribe [::subs/loading])
         local-health-checks (re-frame/subscribe [::subs/get-local-health-checks])]
     [template
      [:div (use-style {:margin-top "10%"})]
@@ -43,7 +45,7 @@
           {:on-click #(re-frame/dispatch [::events/navigate :list-checks])
            :text "Click here!"
            :title "Navigate to my health check list"}]]])
-     (when (> (count @local-health-checks) 0)
+     (when (and (pos? (count @local-health-checks)) (not @loading?))
        [:div
         [:h4 "Local health checks"]
         [:p "These health checks haven't been pushed to the web yet. 
