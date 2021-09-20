@@ -7,8 +7,7 @@
             [brundij.subs :as subs]
             [brundij.views.checks.events :as cevts]
             [re-frame.core :as re-frame]
-            [stylefy.core :as stylefy :refer [use-style]]
-            ["react-loading-skeleton" :default Skeleton]))
+            [stylefy.core :as stylefy :refer [use-style]]))
 
 (def custom-buttom-style {:height "60px"
                           :color "#333"

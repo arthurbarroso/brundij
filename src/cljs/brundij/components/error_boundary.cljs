@@ -2,7 +2,7 @@
   (:require [reagent.core :as r]))
 
 (defn err-boundary
-  [& children]
+  [& _children]
   (let [err-state (r/atom nil)]
     (r/create-class
       {:display-name "ErrBoundary"
