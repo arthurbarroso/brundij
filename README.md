@@ -1,7 +1,7 @@
 # Brundij 🥑
 _Santirix Gremioni's robot, from Isaac's Asimov [The Robots of Dawn](https://www.amazon.com/Robots-Dawn-Robot-Isaac-Asimov/dp/0553299492)_
 
-![Brundij in action](https://user-images.githubusercontent.com/48794198/132617903-a1556a2e-8ec2-45a7-a96c-d77726ab8258.gif)
+![Brundij demo in action](https://user-images.githubusercontent.com/48794198/133950046-77df4596-5d5a-4ce4-9ce2-e24b5beb97a4.gif)
 
 Demo versions of Brundij can be found online:
 - [Client](https://brundij-demo.netlify.app/)
