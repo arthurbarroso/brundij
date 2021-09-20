@@ -26,11 +26,11 @@ if (workbox) {
   },
   {
     "url": "js/app.js",
-    "revision": "277bc9753666c53c63ef1ee2cee0b552"
+    "revision": "736b9acf821361aac1019e9e4919e60c"
   },
   {
     "url": "js/manifest.edn",
-    "revision": "ba012c28024f2277bf17e013b1a97504"
+    "revision": "d29be466148d2936fc7b9c7a59ba2227"
   },
   {
     "url": "manifest.json",

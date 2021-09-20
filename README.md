@@ -56,8 +56,8 @@ lein uberjar
 # a docker image can also be built for the server
 docker build .
 # for the client
-yarn release
-yarn workbox injectManifest workbox.config.js
+yarn release # no support for offline mode/sw
+yarn release-and-sw # offline mode/sw support
 ```
 
 ### License
