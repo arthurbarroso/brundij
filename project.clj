@@ -17,7 +17,8 @@
                  [io.replikativ/datahike "0.3.7-SNAPSHOT"]
                  [io.replikativ/datahike-postgres "0.1.0"]
                  [tick/tick "0.4.32"]
-                 [ring-cors "0.1.13"]]
+                 [ring-cors "0.1.13"]
+                 [org.clojure/core.match "1.0.0"]]
 
   :profiles {:uberjar {:aot :all
                        :source-paths ["src/clj" "src/cljc"]}
