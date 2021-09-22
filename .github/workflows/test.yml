@@ -13,21 +13,6 @@ jobs:
      name: test
      runs-on: ubuntu-latest
 
-     services:
-       postgres:
-         image: postgres:13-alpine
-         env:
-           POSTGRES_USER: postgres
-           POSTGRES_PASSWORD: postgres
-           POSTGRES_DB: postgres 
-         ports:
-           - 5432:5432
-         options: >-
-           --health-cmd pg_isready
-           --health-interval 10s
-           --health-timeout 5s
-           --health-retries 5
-
      steps:
        - name: Checkout
          uses: actions/checkout@v2
@@ -52,14 +37,7 @@ jobs:
        - name: Fetch dependencies
          run: lein deps
 
-       - name: Run tests
-         env:
-           PORT: 4000
-           DATABASE_HOST: localhost
-           DATABASE_PORT: 5432
-           DATABASE_USER: postgres
-           DATABASE_PASSWORD: postgres
-           DATABASE_NAME: postgres
+       - name: Run server tests
          run: lein test
 
 

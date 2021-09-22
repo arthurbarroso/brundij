@@ -23,7 +23,7 @@
           {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
 
   :test {:target :browser-test
-         :test-dir "resources/test/public/js"
+         :test-dir "resources/test/public"
          :devtools {:http-port 8016
                     :http-root "resources/test/public"}}
 
