@@ -27,6 +27,9 @@ jobs:
          with:
            lein: 2.9.4
 
+       - name: Setup Node
+         uses: actions/setup-node@v2
+
        - name: Cache dependencies
          uses: actions/cache@v1
          with:
@@ -40,6 +43,14 @@ jobs:
        - name: Run server tests
          run: lein test
 
+       - name: Fetch js dependencies
+         run: npm i
+
+       - name: Compile frontend
+         run: npx shadow-cljs compile ci
+       
+       - name: Run karma tests
+         run: npx karma start --single-run
 
    test-client:
      name: test-client
