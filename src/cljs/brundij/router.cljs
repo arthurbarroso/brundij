@@ -7,6 +7,7 @@
             [brundij.views.checks.create :refer [create-check-view]]
             [brundij.views.checks.download :refer [download-check-results-view]]
             [brundij.views.checks.list :refer [list-checks-view]]
+            [brundij.views.landing :refer [landing-page]]
             [brundij.views.questions.create :refer [create-questions-view]]
             [brundij.views.questions.success :refer [success-view]]
             [re-frame.core :refer [dispatch subscribe]]
@@ -19,9 +20,13 @@
 
 (def routes
   ["/"
+   ["create"
+    {:name :create
+     :view create-check-view
+     :link-text "Create health check"}]
    [""
     {:name :home
-     :view create-check-view
+     :view landing-page
      :link-text "Home"
      :parameters {:query {(ds/opt :id) string?}}}]
    ["questions"
@@ -59,7 +64,7 @@
 (defn init-routes! []
   (rfe/start! router on-navigate {:use-fragment false}))
 
-(def app-base-style {:background "#d6e3e6"
+(def app-base-style {:background "#F5F4F4"
                      :display "flex"
                      :justify-content "center"
                      :align-items "center"

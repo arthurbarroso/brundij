@@ -64,4 +64,4 @@
     {:db (assoc db :loading false)
      ::events/show-failure-toast
        {:toast-content "Failure creating questions. Please try again later."}
-     ::events/navigate! [:home]}))
+     ::events/navigate! [:create]}))

@@ -63,78 +63,84 @@
         current-index @(re-frame/subscribe [::subs/current-question-index])]
     (if (= 0 (count questions))
       [template
-       [:div (use-style {:margin-top "10%"})]
-       [:h3 (use-style {:font-size "3rem" :margin 0})
-        "Oops! Looks like either the selected health check has no questions 
-        or there is no health check selected at all 🐛"]
-       [link
-        {:on-click #(re-frame/dispatch [::events/navigate :home])
-         :text "Go back to home page"
-         :title "Navigate to home page"}]]
+       [:div (use-style {:display "flex"})
+        [:div (use-style {:max-width "50%"})
+         [:div (use-style {:margin-top "10%"})]
+         [:h3 (use-style {:font-size "3rem" :margin 0})
+          "Oops! Looks like either the selected health check has no questions 
+          or there is no health check selected at all 🐛"]
+         [link
+          {:on-click #(re-frame/dispatch [::events/navigate :home])
+           :text "Go back to home page"
+           :title "Navigate to home page"}]]]]
       [template
-       [:div (use-style {:margin-top "10%"})
-        [:h3 (use-style {:font-size "3rem" :margin 0})
-         "Answering health check questions 🥝"]
-        [:h4 (str "Question/topic: " (:content (nth questions current-index)))]
-        [:p "Your rating:"]
-        [:div (use-style {:display "flex" :align-items "center"
-                          :justify-content "space-between"})
-         (doall
-           (for [option options]
-             ^{:key (str (:rating option) "-"
-                         (:uuid (nth questions current-index)) "-"
-                         current-index)}
-             [:button (use-style
-                        (option-styles
-                          (:rating (nth questions current-index))
-                          (:rating option))
-                        {:title (:title option)
-                         :on-click
-                           #(re-frame/dispatch
-                              [::aevts/update-question-rating-at-index
-                               {:rating (:rating option)
-                                :index current-index}])})
-              [:p (use-style {:margin 0}) (:symbol option)]]))]
-        [:p "The trend for this rating:"]
-        [:div (use-style {:display "flex"
-                          :align-items "center"
-                          :justify-content "space-between"})
-         (doall
-           (for [trend trend-options]
-             ^{:key (str (:title trend) "-"
-                         (:uuid (nth questions current-index)) "-"
-                         current-index)}
-             [:button
-              (use-style
-                (trend-styles (:trend (nth questions current-index))
-                              (:trend trend))
-                {:title (:title trend)
-                 :on-click #(re-frame/dispatch
-                              [::aevts/update-question-trend-at-index
-                               {:trend (:trend trend)
-                                :index current-index}])})
-              (:symbol trend)]))]
-        [:div (use-style {:display "flex"
-                          :align-items "center"
-                          :justify-content "space-between"})
-         [:p
-          (use-style
-            (question-link-styles (> current-index 0))
-            {:on-click #(when (> current-index 0)
-                          (re-frame/dispatch
-                            [::aevts/decrement-current-question-index]))})
-          "Previous question"]
-         [:p
-          (use-style
-            (question-link-styles (< current-index max-index))
-            {:on-click #(when (< current-index max-index)
-                          (re-frame/dispatch
-                            [::aevts/increment-current-question-index]))})
-          "Next question"]]
-        [button {:on-click
-                   #(re-frame/dispatch
-                      [::aevts/create-answers
-                       (parse-questions-for-handler questions)])
-                 :text "Submit answers"
-                 :extra-styles {:width "100%"
-                                :color "#333"}}]]])))
+       [:div (use-style {:margin-top "10%" :display "flex"})
+        [:div (use-style {:max-width "50%"})
+         [:h3 (use-style {:font-size "3rem" :margin 0})
+          "Answering health check questions 🥝"]
+         [:h4 (str "Question/topic: " (:content (nth questions current-index)))]
+         [:p "Your rating:"]
+         [:div (use-style {:display "flex" :align-items "center"
+                           :justify-content "space-between"})
+          (doall
+            (for [option options]
+              ^{:key (str (:rating option) "-"
+                          (:uuid (nth questions current-index)) "-"
+                          current-index)}
+              [:button (use-style
+                         (option-styles
+                           (:rating (nth questions current-index))
+                           (:rating option))
+                         {:title (:title option)
+                          :on-click
+                            #(re-frame/dispatch
+                               [::aevts/update-question-rating-at-index
+                                {:rating (:rating option)
+                                 :index current-index}])})
+               [:p (use-style {:margin 0}) (:symbol option)]]))]
+         [:p "The trend for this rating:"]
+         [:div (use-style {:display "flex"
+                           :align-items "center"
+                           :justify-content "space-between"})
+          (doall
+            (for [trend trend-options]
+              ^{:key (str (:title trend) "-"
+                          (:uuid (nth questions current-index)) "-"
+                          current-index)}
+              [:button
+               (use-style
+                 (trend-styles (:trend (nth questions current-index))
+                               (:trend trend))
+                 {:title (:title trend)
+                  :on-click #(re-frame/dispatch
+                               [::aevts/update-question-trend-at-index
+                                {:trend (:trend trend)
+                                 :index current-index}])})
+               (:symbol trend)]))]
+         [:div (use-style {:display "flex"
+                           :align-items "center"
+                           :justify-content "space-between"})
+          [:p
+           (use-style
+             (question-link-styles (> current-index 0))
+             {:on-click #(when (> current-index 0)
+                           (re-frame/dispatch
+                             [::aevts/decrement-current-question-index]))})
+           "Previous question"]
+          [:p
+           (use-style
+             (question-link-styles (< current-index max-index))
+             {:on-click #(when (< current-index max-index)
+                           (re-frame/dispatch
+                             [::aevts/increment-current-question-index]))})
+           "Next question"]]
+         [button {:on-click
+                    #(re-frame/dispatch
+                       [::aevts/create-answers
+                        (parse-questions-for-handler questions)])
+                  :text "Submit answers"
+                  :extra-styles {:width "100%"
+                                 :color "#333"}}]]
+        [:div
+         [:img (use-style {:max-width "600px"}
+                          {:src "https://user-images.githubusercontent.com/48794198/134417746-690e99f0-13c7-491e-8a5e-5c47f52cc0f8.png"})]]]])))
