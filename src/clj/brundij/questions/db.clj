@@ -1,5 +1,6 @@
 (ns brundij.questions.db
-  (:require [brundij.date :as date]
+  (:require [brundij.common :as common]
+            [brundij.date :as date]
             [brundij.uuids :as uuids]
             [datahike.api :as d]))
 
@@ -17,17 +18,6 @@
          (d/pull @db '[*]))))
 
 (defn create-questions! [db health-id questions]
-  (let [question-ids (vec (for [_i (range (count questions))] (d/tempid -1)))
-        question-transactions
-          (map-indexed
-            (fn [index item]
-              [
-               {:question/uuid (uuids/generate-uuid)
-                :question/content (:content item)
-                :question/created_at (java.util.Date.)
-                :db/id (nth question-ids index)}
-               {:db/id [:health/uuid health-id]
-                :health/question (nth question-ids index)}])
-            questions)]
-    (d/transact db (flatten question-transactions))
+  (let [question-transactions (common/mount-questions-txs health-id questions)]
+    (d/transact db question-transactions)
     (d/pull @db '[* {:health/question [:question/uuid :db/id :question/content]}] [:health/uuid health-id])))

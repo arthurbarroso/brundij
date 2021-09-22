@@ -1,10 +1,9 @@
 (ns brundij.views.questions.events
   (:require [ajax.core :as ajax]
+            [brundij.common :as common]
             [brundij.config :as config]
             [brundij.date :as date]
             [brundij.events :as events]
-            [brundij.uuids :as uuids]
-            [datascript.core :as d]
             [re-frame.core :as re-frame]))
 
 (defn remove-from-vec [vect uuid]
@@ -27,23 +26,10 @@
   (fn [db [_ new-input]]
     (assoc db :question-input new-input)))
 
-(defn mount-questions-txs [health-id questions]
-  (let [question-ids (vec (for [_i (range (count questions))] (d/tempid -1)))]
-    (->> questions
-         (map-indexed
-           (fn [index item]
-             [{:question/uuid (uuids/generate-uuid)
-               :question/content (:content item)
-               :question/created_at (date/get-inst)
-               :db/id (nth question-ids index)}
-              {:db/id [:health/uuid health-id]
-               :health/question (nth question-ids index)}]))
-         (flatten))))
-
 (re-frame/reg-event-fx
   ::add-question-to-ds
   (fn [{:keys [db]} [_ health-id questions]]
-    {::events/transact! (concat (mount-questions-txs health-id questions)
+    {::events/transact! (concat (common/mount-questions-txs health-id questions)
                                 [{:published/uuid health-id
                                   :published/created_at (date/get-inst)}])
      ::events/navigate! [:success]

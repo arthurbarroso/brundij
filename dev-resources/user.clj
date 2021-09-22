@@ -16,6 +16,8 @@
    :db/postgres {:host (env :database-host)
                  :port (env :database-port)
                  :user (env :database-user)
+                 :backend (env :database-backend)
+                 :id (env :database-id)
                  :password (env :database-password)
                  :dbname (env :database-name)}})
 

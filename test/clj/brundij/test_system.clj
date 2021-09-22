@@ -12,3 +12,6 @@
                           (cond-> (:auth opts) (mock/header :Authorization (str "Token " (:token (:auth opts))))
                                   (:body opts) (mock/json-body (:body opts)))))]
      (update request :body (partial m/decode "application/json")))))
+
+(defn database-atom []
+  (-> state/system :db/postgres))

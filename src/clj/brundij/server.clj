@@ -3,7 +3,8 @@
             [brundij.router :as router]
             [environ.core :refer [env]]
             [integrant.core :as ig]
-            [ring.adapter.jetty :as jetty]))
+            [ring.adapter.jetty :as jetty]
+            [taoensso.timbre :as timbre :refer [info]]))
 
 (defn app
   [environment]
@@ -15,17 +16,17 @@
 
 (defmethod ig/init-key :server/jetty
   [_ {:keys [handler port]}]
-  (println (str "\nServer running on port " port))
+  (info (str "\n[Brundij]: server running on port: " port))
   (jetty/run-jetty handler {:port port :join? false}))
 
 (defmethod ig/init-key :brundij/app
   [_ config]
-  (println "\nStarted app")
+  (info "\n[Brundij]: started application")
   (app config))
 
 (defmethod ig/init-key :db/postgres
   [_ config]
-  (println "\nConfigured db")
+  (info "\n[Brundij]: configured db")
   (database/create-connection config))
 
 (defmethod ig/halt-key! :server/jetty
@@ -36,10 +37,13 @@
   (let [config-map
           {:server/jetty {:handler (ig/ref :brundij/app)
                           :port (Integer/parseInt (env :port))}
-           :brundij/app {:database (ig/ref :db/postgres)}
+           :brundij/app {:database (ig/ref :db/postgres)
+                         :db (ig/ref :db)}
            :db/postgres {:host (env :database-host)
                          :port (env :database-port)
                          :user (env :database-user)
+                         :backend (env :database-backend)
+                         :id (env :database-id)
                          :password (env :database-password)
                          :dbname (env :database-name)}}]
     (-> config-map ig/prep ig/init)))

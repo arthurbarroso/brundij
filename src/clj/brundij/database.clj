@@ -3,13 +3,15 @@
             [datahike-postgres.core]
             [datahike.api :as d]))
 
-(defn create-config [{:keys [host port user password dbname]}]
-  {:store {:backend :pg
-           :host host
-           :port port
-           :username user
-           :password password
-           :path (str "/" dbname)}})
+(defn create-config [{:keys [backend id user password host port dbname]}]
+  (if (= backend "mem")
+    {:store {backend :mem :id id}}
+    {:store {:backend :pg
+             :host host
+             :port port
+             :username user
+             :password password
+             :path (str "/" dbname)}}))
 
 (defn create-database [config]
   (d/create-database config))

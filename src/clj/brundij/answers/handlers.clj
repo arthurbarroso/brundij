@@ -9,7 +9,6 @@
 
 (defn bulk-create-answers! [database]
   (fn [request]
-    (let [answers (-> request :parameters :body :answers)]
-      (rr/created "" (db/bulk-create-answers!
-                       database
-                       answers)))))
+    (let [answers (-> request :parameters :body :answers)
+          response (db/bulk-create-answers! database answers)]
+      (rr/created "" response))))

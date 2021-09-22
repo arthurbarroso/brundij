@@ -13,21 +13,6 @@ jobs:
      name: test
      runs-on: ubuntu-latest
 
-     services:
-       postgres:
-         image: postgres:13-alpine
-         env:
-           POSTGRES_USER: postgres
-           POSTGRES_PASSWORD: postgres
-           POSTGRES_DB: postgres 
-         ports:
-           - 5432:5432
-         options: >-
-           --health-cmd pg_isready
-           --health-interval 10s
-           --health-timeout 5s
-           --health-retries 5
-
      steps:
        - name: Checkout
          uses: actions/checkout@v2
@@ -41,55 +26,34 @@ jobs:
          uses: DeLaGuardo/setup-clojure@master
          with:
            lein: 2.9.4
-
-       - name: Cache dependencies
-         uses: actions/cache@v1
-         with:
-           path: ~/.m2/repository
-           key: ${{ runner.os }}-maven-${{ hashFiles('project.clj') }}
-           restore-keys: ${{ runner.os }}-maven-
-
-       - name: Fetch dependencies
-         run: lein deps
-
-       - name: Run tests
-         env:
-           PORT: 4000
-           DATABASE_HOST: localhost
-           DATABASE_PORT: 5432
-           DATABASE_USER: postgres
-           DATABASE_PASSWORD: postgres
-           DATABASE_NAME: postgres
-         run: lein test
-
-
-   test-client:
-     name: test-client
-     runs-on: ubuntu-latest
-
-     steps:
-       - name: Checkout
-         uses: actions/checkout@v2
-
-       - name: Setup Java
-         uses: actions/setup-java@v1
-         with:
-           java-version: "11.0.8"
 
        - name: Setup Node
          uses: actions/setup-node@v2
 
-       - name: Install Clojure
-         uses: DeLaGuardo/setup-clojure@master
-         with:
-           lein: 2.9.4
-
-       - name: Cache dependencies
+       - name: Cache clojure dependencies
          uses: actions/cache@v1
          with:
            path: ~/.m2/repository
            key: ${{ runner.os }}-maven-${{ hashFiles('project.clj') }}
            restore-keys: ${{ runner.os }}-maven-
+
+       - name: Cache node dependencies
+         uses: actions/cache@v2
+         env:
+           cache-name: cache-node
+         with:
+           path: ~/.npm
+           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+           restore-keys: |
+             ${{ runner.os }}-build-${{ env.cache-name }}-
+             ${{ runner.os }}-build-
+             ${{ runner.os }}-
+
+       - name: Fetch clojure dependencies
+         run: lein deps
+
+       - name: Run server tests
+         run: lein test
 
        - name: Fetch js dependencies
          run: npm i
