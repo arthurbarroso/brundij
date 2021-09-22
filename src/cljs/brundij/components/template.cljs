@@ -54,10 +54,12 @@
      [:ul (use-style list-style)
       [:li (use-style
              nav-link-style
-             {:on-click #(re-frame/dispatch [::events/navigate :home])})
+             {:on-click #(re-frame/dispatch [::events/navigate :create])})
        "Create"]
-      [:li (use-style nav-link-style) "Answer"]
-      [:li (use-style nav-link-style) "Export"]]]
+      [:li (use-style
+             nav-link-style
+             {:on-click #(re-frame/dispatch [::events/navigate :export-results])})
+       "Export"]]]
     (into [:<>]
           (reagent/children (reagent/current-component)))]
    [:footer (use-style footer-style)
