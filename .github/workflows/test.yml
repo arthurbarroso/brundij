@@ -30,55 +30,30 @@ jobs:
        - name: Setup Node
          uses: actions/setup-node@v2
 
-       - name: Cache dependencies
+       - name: Cache clojure dependencies
          uses: actions/cache@v1
          with:
            path: ~/.m2/repository
            key: ${{ runner.os }}-maven-${{ hashFiles('project.clj') }}
            restore-keys: ${{ runner.os }}-maven-
 
-       - name: Fetch dependencies
+      - name: Cache node dependencies
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+       - name: Fetch clojure dependencies
          run: lein deps
 
        - name: Run server tests
          run: lein test
-
-       - name: Fetch js dependencies
-         run: npm i
-
-       - name: Compile frontend
-         run: npx shadow-cljs compile ci
-       
-       - name: Run karma tests
-         run: npx karma start --single-run
-
-   test-client:
-     name: test-client
-     runs-on: ubuntu-latest
-
-     steps:
-       - name: Checkout
-         uses: actions/checkout@v2
-
-       - name: Setup Java
-         uses: actions/setup-java@v1
-         with:
-           java-version: "11.0.8"
-
-       - name: Setup Node
-         uses: actions/setup-node@v2
-
-       - name: Install Clojure
-         uses: DeLaGuardo/setup-clojure@master
-         with:
-           lein: 2.9.4
-
-       - name: Cache dependencies
-         uses: actions/cache@v1
-         with:
-           path: ~/.m2/repository
-           key: ${{ runner.os }}-maven-${{ hashFiles('project.clj') }}
-           restore-keys: ${{ runner.os }}-maven-
 
        - name: Fetch js dependencies
          run: npm i
