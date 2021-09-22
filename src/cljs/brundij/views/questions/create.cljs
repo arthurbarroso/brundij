@@ -17,9 +17,9 @@
                  :overflow "auto"
                  :padding 0})
 
-(def list-item-style {:background "#faf7e8"
+(def list-item-style {:border "1px solid #8db8a4"
                       :margin-top "1%"
-                      :width "98%"
+                      :width "97%"
                       :padding "2% 1%"
                       :display "flex"
                       :align-items "center"
@@ -44,42 +44,49 @@
         question-input (re-frame/subscribe [::subs/question-input])
         health-id (re-frame/subscribe [::subs/health-uuid])]
     [template
-     [:h3 (use-style {:font-size "3rem" :margin 0})
-      "Add questions/topics to the health check 🍃"]
-     [:p (use-style {:max-width "70%"})
-      "Health checks come with a few default questions. You may add or remove 
-              questions as you wish"]
      [:div (use-style {:display "flex"})
-      [input {:value @question-input
-              :on-change #(re-frame/dispatch [::qevts/change-question-input %])
-              :disabled false
-              :type "text"
-              :extra-styles {:width "100%"
-                             :margin-right "3%"}
-              :placeholder "New question"}]
-      [button {:on-click #(add-question @question-input)
-               :text "➕" :disabled false
-               :extra-styles {:color "#333"}}]]
-     [:ul (use-style list-style)
-      (doall
-        (for [question @questions]
-          (if (true? @loading?)
-            [:> Skeleton {:height 50}]
-            ^{:key (:id question)}
-            [:<>
-             [:li (use-style list-item-style)
-              [:p (use-style item-text-style-base)
-               (:content question)]
-              [:p
-               (use-style
-                 remove-item-text-style
-                 {:on-click
-                    #(re-frame/dispatch [::qevts/remove-question-by-uuid
-                                         (:id question)])})
-               "❌"]]])))]
-     [button {:on-click #(re-frame/dispatch [::qevts/create-questions @health-id @questions])
-              :text "Create questions"
-              :extra-styles {:color "#333"
-                             :width "100%"
-                             :font-weight 700}
-              :disabled false}]]))
+      [:div (use-style {:max-width "50%"})
+       [:h3 (use-style {:font-size "3rem" :margin 0})
+        "Add questions/topics to the health check 🍃"]
+       [:p (use-style {:max-width "70%"})
+        "Health checks come with a few default questions. You may add or remove 
+                questions as you wish"]
+       [:div (use-style {:display "flex"})
+        [input {:value @question-input
+                :on-change #(re-frame/dispatch [::qevts/change-question-input %])
+                :disabled false
+                :type "text"
+                :extra-styles {:width "100%"
+                               :margin-right "3%"}
+                :placeholder "New question"}]
+        [button {:on-click #(add-question @question-input)
+                 :text "➕" :disabled false
+                 :extra-styles {:color "#333"}}]]
+       [:div (use-style {:max-height "48%" :height "48%"})
+        [:ul (use-style list-style)
+         (doall
+           (for [question @questions]
+             (if (true? @loading?)
+               ^{:key (:id question)}
+               [:> Skeleton {:height 50}]
+               ^{:key (:id question)}
+               [:<>
+                [:li (use-style list-item-style)
+                 [:p (use-style item-text-style-base)
+                  (:content question)]
+                 [:p
+                  (use-style
+                    remove-item-text-style
+                    {:on-click
+                       #(re-frame/dispatch [::qevts/remove-question-by-uuid
+                                            (:id question)])})
+                  "❌"]]])))]
+        [button {:on-click #(re-frame/dispatch [::qevts/create-questions @health-id @questions])
+                 :text "Create questions"
+                 :extra-styles {:color "#333"
+                                :width "100%"
+                                :font-weight 700}
+                 :disabled false}]]]
+      [:div (use-style {:margin-top "10%"})
+       [:img (use-style {:max-width "600px"}
+                        {:src "https://user-images.githubusercontent.com/48794198/134416104-5eb6e37d-283f-4123-a7cb-06ec64f8d6d1.png"})]]]]))

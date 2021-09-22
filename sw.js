@@ -19,6 +19,13 @@ if (workbox) {
     })
   )
 
+  workbox.routing.registerRoute(
+    new RegExp('https://user-images.githubusercontent.com/*'),
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: 'cdn-font-cache'
+    })
+  )
+
   workbox.precaching.precacheAndRoute([
   ]);
 } else {

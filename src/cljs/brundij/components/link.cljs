@@ -1,7 +1,7 @@
 (ns brundij.components.link
   (:require [stylefy.core :as stylefy :refer [use-style]]))
 
-(def custom-link-style {:color "#eec74c"
+(def custom-link-style {:color "#3ec762"
                         :font-weight 700
                         :cursor "pointer"})
 

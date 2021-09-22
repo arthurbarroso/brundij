@@ -7,19 +7,15 @@
             [brundij.utils :as utils]
             [brundij.views.questions.subs :as subs]
             [re-frame.core :as re-frame]
-            [stylefy.core :as stylefy :refer [use-style]]
-            ["react-loading-skeleton" :default Skeleton]))
+            [stylefy.core :as stylefy :refer [use-style]]))
 
 (defn success-view []
   (let [health-id (re-frame/subscribe [::subs/health-uuid])
         is-online? (re-frame/subscribe [::bsubs/is-online?])
-        loading? (re-frame/subscribe [::bsubs/loading])
         final-url (utils/mount-shareable-link @health-id)]
     [template
-     (if (true? @loading?)
-       [:<>
-        [:> Skeleton {:height 80}]
-        [:> Skeleton {:count 15}]]
+     [:div (use-style {:display "flex"})
+      [:div (use-style {:max-width "50%"})
        [:<>
         [:div (use-style {:margin-top "10%"})]
         [:h3 (use-style {:font-size "3rem" :margin 0})
@@ -28,8 +24,8 @@
           [:<>
            [:p
             "You should now be able to share this health check survey with your teammates 
-                by pointing them to the link below. Simply click the link below to copy it 
-                to your clipboard."]
+                  by pointing them to the link below. Simply click the link below to copy it 
+                  to your clipboard."]
            [:div {:on-click #(-> js/navigator
                                  .-clipboard
                                  (.writeText final-url))}
@@ -41,8 +37,8 @@
              (str @health-id)]]
            [:p (use-style {:margin 0})
             "Please save the id as you'll need it to download the health check's results.
-              This ID also get's saved to your browser's storage so you're able to check
-              it by navigating to your "
+                This ID also get's saved to your browser's storage so you're able to check
+                it by navigating to your "
             [link
              {:on-click #(re-frame/dispatch [::events/navigate :list-checks])
               :text "health check list"
@@ -52,4 +48,8 @@
             "Your health check's ID is: "
             [:span (use-style {:font-weight 700 :margin 0}) (str @health-id)]]
            [:p (use-style {:margin 0})
-            "You'll be able to publish it by vising the home page with an active connection"]])])]))
+            "You'll be able to publish it by vising the home page with an active connection"]])]]
+      [:div (use-style {:margin-top "10%" :align-self "flex-end"})
+       [:img (use-style
+               {:max-width "600px"}
+               {:src "https://user-images.githubusercontent.com/48794198/134417135-1dec0012-0666-45f9-8c03-aae3e39ca843.png"})]]]]))

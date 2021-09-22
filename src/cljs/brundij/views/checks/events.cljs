@@ -96,7 +96,7 @@
 (re-frame/reg-event-fx
   ::health-creation-failure
   (fn [_]
-    {::events/navigate! [:home]
+    {::events/navigate! [:create]
      ::events/show-failure-toast
        {:toast-content
           "Failure creating your health check. Please try again later"}}))

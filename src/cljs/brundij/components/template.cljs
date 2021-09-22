@@ -5,41 +5,61 @@
             [reagent.core :as reagent]
             [stylefy.core :as stylefy :refer [use-style]]))
 
-(def outer-style {:background "#fff"
-                  :display "flex"
-                  :align-items "center"
+(def outer-style {:display "flex"
+                  :background "#F5F4F4"
+                  :flex-direction "column"
+                  :justify-content "space-between"
                   :font-family font-family
                   :width "100%"
-                  :height "100vh"})
+                  :height "100vh"
+                  :max-width "1440px"})
 
-(def column-style {:width "50%"
-                   :height "100%"})
+(def title-style {:color "#161313"
+                  :cursor "pointer"
+                  :font-size "2rem"
+                  ::stylefy/mode {:hover {:color "#3ec762"}}})
 
-(def left-column-style (merge column-style
-                              {;:background "#b8fca9"
-                               :background "#dbb645"
-                               :display "flex"}))
+(def list-style {:display "flex"
+                 :list-style "none"
+                 :width "20%"})
 
-(def right-column-style (merge column-style
-                               {:display "flex"
-                                :padding "0% 2%"
-                                :flex-direction "column"
-                                :background "#f1f1f1"}))
+(def nav-link-style {:margin-left "3%"
+                     :font-weight 500
+                     :text-transform "uppercase"
+                     :color "#574A4D"
+                     :cursor "pointer"
+                     ::stylefy/mode {:hover {:color "#3ec762"}}})
+
+(def footer-link-style {:margin-right "3%"
+                        :font-weight 500
+                        :color "#574A4D"
+                        :cursor "pointer"
+                        ::stylefy/mode {:hover {:color "#3ec762"}}})
+
+(def footer-style {:border-top "1px solid #D3D3D3"
+                   :display "flex"})
 
 (defn template []
   [:div (use-style outer-style)
-   [:div (use-style left-column-style)
-    [:div (use-style {:padding "4%"})]]
-   [:div (use-style right-column-style)
-    [:div (use-style {:padding-top "4%"
-                      :max-width "60%"
-                      :overflow "hidden"})
-     [:h3
-      (use-style
-        {:font-size "4rem" :color "#333" :margin "0 0 4% 0"
-         :cursor "pointer"}
-        {:on-click #(re-frame/dispatch [::events/navigate :home])
-         :title "Go to website's home page"})
-      "Brundij 🥑"]
-     (into [:<>]
-           (reagent/children (reagent/current-component)))]]])
+   [:div (use-style {;:padding "1.5%"
+                     :overflow "hidden"
+                     :width "100%"})
+    [:nav (use-style {:display "flex"
+                      :justify-content "space-between"
+                      :align-items "center"})
+     [:h1 (use-style
+            title-style
+            {:on-click #(re-frame/dispatch [::events/navigate :home])})
+      "Brundij"]
+     [:ul (use-style list-style)
+      [:li (use-style
+             nav-link-style
+             {:on-click #(re-frame/dispatch [::events/navigate :home])})
+       "Create"]
+      [:li (use-style nav-link-style) "Answer"]
+      [:li (use-style nav-link-style) "Export"]]]
+    (into [:<>]
+          (reagent/children (reagent/current-component)))]
+   [:footer (use-style footer-style)
+    [:p (use-style footer-link-style) "About Brundij"]
+    [:p (use-style footer-link-style) "Self hosting"]]])
