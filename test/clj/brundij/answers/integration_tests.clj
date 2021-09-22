@@ -1,4 +1,4 @@
-(ns brundij.answer-tests
+(ns brundij.answers.integration-tests
   (:require [brundij.test-helpers :as th]
             [brundij.test-system :as ts]
             [clojure.test :refer [deftest testing is]]))

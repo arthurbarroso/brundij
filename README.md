@@ -30,16 +30,17 @@ With the REPL running, start the server using Integrant's `go` function. I usual
 
 To start the web client in development mode, run `yarn watch` or `npm run watch`. Shadow will automatically reload the application whenever there are changes to `.cljs` and `.cljc` files.
 
+##### Testing
+Server tests can be started by running `lein test`, which uses the `:test` profile from `project.clj`. This profile makes sure the project's tests are going to run using an in-memory datahike db.
 
-
-
-Server tests can be started by running `lein test`, whilst the client tests can be started using `yarn test`. It is also possible to generate a compiled version of the client tests by running `npx shadow-cljs compile ci`. This compiled version of the tests can be ran using `npx karma start --single-run` - this version is specially useful for CIs.
-
+Client tests can be started using `yarn test`. It is also possible to generate a compiled version of the client tests by running `npx shadow-cljs compile ci`. This compiled version of the tests can be ran using `npx karma start --single-run` - this version is specially useful for CIs.
 
 It is also possible to run tests by namespace. This can done by `, t n` in Conjure or by calling `run namespace tests` from within cursive's command palette and is especially useful when some test is failing for some obscure reason.
 
 
-It is also possible to create release/production builds of the server and the application. To do so, run:
+
+##### Releasing:
+It is possible to create release/production builds of the server and the application. To do so, run:
 ```bash
 # for the server
 lein uberjar

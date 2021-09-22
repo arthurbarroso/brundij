@@ -23,7 +23,8 @@
                        :source-paths ["src/clj" "src/cljc"]}
 
              :test-overrides {:env {:database-backend "mem"
-                                    :database-id "brundij"}}
+                                    :database-id "brundij"
+                                    :port "4003"}}
              :test [:dev :test-overrides]
 
              :dev {:source-paths ["dev-resources"

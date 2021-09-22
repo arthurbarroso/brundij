@@ -1,6 +1,6 @@
-(ns brundij.health-tests
+(ns brundij.healths.integration-tests
   (:require [brundij.date :as date]
-            [brundij.test-helpers :as th]
+            [brundij.healths.test-helpers :as th]
             [brundij.test-system :as ts]
             [brundij.uuids :as uuids]
             [clojure.test :refer [deftest testing is]]))
