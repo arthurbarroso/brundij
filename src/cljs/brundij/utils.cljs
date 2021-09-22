@@ -1,9 +1,10 @@
 (ns brundij.utils
-  (:require [clojure.string :refer [replace includes?]]
+  (:require [cljs.reader :as reader]
+            [clojure.string :refer [replace includes?]]
             [reitit.frontend.easy :refer [push-state]]))
 
 (defn ^:export out-navigate [route]
-  (push-state route nil nil))
+  (push-state (reader/read-string route) nil nil))
 
 (defn dissoc-local-health-db-ids [health]
   (-> health
