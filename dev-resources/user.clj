@@ -1,7 +1,8 @@
 (ns user
   (:require [brundij.server]
-            [clojure.core.async :refer [go-loop >! <! chan timeout close! alts!] :as core.async]
+            [clojure.core.async :refer [go-loop >! <! chan timeout] :as core.async]
             [clojure.core.async.impl.protocols :refer [closed?]]
+            [clojure.string :as string]
             [environ.core :refer [env]]
             [etaoin.api :as etaoin]
             [hawk.core :as hawk]
@@ -61,8 +62,8 @@
 (defn- wait-for-frontend [driver]
   (core.async/go
     (let [poll-ch (poll-frontend driver)
-          [message ch] (core.async/alts! [poll-ch
-                                          (core.async/timeout 4000)])]
+          [_message ch] (core.async/alts! [poll-ch
+                                           (core.async/timeout 4000)])]
       (if (= ch poll-ch)
         true
         (core.async/close! poll-ch)))))
@@ -73,8 +74,14 @@
                      (str "brundij.utils.out_navigate(\"" (keyword route) "\");"))
   (core.async/go
     (when (<! (wait-for-frontend driver))
-      (let [url (subs (etaoin/js-execute driver "return document.location.pathname;") 1)]
-        (clojure.pprint/pprint (etaoin/js-execute driver "return document.getElementById('app').innerHTML;"))))))
+      (let [url (subs (etaoin/js-execute driver "return document.location.pathname;") 1)
+            body (etaoin/js-execute driver "return document.getElementById('app').innerHTML;")
+            head (etaoin/js-execute driver "return document.querySelector('head').innerHTML;")
+            template (slurp "dev-resources/resources/template.html")]
+        (spit "target/index.html"
+              (-> template
+                  (string/replace "{{head}}" head)
+                  (string/replace "{{body}}" body)))))))
 
 (comment
   (go)
