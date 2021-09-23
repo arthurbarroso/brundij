@@ -20,7 +20,8 @@
     (= (.-readyState js/document) "complete")))
 
 (defn ^:export export-db []
-  @(re-frame/subscribe [::subs/db]))
+  (-> @(re-frame/subscribe [::subs/db])
+      (clj->js)))
 
 (defn dissoc-local-health-db-ids [health]
   (-> health
