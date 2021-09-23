@@ -26,7 +26,7 @@
   (app config))
 
 (defmethod ig/init-key :brundij/render
-  [_ config]
+  [_ _config]
   (info "\n[Brundij]: starting headless chrome for pre-rendering")
   (etaoin/chrome))
 
