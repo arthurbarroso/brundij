@@ -13,11 +13,19 @@
             [reitit.frontend.easy :refer [push-state]]
             ["react-toastify" :refer (toast)]))
 
-(re-frame/reg-event-db
+(re-frame/reg-fx
+  ::aset
+  (fn [args]
+    (apply aset args)))
+
+(re-frame/reg-event-fx
   ::initialize-db
-  #_{:clj-kondo/ignore [:unresolved-symbol]}
-  (fn-traced [_ _]
-             db/default-db))
+  (fn [{:keys [db]} _]
+    (let [rendered (aget js/window "__rendered_db")]
+      (if (not (nil? rendered))
+        {:db (reader/read-string rendered)
+         ::aset [js/window "__rendered_db" nil]})
+      {:db db/default-db})))
 
 ;; ds
 (re-frame/reg-fx
