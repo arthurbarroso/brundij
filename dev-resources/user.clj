@@ -78,7 +78,7 @@
             body (etaoin/js-execute driver "return document.getElementById('app').innerHTML;")
             head (etaoin/js-execute driver "return document.querySelector('head').innerHTML;")
             template (slurp "dev-resources/resources/template.html")]
-        (spit "target/index.html"
+        (spit "dev-resources/resources/final.html"
               (-> template
                   (string/replace "{{head}}" head)
                   (string/replace "{{body}}" body)))))))
