@@ -2,6 +2,7 @@
   (:require [brundij.database :as database]
             [brundij.router :as router]
             [environ.core :refer [env]]
+            [etaoin.api :as etaoin]
             [integrant.core :as ig]
             [ring.adapter.jetty :as jetty]
             [taoensso.timbre :as timbre :refer [info]]))
@@ -23,6 +24,11 @@
   [_ config]
   (info "\n[Brundij]: started application")
   (app config))
+
+(defmethod ig/init-key :brundij/render
+  [_ config]
+  (info "\n[Brundij]: starting headless chrome for pre-rendering")
+  (etaoin/chrome))
 
 (defmethod ig/init-key :db/postgres
   [_ config]
