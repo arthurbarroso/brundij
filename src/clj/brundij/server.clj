@@ -26,9 +26,10 @@
   (app config))
 
 (defmethod ig/init-key :brundij/render
-  [_ _config]
-  (info "\n[Brundij]: starting headless chrome for pre-rendering")
-  (etaoin/chrome))
+  [_ config]
+  (when-not (boolean (:render? config))
+    (info "\n[Brundij]: starting headless chrome for pre-rendering")
+    (etaoin/chrome)))
 
 (defmethod ig/init-key :db/postgres
   [_ config]
@@ -44,7 +45,8 @@
           {:server/jetty {:handler (ig/ref :brundij/app)
                           :port (Integer/parseInt (env :port))}
            :brundij/app {:database (ig/ref :db/postgres)
-                         :db (ig/ref :db)}
+                         :renderer (ig/ref :brundij/render)}
+           :brundij/render {:render? (env :pre-render)}
            :db/postgres {:host (env :database-host)
                          :port (env :database-port)
                          :user (env :database-user)

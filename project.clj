@@ -26,7 +26,8 @@
 
              :test-overrides {:env {:database-backend "mem"
                                     :database-id "brundij"
-                                    :port "4003"}}
+                                    :port "4003"
+                                    :pre-render false}}
              :test [:dev :test-overrides]
 
              :dev {:source-paths ["dev-resources"
@@ -42,7 +43,8 @@
                          :database-host "localhost"
                          :database-port "5432"
                          :database-backend "pg"
-                         :database-name "brundij"}
+                         :database-name "brundij"
+                         :pre-render true}
 
                    :dependencies [[ring/ring-mock "0.4.0"]
                                   [hawk "0.2.11"]

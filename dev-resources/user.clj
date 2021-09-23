@@ -14,7 +14,7 @@
                   :port (Integer/parseInt (env :port))}
    :brundij/app {:database (ig/ref :db/postgres)
                  :renderer (ig/ref :brundij/render)}
-   :brundij/render {}
+   :brundij/render {:render? (env :pre-render)}
    :db/postgres {:host (env :database-host)
                  :port (env :database-port)
                  :user (env :database-user)
