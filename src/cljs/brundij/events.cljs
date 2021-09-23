@@ -5,6 +5,7 @@
             [brundij.db :as db]
             [brundij.ds :as ds]
             [brundij.utils :as utils]
+            [cljs.reader :as reader]
             [day8.re-frame.http-fx]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [re-frame.core :as re-frame]
@@ -150,3 +151,6 @@
     {::show-failure-toast
        {:toast-content
           "Failure creating your health check. Please try again later"}}))
+
+(defn ^:export go-to [route]
+  (re-frame/dispatch [::navigate (reader/read-string route)]))
