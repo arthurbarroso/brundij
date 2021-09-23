@@ -27,7 +27,7 @@
 
 (defmethod ig/init-key :brundij/render
   [_ config]
-  (when-not (boolean (:render? config))
+  (when (boolean (Boolean/valueOf (:render? config)))
     (info "\n[Brundij]: starting headless chrome for pre-rendering")
     (etaoin/chrome)))
 

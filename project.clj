@@ -27,11 +27,11 @@
              :test-overrides {:env {:database-backend "mem"
                                     :database-id "brundij"
                                     :port "4003"
-                                    :pre-render false}}
+                                    :pre-render false}
+                              :source-paths ["dev-resources"]}
              :test [:dev :test-overrides]
 
-             :dev {:source-paths ["dev-resources"
-                                  "src/clj"
+             :dev {:source-paths ["src/clj"
                                   "src/cljc"
                                   "test/clj"]
                    :resource-paths ["dev-resources/resources" "resources"]
