@@ -32,4 +32,4 @@
 (re-frame/reg-sub
   ::db
   (fn [db]
-    db))
+    (dissoc db :questions)))
