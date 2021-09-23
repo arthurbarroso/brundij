@@ -6,6 +6,14 @@
 (defn ^:export out-navigate [route]
   (push-state (reader/read-string route) nil nil))
 
+(defn rendered? []
+  (not (nil? (.getElementById js/document "app"))))
+
+(defn ^:export ready? []
+  (and
+    (rendered?)
+    (= (.-readyState js/document) "complete")))
+
 (defn dissoc-local-health-db-ids [health]
   (-> health
       (dissoc :db/id)
