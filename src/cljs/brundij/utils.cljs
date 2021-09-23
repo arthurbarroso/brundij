@@ -1,6 +1,9 @@
 (ns brundij.utils
-  (:require [cljs.reader :as reader]
+  (:require [brundij.subs :as subs]
+            [cljs.reader :as reader]
+            [clojure.pprint :refer [pprint]]
             [clojure.string :refer [replace includes?]]
+            [re-frame.core :as re-frame]
             [reitit.frontend.easy :refer [push-state]]))
 
 (defn ^:export out-navigate [route]
@@ -13,6 +16,10 @@
   (and
     (rendered?)
     (= (.-readyState js/document) "complete")))
+
+(defn ^:export export-db []
+  (with-out-str
+    (pprint @(re-frame/subscribe [::subs/db]))))
 
 (defn dissoc-local-health-db-ids [health]
   (-> health
