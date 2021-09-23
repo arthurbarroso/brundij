@@ -28,3 +28,8 @@
   ::get-local-published-health-checks
   (fn [_]
     (ratom/make-reaction ds/get-published-health-checks)))
+
+(re-frame/reg-sub
+  ::db
+  (fn [db]
+    db))
