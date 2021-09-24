@@ -54,6 +54,16 @@
      :view list-checks-view
      :link-text "List published health checks"}]])
 
+(def server-route-matcher
+  {:create {:view create-check-view}
+   :home {:view landing-page}
+   :questions {:view create-questions-view}
+   :answers {:view create-answers}
+   :success {:view success-view}
+   :answers-success {:view answers-success-view}
+   :results {:view download-check-results-view}
+   :list {:view list-checks-view}})
+
 (def router
   (rf/router routes {:data {:coercion rss/coercion}}))
 
@@ -72,13 +82,18 @@
 
 (defn router-component []
   (let [current-route @(subscribe [::subs/current-route])]
+    (println {:r (-> current-route :data :name)})
     [err-boundary
      (when (and (= (-> current-route :data :name) :home)
                 (not (nil? (-> current-route :parameters :query :id))))
        (dispatch [::events/fetch-health-questions
                   (-> current-route :parameters :query :id)]))
-     (when current-route
+     (if (not (nil? (-> current-route :data :view)))
        [:<>
         [:> ToastContainer]
         [:div (use-style app-base-style)
-         [(-> current-route :data :view)]]])]))
+         [(-> current-route :data :view)]]]
+       [:<>
+        [:> ToastContainer]
+        [:div (use-style app-base-style)
+         [(-> server-route-matcher (-> current-route :data :name) :view)]]])]))

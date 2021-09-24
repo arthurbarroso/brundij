@@ -1,8 +1,8 @@
 (ns brundij.router
   (:require [brundij.answers.routes :as answers]
             [brundij.healths.routes :as healths]
+            [brundij.html.routes :as html]
             [brundij.questions.routes :as questions]
-            [clojure.java.io :as io]
             [muuntaja.core :as m]
             [reitit.coercion.spec :as coercion-spec]
             [reitit.dev.pretty :as pretty]
@@ -13,9 +13,6 @@
             [reitit.swagger :as swagger]
             [reitit.swagger-ui :as swagger-ui]
             [ring.middleware.cors :refer [wrap-cors]]))
-
-(defn index-handler [_]
-  {:body (slurp (io/resource "resources/final.html"))})
 
 (def router-config
   {:data {:coercion coercion-spec/coercion
@@ -41,7 +38,7 @@
   (wrap-cors
     (ring/ring-handler
       (ring/router
-        [["/app" {:get index-handler}]
+        [[(html/routes)]
          ["/assets/*" (ring/create-resource-handler {:root "resources/assets"})]
          [swagger-docs
           ["/v1"

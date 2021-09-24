@@ -8,7 +8,8 @@
             [hawk.core :as hawk]
             [integrant.core :as ig]
             [integrant.repl :as ig-repl]
-            [integrant.repl.state :as state]))
+            [integrant.repl.state :as state]
+            [muuntaja.core :as m]))
 
 (def config-map
   {:server/jetty {:handler (ig/ref :brundij/app)
@@ -28,7 +29,6 @@
   (fn [] config-map))
 
 (def app (-> state/system :brundij/app))
-(def driver (-> state/system :brundij/render))
 (def go ig-repl/go)
 (def reset ig-repl/reset)
 (def reset-all ig-repl/reset-all)
@@ -68,25 +68,45 @@
         true
         (core.async/close! poll-ch)))))
 
-(defn prerender [route]
+(defn prerender [driver {:keys [route html-name]}]
   (etaoin/go driver "https://brundij-demo.netlify.app/")
   (etaoin/js-execute driver
                      (str "brundij.utils.out_navigate(\"" (keyword route) "\");"))
   (core.async/go
     (when (<! (wait-for-frontend driver))
       (let [url (subs (etaoin/js-execute driver "return document.location.pathname;") 1)
+            m (m/create)
             body (etaoin/js-execute driver "return document.getElementById('app').innerHTML;")
             head (etaoin/js-execute driver "return document.querySelector('head').innerHTML;")
-            template (slurp "dev-resources/resources/template.html")]
-        (spit "dev-resources/resources/final.html"
+            template (slurp "dev-resources/resources/template.html")
+            app-db (->> (etaoin/js-execute driver "return brundij.utils.export_db();")
+                        (clojure.edn/read-string)
+                        (m/encode m "application/json")
+                        (slurp))
+            app-db-string (str "<script>window.__rendered_db=" app-db "</script>")]
+        (spit (str "dev-resources/resources/" html-name)
               (-> template
                   (string/replace "{{head}}" head)
-                  (string/replace "{{body}}" body)))))))
+                  (string/replace "{{body}}" body)
+                  (string/replace "{{pre-rendered-db}}" app-db-string)))))))
+
+(def server-routes
+  [{:route "home" :html-name "index.html"}
+   {:route "create" :html-name "create.html"}
+   {:route "questions" :html-name "questions.html"}
+   {:route "success" :html-name "success.html"}
+   {:route "answers" :html-name "answers.html"}
+   {:route "answers-success" :html-name "answers-success.html"}
+   {:route "export-results" :html-name "results.html"}
+   {:route "list-checks" :html-name "list.html"}])
 
 (comment
   (go)
   (reset-all)
-  (prerender "create")
+  (nth server-routes 0)
+  (def driver (-> state/system :brundij/render))
+  (prerender driver (nth server-routes 7)) ;;7
+  (prerender driver "create")
   (etaoin/go driver "https://brundij-demo.netlify.app/")
   (etaoin/js-execute driver "brundij.utils.out_navigate(\":create\")")
   (etaoin/js-execute driver "return brundij.utils.ready_QMARK_();")
