@@ -23,7 +23,11 @@
 (defn ^:export export-db []
   (with-out-str
     (pprint
-      (-> @(re-frame/subscribe [::subs/db])))))
+      (-> @(re-frame/subscribe [::subs/db])
+          (update-in [:current-route :data] dissoc :coercion)
+          (update-in [:current-route :data] dissoc :view)
+          (update-in [:current-route :data] dissoc :parameters)
+          (update-in [:current-route :result] dissoc :query)))))
 
 (defn dissoc-local-health-db-ids [health]
   (-> health
