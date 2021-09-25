@@ -38,7 +38,7 @@
                         (read-string)
                         (m/encode m "application/json")
                         (slurp))
-            template (slurp "resources/template.html")
+            template (slurp "pre-render/template.html")
             app-db-string (str "<script>window.__rendered_db=" app-db "</script>")]
         (spit (str "pre-render/resources/" html-name)
               (-> template
@@ -61,5 +61,5 @@
     (map
       #(prerender
          (:driver config)
-         "https://614f3fc6632cd5427410caf1--brundij-demo.netlify.app/"
+         (:url config)
          %) server-routes)))

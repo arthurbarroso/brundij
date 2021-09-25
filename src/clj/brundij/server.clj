@@ -32,7 +32,7 @@
     (info "\n[Brundij]: starting headless chrome for pre-rendering")
     (let [driver (etaoin/chrome-headless)]
       (info "\n[Brundij]: pre-rendering SPA pages...")
-      (render-pages! {:driver driver})
+      (render-pages! {:driver driver :url (:spa-url config)})
       driver)))
 
 (defmethod ig/init-key :db/postgres
@@ -50,7 +50,8 @@
                           :port (Integer/parseInt (env :port))}
            :brundij/app {:database (ig/ref :db/postgres)
                          :renderer (ig/ref :brundij/render)}
-           :brundij/render {:render? (env :pre-render)}
+           :brundij/render {:render? (env :pre-render)
+                            :spa-url (env :spa-url)}
            :db/postgres {:host (env :database-host)
                          :port (env :database-port)
                          :user (env :database-user)

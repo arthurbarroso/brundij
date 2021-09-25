@@ -35,7 +35,7 @@
              :dev {:source-paths ["src/clj"
                                   "src/cljc"
                                   "test/clj"]
-                   :resource-paths ["pre-render" "resources"]
+                   :resource-paths ["pre-render"]
 
                    :env {:environment "development"
                          :port "4000"
@@ -45,7 +45,8 @@
                          :database-port "5432"
                          :database-backend "pg"
                          :database-name "brundij"
-                         :pre-render true}
+                         :pre-render true
+                         :spa-url "https://brundij-demo.netlify.app/"}
 
                    :dependencies [[ring/ring-mock "0.4.0"]
                                   [hawk "0.2.11"]
