@@ -29,7 +29,7 @@
   [_ config]
   (when (boolean (Boolean/valueOf (:render? config)))
     (info "\n[Brundij]: starting headless chrome for pre-rendering")
-    (etaoin/chrome)))
+    (etaoin/chrome-headless)))
 
 (defmethod ig/init-key :db/postgres
   [_ config]
