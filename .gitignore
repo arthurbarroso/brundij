@@ -8,6 +8,8 @@
 /resources/dev/public/js/
 /resources/test/public/
 /resouces/test/public/js
+/pre-render/resources/*.html
+/pre-render/resources/assets/
 
 /target/
 /*-init.clj

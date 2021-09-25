@@ -35,7 +35,7 @@
              :dev {:source-paths ["src/clj"
                                   "src/cljc"
                                   "test/clj"]
-                   :resource-paths ["dev-resources/resources" "resources"]
+                   :resource-paths ["pre-render" "resources"]
 
                    :env {:environment "development"
                          :port "4000"

@@ -40,7 +40,8 @@
   (wrap-cors
     (ring/ring-handler
       (ring/router
-        [[(html/routes)]
+        [
+         [(html/routes)]
          ["/assets/*" (ring/create-resource-handler {:root "resources/assets"})]
          [swagger-docs
           ["/v1"

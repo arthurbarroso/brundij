@@ -15,6 +15,5 @@
 
 (defn initialize-styles
   []
-  (when-not (check-if-stylefy-was-initialized)
-    (initialize-fonts)
-    (stylefy/init {:dom (stylefy-reagent/init)})))
+  (initialize-fonts)
+  (stylefy/init {:dom (stylefy-reagent/init)}))

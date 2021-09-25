@@ -82,7 +82,6 @@
 
 (defn router-component []
   (let [current-route @(subscribe [::subs/current-route])]
-    (println {:r (-> current-route :data :name)})
     [err-boundary
      (when (and (= (-> current-route :data :name) :home)
                 (not (nil? (-> current-route :parameters :query :id))))

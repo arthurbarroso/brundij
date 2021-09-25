@@ -68,8 +68,8 @@
         true
         (core.async/close! poll-ch)))))
 
-(defn prerender [driver {:keys [route html-name]}]
-  (etaoin/go driver "https://brundij-demo.netlify.app/")
+(defn prerender [driver url {:keys [route html-name]}]
+  (etaoin/go driver url)
   (etaoin/js-execute driver
                      (str "brundij.utils.out_navigate(\"" (keyword route) "\");"))
   (core.async/go
@@ -78,18 +78,17 @@
             m (m/create)
             body (etaoin/js-execute driver "return document.getElementById('app').innerHTML;")
             head (etaoin/js-execute driver "return document.querySelector('head').innerHTML;")
-            template (slurp "dev-resources/resources/template.html")
+            template (slurp "pre-render/template.html")
             app-db (->> (etaoin/js-execute driver "return brundij.utils.export_db();")
                         (clojure.edn/read-string)
                         (m/encode m "application/json")
                         (slurp))
             app-db-string (str "<script>window.__rendered_db=" app-db "</script>")]
-        (spit (str "dev-resources/resources/" html-name)
+        (spit (str "pre-render/resources/" html-name)
               (-> template
                   (string/replace "{{head}}" head)
                   (string/replace "{{body}}" body)
                   (string/replace "{{pre-rendered-db}}" app-db-string)))))))
-
 (def server-routes
   [{:route "home" :html-name "index.html"}
    {:route "create" :html-name "create.html"}
@@ -100,13 +99,14 @@
    {:route "export-results" :html-name "results.html"}
    {:route "list-checks" :html-name "list.html"}])
 
+; <input type="text" placeholder="New question" class="_stylefy_-707977393" value="">
 (comment
   (go)
   (reset-all)
   (nth server-routes 0)
   (def driver (-> state/system :brundij/render))
-  (prerender driver (nth server-routes 7)) ;;7
-  (prerender driver "create")
+  (prerender driver "https://614f3ddb6fff620007cc4f2a--brundij-demo.netlify.app/"
+             (nth server-routes 7))
   (etaoin/go driver "https://brundij-demo.netlify.app/")
   (etaoin/js-execute driver "brundij.utils.out_navigate(\":create\")")
   (etaoin/js-execute driver "return brundij.utils.ready_QMARK_();")
