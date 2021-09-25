@@ -53,6 +53,6 @@ yarn release-and-sw # offline mode/sw support
 
 ### License
 
-Copyright © 2021 Arthur Barroso
+Copyright © 2021 Arthur Barroso.
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
