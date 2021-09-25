@@ -1,5 +1,6 @@
 (ns brundij.server
   (:require [brundij.database :as database]
+            [brundij.pre-render :refer [render-pages!]]
             [brundij.router :as router]
             [environ.core :refer [env]]
             [etaoin.api :as etaoin]
@@ -29,7 +30,10 @@
   [_ config]
   (when (boolean (Boolean/valueOf (:render? config)))
     (info "\n[Brundij]: starting headless chrome for pre-rendering")
-    (etaoin/chrome)))
+    (let [driver (etaoin/chrome-headless)]
+      (info "\n[Brundij]: pre-rendering SPA pages...")
+      (render-pages! {:driver driver})
+      driver)))
 
 (defmethod ig/init-key :db/postgres
   [_ config]

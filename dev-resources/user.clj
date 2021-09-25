@@ -99,7 +99,6 @@
    {:route "export-results" :html-name "results.html"}
    {:route "list-checks" :html-name "list.html"}])
 
-; <input type="text" placeholder="New question" class="_stylefy_-707977393" value="">
 (comment
   (go)
   (reset-all)

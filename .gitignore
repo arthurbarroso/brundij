@@ -10,6 +10,7 @@
 /resouces/test/public/js
 /pre-render/resources/*.html
 /pre-render/resources/assets/
+!/pre-render/resources/assets/sw.js
 
 /target/
 /*-init.clj

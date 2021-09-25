@@ -1,4 +1,4 @@
-(ns clj.brundij.pre-render
+(ns brundij.pre-render
   (:require [clojure.core.async :refer [go-loop >! <! chan timeout] :as core.async]
             [clojure.core.async.impl.protocols :refer [closed?]]
             [clojure.edn :refer [read-string]]
@@ -34,13 +34,13 @@
       (let [m (m/create)
             body (etaoin/js-execute driver "return document.getElementById('app').innerHTML;")
             head (etaoin/js-execute driver "return document.querySelector('head').innerHTML;")
-            template (slurp "dev-resources/resources/template.html")
             app-db (->> (etaoin/js-execute driver "return brundij.utils.export_db();")
                         (read-string)
                         (m/encode m "application/json")
                         (slurp))
+            template (slurp "resources/template.html")
             app-db-string (str "<script>window.__rendered_db=" app-db "</script>")]
-        (spit (str "dev-resources/resources/" html-name)
+        (spit (str "pre-render/resources/" html-name)
               (-> template
                   (string/replace "{{head}}" head)
                   (string/replace "{{body}}" body)
@@ -55,3 +55,11 @@
    {:route "answers-success" :html-name "answers-success.html"}
    {:route "export-results" :html-name "results.html"}
    {:route "list-checks" :html-name "list.html"}])
+
+(defn render-pages! [config]
+  (dorun
+    (map
+      #(prerender
+         (:driver config)
+         "https://614f3fc6632cd5427410caf1--brundij-demo.netlify.app/"
+         %) server-routes)))
