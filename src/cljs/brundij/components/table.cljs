@@ -1,6 +1,5 @@
 (ns brundij.components.table
   (:require [brundij.components.button :refer [button]]
-            [brundij.date :refer [format-inst]]
             [brundij.events :as events]
             [brundij.subs :as subs]
             [re-frame.core :as re-frame]
@@ -32,7 +31,6 @@
           [:tr
            [:td (use-style td-style)
             (.toString (:health/uuid health))]
-           [:td (use-style td-style) (format-inst (:health/created_at health))]
            [:td (use-style td-style-right) (count (:health/question health))]
            [:td (use-style td-style)
             [button

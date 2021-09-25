@@ -88,12 +88,10 @@
                 (not (nil? (-> current-route :parameters :query :id))))
        (dispatch [::events/fetch-health-questions
                   (-> current-route :parameters :query :id)]))
-     (if (not (nil? (-> current-route :data :view)))
-       [:<>
-        [:> ToastContainer]
-        [:div (use-style app-base-style)
-         [(-> current-route :data :view)]]]
-       [:<>
-        [:> ToastContainer]
-        [:div (use-style app-base-style)
-         [(-> server-route-matcher (-> current-route :data :name) :view)]]])]))
+     [:<>
+      [:> ToastContainer]
+      [:div (use-style app-base-style)
+       (cond
+         (not (nil? (-> current-route :data :view))) [(-> current-route :data :view)]
+         (not (nil? (-> current-route :name))) [(-> server-route-matcher (-> current-route :data :name) :view)]
+         (nil? current-route) [landing-page])]]]))

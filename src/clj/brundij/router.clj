@@ -12,13 +12,15 @@
             [reitit.ring.middleware.muuntaja :as muuntaja]
             [reitit.swagger :as swagger]
             [reitit.swagger-ui :as swagger-ui]
-            [ring.middleware.cors :refer [wrap-cors]]))
+            [ring.middleware.cors :refer [wrap-cors]]
+            [ring.middleware.gzip :as gzip]))
 
 (def router-config
   {:data {:coercion coercion-spec/coercion
           :exception pretty/exception
           :muuntaja m/instance
-          :middleware [muuntaja/format-middleware
+          :middleware [gzip/wrap-gzip
+                       muuntaja/format-middleware
                        exception/exception-middleware
                        swagger/swagger-feature
                        coercion/coerce-request-middleware

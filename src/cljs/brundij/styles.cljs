@@ -7,7 +7,7 @@
 
 (defn initialize-fonts []
   (stylefy/font-face {:font-family font-family
-                      :src "url('/fonts/Roboto-Regular.ttf')"}))
+                      :src "url('https://fonts.googleapis.com/css2?family=Roboto&display=swap')"}))
 
 (defn check-if-stylefy-was-initialized []
   (includes? (.-innerHTML (.querySelector js/document "head"))
