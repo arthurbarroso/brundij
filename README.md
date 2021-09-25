@@ -25,6 +25,7 @@ In order to get a development server up and running you'll need to run `lein rep
 docker-compose up -d # Spins up a local docker container with a postgres database
 lein repl # Starts the REPL
 ```
+Please note the development environment variables set in `project.clj` will assume you want to pre-render your application. If you want to pre-render an SPA you didn't yet deploy please use `spa-http-server` and point your env's `spa-url` key to the running application. Pre-rendering can be turned off by setting the `pre-render` environment variable to false.
 
 With the REPL running, start the server using Integrant's `go` function. I usually start the server and then restart it with `reset-all` just in case. These functions are available in the `user` namespace and should be automatically loaded when you start the REPL. A function called `auto-reset` is also available. It automatically runs integrant's reset when changes are made to `.clj` and `.cljc` files.
 

@@ -38,21 +38,23 @@
           :handler (swagger/create-swagger-handler)}}])
 
 (defn routes [environment]
-  (wrap-cors
-    (ring/ring-handler
-      (ring/router
-        [
-         [(html/routes)]
-         ["/assets/*" (ring/create-resource-handler {:root "resources/assets"})]
-         ["/favicon.ico" {:get (fn [_] (resource-response "favicon.ico" {:root "resources/assets/"}))}]
-         [swagger-docs
-          ["/v1"
-           (healths/routes environment)
-           (questions/routes environment)
-           (answers/routes environment)]]]
-        router-config)
-      (ring/routes
-        (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))
-      (ring/create-default-handler))
-    :access-control-allow-origin [#".*"]
-    :access-control-allow-methods [:get :put :post :delete]))
+  (let [pre-rendered-routes (-> environment :renderer :config :render?)]
+    (wrap-cors
+      (ring/ring-handler
+        (ring/router
+          [
+           (when pre-rendered-routes
+             [(html/routes)])
+           ["/assets/*" (ring/create-resource-handler {:root "resources/assets"})]
+           ["/favicon.ico" {:get (fn [_] (resource-response "favicon.ico" {:root "resources/assets/"}))}]
+           [swagger-docs
+            ["/v1"
+             (healths/routes environment)
+             (questions/routes environment)
+             (answers/routes environment)]]]
+          router-config)
+        (ring/routes
+          (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))
+        (ring/create-default-handler))
+      :access-control-allow-origin [#".*"]
+      :access-control-allow-methods [:get :put :post :delete])))

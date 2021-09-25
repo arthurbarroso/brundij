@@ -33,7 +33,7 @@
     (let [driver (etaoin/chrome-headless)]
       (info "\n[Brundij]: pre-rendering SPA pages...")
       (render-pages! {:driver driver :url (:spa-url config)})
-      driver)))
+      {:driver driver :config config})))
 
 (defmethod ig/init-key :db/postgres
   [_ config]
