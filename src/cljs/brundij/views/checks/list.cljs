@@ -1,6 +1,5 @@
 (ns brundij.views.checks.list
   (:require [brundij.components.template :refer [template]]
-            [brundij.date :as date]
             [brundij.subs :as subs]
             [brundij.utils :as utils]
             [re-frame.core :as re-frame]

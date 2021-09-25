@@ -7,7 +7,6 @@
             [brundij.utils :as utils]
             [cljs.reader :as reader]
             [day8.re-frame.http-fx]
-            [day8.re-frame.tracing :refer-macros [fn-traced]]
             [re-frame.core :as re-frame]
             [reitit.frontend.controllers :refer [apply-controllers]]
             [reitit.frontend.easy :refer [push-state]]
