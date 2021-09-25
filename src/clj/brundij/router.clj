@@ -13,7 +13,8 @@
             [reitit.swagger :as swagger]
             [reitit.swagger-ui :as swagger-ui]
             [ring.middleware.cors :refer [wrap-cors]]
-            [ring.middleware.gzip :as gzip]))
+            [ring.middleware.gzip :as gzip]
+            [ring.util.response :refer [resource-response]]))
 
 (def router-config
   {:data {:coercion coercion-spec/coercion
@@ -43,6 +44,7 @@
         [
          [(html/routes)]
          ["/assets/*" (ring/create-resource-handler {:root "resources/assets"})]
+         ["/favicon.ico" {:get (fn [_] (resource-response "favicon.ico" {:root "resources/assets/"}))}]
          [swagger-docs
           ["/v1"
            (healths/routes environment)

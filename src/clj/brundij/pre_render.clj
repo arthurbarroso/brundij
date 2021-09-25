@@ -1,7 +1,7 @@
 (ns brundij.pre-render
   (:require [clojure.core.async :refer [go-loop >! <! chan timeout] :as core.async]
             [clojure.core.async.impl.protocols :refer [closed?]]
-            [clojure.edn :refer [read-string]]
+            [clojure.edn :as edn]
             [clojure.string :as string]
             [etaoin.api :as etaoin]
             [muuntaja.core :as m]))
@@ -35,7 +35,7 @@
             body (etaoin/js-execute driver "return document.getElementById('app').innerHTML;")
             head (etaoin/js-execute driver "return document.querySelector('head').innerHTML;")
             app-db (->> (etaoin/js-execute driver "return brundij.utils.export_db();")
-                        (read-string)
+                        (edn/read-string)
                         (m/encode m "application/json")
                         (slurp))
             template (slurp "pre-render/template.html")

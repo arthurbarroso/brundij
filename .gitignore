@@ -11,6 +11,7 @@
 /pre-render/resources/*.html
 /pre-render/resources/assets/
 !/pre-render/resources/assets/sw.js
+!/pre-render/resources/assets/favicon.ico
 
 /target/
 /*-init.clj
