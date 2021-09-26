@@ -22,7 +22,9 @@
                  [etaoin "0.4.6"]]
 
   :profiles {:uberjar {:aot :all
-                       :source-paths ["src/clj" "src/cljc"]}
+                       :source-paths ["src/clj" "src/cljc"]
+                       :resource-paths ["pre-render"]
+                       :env {:pre-render true}}
 
              :test-overrides {:env {:database-backend "mem"
                                     :database-id "brundij"
@@ -44,8 +46,7 @@
                          :database-port "5432"
                          :database-backend "pg"
                          :database-name "brundij"
-                         :pre-render true
-                         :spa-url "https://brundij-demo.netlify.app/"}
+                         :pre-render true}
 
                    :dependencies [[ring/ring-mock "0.4.0"]
                                   [hawk "0.2.11"]
