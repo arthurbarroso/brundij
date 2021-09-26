@@ -28,12 +28,13 @@
 
 (defmethod ig/init-key :brundij/render
   [_ config]
-  (when (boolean (Boolean/valueOf (:render? config)))
-    (info "\n[Brundij]: starting headless chrome for pre-rendering")
+  (if (boolean (Boolean/valueOf (:render? config)))
     (let [driver (etaoin/chrome-headless)]
+      (info "\n[Brundij]: starting headless chrome for pre-rendering")
       (info "\n[Brundij]: pre-rendering SPA pages...")
       (render-pages! {:driver driver :url (:spa-url config)})
-      {:driver driver :config config})))
+      {:driver driver :config config})
+    {:driver nil :config config}))
 
 (defmethod ig/init-key :db/postgres
   [_ config]
