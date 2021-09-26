@@ -18,9 +18,8 @@
                  [tick/tick "0.4.32"]
                  [ring-cors "0.1.13"]
                  [org.clojure/core.match "1.0.0"]
-                 [org.clojure/core.async "1.3.618"]
-                 [etaoin "0.4.6"]
-                 [amalloy/ring-gzip-middleware "0.1.4"]]
+                 [amalloy/ring-gzip-middleware "0.1.4"]
+                 [etaoin "0.4.6"]]
 
   :profiles {:uberjar {:aot :all
                        :source-paths ["src/clj" "src/cljc"]}
@@ -76,7 +75,8 @@
 
   :aliases {"test" ["with-profile" "test" "run" "-m" "circleci.test/dir" :project/test-paths]
             "tests" ["with-profile" "test" "run" "-m" "circleci.test"]
-            "retest" ["with-profile" "test" "run" "-m" "circleci.test.retest"]}
+            "retest" ["with-profile" "test" "run" "-m" "circleci.test.retest"]
+            "pre-render" ["run" "-m" "brundij.pre-render"]}
 
   :test-selectors {:integration :integration}
   :uberjar-name "brundij.jar")

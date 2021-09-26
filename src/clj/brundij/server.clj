@@ -1,9 +1,7 @@
 (ns brundij.server
   (:require [brundij.database :as database]
-            [brundij.pre-render :refer [render-pages!]]
             [brundij.router :as router]
             [environ.core :refer [env]]
-            [etaoin.api :as etaoin]
             [integrant.core :as ig]
             [ring.adapter.jetty :as jetty]
             [taoensso.timbre :as timbre :refer [info]]))
@@ -29,12 +27,11 @@
 (defmethod ig/init-key :brundij/render
   [_ config]
   (if (boolean (Boolean/valueOf (:render? config)))
-    (let [driver (etaoin/chrome-headless)]
-      (info "\n[Brundij]: starting headless chrome for pre-rendering")
-      (info "\n[Brundij]: pre-rendering SPA pages...")
-      (render-pages! {:driver driver :url (:spa-url config)})
-      {:driver driver :config config})
-    {:driver nil :config config}))
+    (info "\n[Brundij]: `pre-render` set to true. Serving HTML
+             pages from resources...")
+    (info "\n[Brundij]: `pre-render` set to false. Not serving HTML
+             pages from resources..."))
+  {:config config})
 
 (defmethod ig/init-key :db/postgres
   [_ config]
