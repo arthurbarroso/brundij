@@ -1,5 +1,6 @@
 (ns brundij.pre-render
-  (:require [clojure.edn :as edn]
+  (:require [brundij.html.routes :refer [server-routes]]
+            [clojure.edn :as edn]
             [clojure.java.io :as io]
             [clojure.string :as string]
             [etaoin.api :as etaoin]
@@ -31,16 +32,6 @@
                 (string/replace "{{head}}" head)
                 (string/replace "{{body}}" body)
                 (string/replace "{{pre-rendered-db}}" app-db-string))))))
-
-(def server-routes
-  [{:route "home" :html-name "index.html"}
-   {:route "create" :html-name "create.html"}
-   {:route "questions" :html-name "questions.html"}
-   {:route "success" :html-name "success.html"}
-   {:route "answers" :html-name "answers.html"}
-   {:route "answers-success" :html-name "answers-success.html"}
-   {:route "export-results" :html-name "results.html"}
-   {:route "list-checks" :html-name "list.html"}])
 
 (defn render-pages! [config]
   (let [driver (:driver config)
