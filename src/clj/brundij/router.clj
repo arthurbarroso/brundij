@@ -1,6 +1,7 @@
 (ns brundij.router
   (:require [brundij.answers.routes :as answers]
             [brundij.healths.routes :as healths]
+            [brundij.html.routes :as html]
             [brundij.questions.routes :as questions]
             [muuntaja.core :as m]
             [reitit.coercion.spec :as coercion-spec]
@@ -11,13 +12,16 @@
             [reitit.ring.middleware.muuntaja :as muuntaja]
             [reitit.swagger :as swagger]
             [reitit.swagger-ui :as swagger-ui]
-            [ring.middleware.cors :refer [wrap-cors]]))
+            [ring.middleware.cors :refer [wrap-cors]]
+            [ring.middleware.gzip :as gzip]
+            [ring.util.response :refer [resource-response]]))
 
 (def router-config
   {:data {:coercion coercion-spec/coercion
           :exception pretty/exception
           :muuntaja m/instance
-          :middleware [muuntaja/format-middleware
+          :middleware [gzip/wrap-gzip
+                       muuntaja/format-middleware
                        exception/exception-middleware
                        swagger/swagger-feature
                        coercion/coerce-request-middleware
@@ -34,18 +38,23 @@
           :handler (swagger/create-swagger-handler)}}])
 
 (defn routes [environment]
-  (wrap-cors
-    (ring/ring-handler
-      (ring/router
-        [
-         [swagger-docs
-          ["/v1"
-           (healths/routes environment)
-           (questions/routes environment)
-           (answers/routes environment)]]]
-        router-config)
-      (ring/routes
-        (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))
-      (ring/create-default-handler))
-    :access-control-allow-origin [#".*"]
-    :access-control-allow-methods [:get :put :post :delete]))
+  (let [pre-rendered-routes (-> environment :renderer :config :render?)]
+    (wrap-cors
+      (ring/ring-handler
+        (ring/router
+          [
+           (when pre-rendered-routes
+             [(html/routes)])
+           ["/assets/*" (ring/create-resource-handler {:root "resources/assets"})]
+           ["/favicon.ico" {:get (fn [_] (resource-response "favicon.ico" {:root "resources/assets/"}))}]
+           [swagger-docs
+            ["/v1"
+             (healths/routes environment)
+             (questions/routes environment)
+             (answers/routes environment)]]]
+          router-config)
+        (ring/routes
+          (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))
+        (ring/create-default-handler))
+      :access-control-allow-origin [#".*"]
+      :access-control-allow-methods [:get :put :post :delete])))

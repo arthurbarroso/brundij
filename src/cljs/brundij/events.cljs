@@ -7,7 +7,6 @@
             [brundij.utils :as utils]
             [cljs.reader :as reader]
             [day8.re-frame.http-fx]
-            [day8.re-frame.tracing :refer-macros [fn-traced]]
             [re-frame.core :as re-frame]
             [reitit.frontend.controllers :refer [apply-controllers]]
             [reitit.frontend.easy :refer [push-state]]
@@ -20,12 +19,12 @@
 
 (re-frame/reg-event-fx
   ::initialize-db
-  (fn [{:keys [db]} _]
-    (let [rendered (aget js/window "__rendered_db")]
+  (fn [{:keys [_]} _]
+    (let [rendered (.-rendereddb js/window)]
       (if (not (nil? rendered))
-        {:db (reader/read-string rendered)
-         ::aset [js/window "__rendered_db" nil]})
-      {:db db/default-db})))
+        {:db (js->clj rendered)
+         ::aset [js/window "__rendered_db" nil]}
+        {:db db/default-db}))))
 
 ;; ds
 (re-frame/reg-fx

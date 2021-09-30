@@ -1,6 +1,5 @@
 (ns brundij.views.checks.list
   (:require [brundij.components.template :refer [template]]
-            [brundij.date :as date]
             [brundij.subs :as subs]
             [brundij.utils :as utils]
             [re-frame.core :as re-frame]
@@ -48,9 +47,7 @@
                                    (.writeText final-url))
                     :title "Click to copy the URL to this health check"})
                  [:p (use-style {:margin 0})
-                  (str (:published/uuid check))]
-                 [:p (use-style {:margin 0})
-                  (str "Pubished on " (date/format-inst (:published/created_at check)))]]])))]]]
+                  (str (:published/uuid check))]]])))]]]
 
       [:div (use-style {:margin-top "10%"})
        [:img (use-style {:max-width "600px"}

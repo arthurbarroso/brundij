@@ -14,13 +14,15 @@
                    :watch-dir "resources/dev/public"}
         :dev {:compiler-options
                {:closure-defines {re-frame.trace.trace-enabled? true
-                                  day8.re-frame.tracing.trace-enabled? true}}}
+                                  day8.re-frame.tracing.trace-enabled? true
+                                  brundij.config/APIURL "https://brundij-api-demo.herokuapp.com"}}}
 
         :release
         {:output-dir "resources/public/js"
-         :build-options
-         {:ns-aliases
-          {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
+         :closure-defines {brundij.config/APIURL #shadow/env "API_URL"}
+         :build-options 
+          {:ns-aliases
+            {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
 
   :test {:target :browser-test
          :test-dir "resources/test/public"

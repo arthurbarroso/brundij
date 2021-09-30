@@ -24,6 +24,15 @@
   (info "\n[Brundij]: started application")
   (app config))
 
+(defmethod ig/init-key :brundij/render
+  [_ config]
+  (if (boolean (Boolean/valueOf (:render? config)))
+    (info "\n[Brundij]: `pre-render` set to true. Serving HTML
+             pages from resources...")
+    (info "\n[Brundij]: `pre-render` set to false. Not serving HTML
+             pages from resources..."))
+  {:config config})
+
 (defmethod ig/init-key :db/postgres
   [_ config]
   (info "\n[Brundij]: configured db")
@@ -38,7 +47,9 @@
           {:server/jetty {:handler (ig/ref :brundij/app)
                           :port (Integer/parseInt (env :port))}
            :brundij/app {:database (ig/ref :db/postgres)
-                         :db (ig/ref :db)}
+                         :renderer (ig/ref :brundij/render)}
+           :brundij/render {:render? (env :pre-render)
+                            :spa-url (env :spa-url)}
            :db/postgres {:host (env :database-host)
                          :port (env :database-port)
                          :user (env :database-user)

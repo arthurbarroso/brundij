@@ -17,21 +17,26 @@
                  [io.replikativ/datahike-postgres "0.1.0"]
                  [tick/tick "0.4.32"]
                  [ring-cors "0.1.13"]
-                 [org.clojure/core.match "1.0.0"]]
+                 [org.clojure/core.match "1.0.0"]
+                 [amalloy/ring-gzip-middleware "0.1.4"]
+                 [etaoin "0.4.6"]]
 
   :profiles {:uberjar {:aot :all
-                       :source-paths ["src/clj" "src/cljc"]}
+                       :source-paths ["src/clj" "src/cljc"]
+                       :resource-paths ["pre-render"]
+                       :env {:pre-render true}}
 
              :test-overrides {:env {:database-backend "mem"
                                     :database-id "brundij"
-                                    :port "4003"}}
+                                    :port "4003"
+                                    :pre-render false}
+                              :source-paths ["dev-resources"]}
              :test [:dev :test-overrides]
 
-             :dev {:source-paths ["dev-resources"
-                                  "src/clj"
+             :dev {:source-paths ["src/clj"
                                   "src/cljc"
                                   "test/clj"]
-                   :resource-paths ["dev-resources/resources" "resources"]
+                   :resource-paths ["pre-render"]
 
                    :env {:environment "development"
                          :port "4000"
@@ -40,7 +45,8 @@
                          :database-host "localhost"
                          :database-port "5432"
                          :database-backend "pg"
-                         :database-name "brundij"}
+                         :database-name "brundij"
+                         :pre-render true}
 
                    :dependencies [[ring/ring-mock "0.4.0"]
                                   [hawk "0.2.11"]
@@ -70,7 +76,8 @@
 
   :aliases {"test" ["with-profile" "test" "run" "-m" "circleci.test/dir" :project/test-paths]
             "tests" ["with-profile" "test" "run" "-m" "circleci.test"]
-            "retest" ["with-profile" "test" "run" "-m" "circleci.test.retest"]}
+            "retest" ["with-profile" "test" "run" "-m" "circleci.test.retest"]
+            "pre-render" ["run" "-m" "brundij.pre-render"]}
 
   :test-selectors {:integration :integration}
   :uberjar-name "brundij.jar")

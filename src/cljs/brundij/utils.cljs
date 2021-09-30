@@ -20,6 +20,12 @@
     (rendered?)
     (= (.-readyState js/document) "complete")))
 
+(defn ^:export get-rendered-db []
+  (.-rendereddb js/window))
+
+(defn ^:export parse-to-clj [x]
+  (js->clj x))
+
 (defn ^:export export-db []
   (with-out-str
     (pprint

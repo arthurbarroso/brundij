@@ -8,6 +8,10 @@
 /resources/dev/public/js/
 /resources/test/public/
 /resouces/test/public/js
+/pre-render/resources/*.html
+/pre-render/resources/assets/
+!/pre-render/resources/assets/sw.js
+!/pre-render/resources/assets/favicon.ico
 
 /target/
 /*-init.clj

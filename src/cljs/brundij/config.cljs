@@ -3,5 +3,7 @@
 (def debug?
   ^boolean goog.DEBUG)
 
+(goog-define APIURL "")
+
 (def url
-  "https://brundij-api-demo.herokuapp.com")
+  APIURL)
