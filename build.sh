@@ -1,6 +1,6 @@
 #!/bin/bash
 
-npm run release
+API_URL="" npm run release
 cp ./resources/public/js/app.js ./pre-render/resources/assets/app.js
 cp ./resources/public/js/manifest.edn ./pre-render/resources/assets/manifest.edn
 npm run serve-pre-render &
