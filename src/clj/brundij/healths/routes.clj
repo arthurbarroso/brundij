@@ -1,12 +1,15 @@
 (ns brundij.healths.routes
-  (:require [brundij.healths.handlers :as handlers]))
+  (:require [brundij.healths.handlers :as handlers]
+            [brundij.healths.responses :as responses]))
 
 (defn routes [environment]
   (let [database (:database environment)]
     [
      ["/healths"
       [""
-       {:post {:handler (handlers/create-health! database)}}]
+       {:post {:handler (handlers/create-health! database)
+               :description "Creates a new health check"
+               :responses {201 {:body responses/health-creation}}}}]
       ["/:health-id"
        [""
         {:get {:handler (handlers/get-health-questions database)

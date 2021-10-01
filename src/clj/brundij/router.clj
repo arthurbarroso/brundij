@@ -23,7 +23,6 @@
           :middleware [gzip/wrap-gzip
                        muuntaja/format-middleware
                        exception/exception-middleware
-                       swagger/swagger-feature
                        coercion/coerce-request-middleware
                        coercion/coerce-response-middleware
                        coercion/coerce-exceptions-middleware]}})
@@ -43,15 +42,16 @@
       (ring/ring-handler
         (ring/router
           [
-           (when pre-rendered-routes
-             [(html/routes)])
-           ["/assets/*" (ring/create-resource-handler {:root "resources/assets"})]
-           ["/favicon.ico" {:get (fn [_] (resource-response "favicon.ico" {:root "resources/assets/"}))}]
            [swagger-docs
-            ["/v1"
+            ["/v1" {:middleware [swagger/swagger-feature]}
              (healths/routes environment)
              (questions/routes environment)
-             (answers/routes environment)]]]
+             (answers/routes environment)]]
+           ["" {:no-doc true}
+            (when pre-rendered-routes
+              [(html/routes)
+               ["/assets/*" (ring/create-resource-handler {:root "resources/assets"})]
+               ["/favicon.ico" {:get (fn [_] (resource-response "favicon.ico" {:root "resources/assets/"}))}]])]]
           router-config)
         (ring/routes
           (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))
