@@ -3,10 +3,9 @@ _Santirix Gremioni's robot, from Isaac's Asimov [The Robots of Dawn](https://www
 
 ![Brundij demo in action](https://user-images.githubusercontent.com/48794198/134423862-17bf9234-22a3-40a5-aa1d-0da0cd68e939.gif)
 
-Demo versions of Brundij can be found online:
-- [Client](https://brundij-demo.netlify.app/)
-- [Server](https://brundij-api-demo.herokuapp.com/swagger) 
-  - _p.s.: the server runs on a Heroku free dyno, so it takes a few seconds/minutes to start up_
+A demo version of Brundij can be accessed online:
+- [Demo](https://brundij-api-demo.herokuapp.com) 
+  - _p.s.: the demo runs on a Heroku free dyno, so it takes a few seconds/minutes to start up_
 ### About
 An open source tool to help teams host squad health checks. Written in Clojure and Clojurescript and powered by awesome libraries such as datahike and re-frame. An attempt on having a working, self-hosted and easy to use squad health check platform. Brundij tries to handle a few main features:
 
