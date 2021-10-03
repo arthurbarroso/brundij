@@ -20,10 +20,9 @@
                   ::stylefy/mode {:hover {:color "#3ec762"}}})
 
 (def list-style {:display "flex"
-                 :list-style "none"
-                 :width "20%"})
+                 :list-style "none"})
 
-(def nav-link-style {:margin-left "3%"
+(def nav-link-style {:margin-left "8%"
                      :font-weight 500
                      :text-transform "uppercase"
                      :color "#574A4D"
@@ -32,6 +31,8 @@
 
 (def footer-link-style {:margin-right "3%"
                         :font-weight 500
+                        :text-decoration "none"
+                        :margin "2% 0"
                         :color "#574A4D"
                         :cursor "pointer"
                         ::stylefy/mode {:hover {:color "#3ec762"}}})
@@ -46,7 +47,8 @@
                      :width "100%"})
     [:nav (use-style {:display "flex"
                       :justify-content "space-between"
-                      :align-items "center"})
+                      :align-items "center"
+                      :padding "0 5%"})
      [:h1 (use-style
             title-style
             {:on-click #(re-frame/dispatch [::events/navigate :home])})
@@ -60,8 +62,16 @@
              nav-link-style
              {:on-click #(re-frame/dispatch [::events/navigate :export-results])})
        "Export"]]]
-    (into [:<>]
+    (into [:div (use-style {:padding "0 5%"})]
           (reagent/children (reagent/current-component)))]
    [:footer (use-style footer-style)
-    [:p (use-style footer-link-style) "About Brundij"]
-    [:p (use-style footer-link-style) "Self hosting"]]])
+    [:a
+     (use-style footer-link-style
+                {:href "https://github.com/arthurbarroso/brundij"
+                 :target "_blank"})
+     "About Brundij"]
+    [:a
+     (use-style footer-link-style
+                {:href "https://github.com/arthurbarroso/brundij"
+                 :target "_blank"})
+     "Self hosting"]]])

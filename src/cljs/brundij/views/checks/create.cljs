@@ -47,7 +47,7 @@
              :title "Navigate to my health check list"}]]])]
       [:div
        [:img (use-style {:max-width "600px"}
-                        {:src "https://user-images.githubusercontent.com/48794198/134415300-0194f2c1-ec02-4e9e-8883-a4720e935123.png"})]]
+                        {:src "assets/mic.png"})]]
       (when (and (pos? (count @local-health-checks)) (not @loading?))
         [:div
          [:h4 "Local health checks"]

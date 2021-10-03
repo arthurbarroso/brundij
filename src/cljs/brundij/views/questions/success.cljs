@@ -52,4 +52,4 @@
       [:div (use-style {:margin-top "10%" :align-self "flex-end"})
        [:img (use-style
                {:max-width "600px"}
-               {:src "https://user-images.githubusercontent.com/48794198/134417135-1dec0012-0666-45f9-8c03-aae3e39ca843.png"})]]]]))
+               {:src "assets/control.png"})]]]]))

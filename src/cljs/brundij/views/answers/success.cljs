@@ -14,4 +14,4 @@
         questions for this health check"]]
     [:div
      [:img (use-style {:max-width "600px"}
-                      {:src "https://user-images.githubusercontent.com/48794198/134418718-2b09cb7d-42fb-4818-954c-7e586a644caa.png"})]]]])
+                      {:src "assets/headphones.png"})]]]])

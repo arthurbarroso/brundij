@@ -89,4 +89,4 @@
                  :disabled false}]]]
       [:div (use-style {:margin-top "10%"})
        [:img (use-style {:max-width "600px"}
-                        {:src "https://user-images.githubusercontent.com/48794198/134416104-5eb6e37d-283f-4123-a7cb-06ec64f8d6d1.png"})]]]]))
+                        {:src "assets/folder.png"})]]]]))

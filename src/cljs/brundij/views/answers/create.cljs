@@ -143,4 +143,4 @@
                                  :color "#333"}}]]
         [:div
          [:img (use-style {:max-width "600px"}
-                          {:src "https://user-images.githubusercontent.com/48794198/134417746-690e99f0-13c7-491e-8a5e-5c47f52cc0f8.png"})]]]])))
+                          {:src "assets/button.png"})]]]])))

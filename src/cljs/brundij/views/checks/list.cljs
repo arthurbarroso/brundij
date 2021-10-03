@@ -51,4 +51,4 @@
 
       [:div (use-style {:margin-top "10%"})
        [:img (use-style {:max-width "600px"}
-                        {:src "https://user-images.githubusercontent.com/48794198/134419101-87a485dd-1dbe-4c22-ac53-d5fd38f4ce65.png"})]]]]))
+                        {:src "assets/disk.png"})]]]]))

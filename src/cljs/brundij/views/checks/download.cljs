@@ -30,4 +30,4 @@
                                :width "100%"}}]]
       [:div
        [:img (use-style {:max-width "600px"}
-                        {:src "https://user-images.githubusercontent.com/48794198/134419086-8a2267e1-478e-4614-bfab-8607a3d91ab3.png"})]]]]))
+                        {:src "assets/processor.png"})]]]]))
