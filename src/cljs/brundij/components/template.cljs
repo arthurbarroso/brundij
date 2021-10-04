@@ -64,14 +64,15 @@
        "Export"]]]
     (into [:div (use-style {:padding "0 5%"})]
           (reagent/children (reagent/current-component)))]
-   [:footer (use-style footer-style)
-    [:a
-     (use-style footer-link-style
-                {:href "https://github.com/arthurbarroso/brundij"
-                 :target "_blank"})
-     "About Brundij"]
-    [:a
-     (use-style footer-link-style
-                {:href "https://github.com/arthurbarroso/brundij"
-                 :target "_blank"})
-     "Self hosting"]]])
+   [:div (use-style {:padding "0 5%"})
+    [:footer (use-style footer-style)
+     [:a
+      (use-style footer-link-style
+                 {:href "https://github.com/arthurbarroso/brundij"
+                  :target "_blank"})
+      "About Brundij"]
+     [:a
+      (use-style footer-link-style
+                 {:href "https://github.com/arthurbarroso/brundij"
+                  :target "_blank"})
+      "Self hosting"]]]])
