@@ -10,8 +10,10 @@
 (defn download-check-results-view []
   (let [health-id-input (re-frame/subscribe [::subs/health-id-input])]
     [template
-     [:div (use-style {:margin-top "10%" :display "flex"})
-      [:div (use-style {:max-width "50%"})
+     [:div (use-style {:margin-top "10%" :display "flex"
+                       ::stylefy/media {{:max-width "768px"} {:flex-direction "column"}}})
+      [:div (use-style {:max-width "50%"
+                        ::stylefy/media {{:max-width "768px"} {:max-width "100%"}}})
        [:h3 (use-style {:font-size "3rem" :margin 0
                         :max-width "80%"}) "Download health check results 🧶"]
        [:p (use-style {:max-width "75%"})
@@ -28,6 +30,7 @@
                 :extra-styles {:margin-top "1%"
                                :color "#333"
                                :width "100%"}}]]
-      [:div
+      [:div (use-style
+              {::stylefy/media {{:max-width "768px"} {:display "none"}}})
        [:img (use-style {:max-width "600px"}
                         {:src "assets/processor.png"})]]]]))

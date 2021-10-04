@@ -14,8 +14,10 @@
         is-online? (re-frame/subscribe [::bsubs/is-online?])
         final-url (utils/mount-shareable-link @health-id)]
     [template
-     [:div (use-style {:display "flex"})
-      [:div (use-style {:max-width "50%"})
+     [:div (use-style {:display "flex"
+                       ::stylefy/media {{:max-width "768px"} {:flex-direction "column"}}})
+      [:div (use-style {:max-width "50%"
+                        ::stylefy/media {{:max-width "768px"} {:max-width "100%"}}})
        [:<>
         [:div (use-style {:margin-top "10%"})]
         [:h3 (use-style {:font-size "3rem" :margin 0})
@@ -49,7 +51,8 @@
             [:span (use-style {:font-weight 700 :margin 0}) (str @health-id)]]
            [:p (use-style {:margin 0})
             "You'll be able to publish it by vising the home page with an active connection"]])]]
-      [:div (use-style {:margin-top "10%" :align-self "flex-end"})
+      [:div (use-style {:margin-top "10%" :align-self "flex-end"
+                        ::stylefy/media {{:max-width "768px"} {:display "none"}}})
        [:img (use-style
                {:max-width "600px"}
                {:src "assets/control.png"})]]]]))

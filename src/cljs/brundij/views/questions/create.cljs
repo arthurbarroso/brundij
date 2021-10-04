@@ -15,7 +15,9 @@
                  :max-height "48%"
                  :margin-top "3%"
                  :overflow "auto"
-                 :padding 0})
+                 :padding 0
+                 ::stylefy/media {{:max-width "768px"} {:max-height "12%"
+                                                        :height "12%"}}})
 
 (def list-item-style {:border "1px solid #8db8a4"
                       :margin-top "1%"
@@ -44,9 +46,12 @@
         question-input (re-frame/subscribe [::subs/question-input])
         health-id (re-frame/subscribe [::subs/health-uuid])]
     [template
-     [:div (use-style {:display "flex"})
-      [:div (use-style {:max-width "50%"})
-       [:h3 (use-style {:font-size "3rem" :margin 0})
+     [:div (use-style {:display "flex"
+                       ::stylefy/media {{:max-width "768px"} {:flex-direction "column"}}})
+      [:div (use-style {:max-width "50%"
+                        ::stylefy/media {{:max-width "768px"} {:max-width "100%"}}})
+       [:h3 (use-style {:font-size "3rem" :margin 0
+                        ::stylefy/media {{:max-width "768px"} {:font-size "1rem"}}})
         "Add questions/topics to the health check 🍃"]
        [:p (use-style {:max-width "70%"})
         "Health checks come with a few default questions. You may add or remove 
@@ -62,7 +67,9 @@
         [button {:on-click #(add-question @question-input)
                  :text "➕" :disabled false
                  :extra-styles {:color "#333"}}]]
-       [:div (use-style {:max-height "48%" :height "48%"})
+       [:div (use-style {:max-height "48%" :height "48%"
+                         ::stylefy/media {{:max-width "768px"} {:max-height "12%"
+                                                                :height "12%"}}})
         [:ul (use-style list-style)
          (doall
            (for [question @questions]
@@ -85,8 +92,10 @@
                  :text "Create questions"
                  :extra-styles {:color "#333"
                                 :width "100%"
-                                :font-weight 700}
+                                :font-weight 700
+                                ::stylefy/media {{:max-width "768px"} {:margin-bottom "3%"}}}
                  :disabled false}]]]
-      [:div (use-style {:margin-top "10%"})
+      [:div (use-style {:margin-top "10%"
+                        ::stylefy/media {{:max-width "768px"} {:display "none"}}})
        [:img (use-style {:max-width "600px"}
                         {:src "assets/folder.png"})]]]]))

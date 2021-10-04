@@ -63,8 +63,10 @@
         current-index @(re-frame/subscribe [::subs/current-question-index])]
     (if (= 0 (count questions))
       [template
-       [:div (use-style {:display "flex"})
-        [:div (use-style {:max-width "50%"})
+       [:div (use-style {:display "flex"
+                         ::stylefy/media {{:max-width "768px"} {:flex-direction "column"}}})
+        [:div (use-style {:max-width "50%"
+                          ::stylefy/media {{:max-width "768px"} {:max-width "100%"}}})
          [:div (use-style {:margin-top "10%"})]
          [:h3 (use-style {:font-size "3rem" :margin 0})
           "Oops! Looks like either the selected health check has no questions 
@@ -74,8 +76,10 @@
            :text "Go back to home page"
            :title "Navigate to home page"}]]]]
       [template
-       [:div (use-style {:margin-top "10%" :display "flex"})
-        [:div (use-style {:max-width "50%"})
+       [:div (use-style {:margin-top "10%" :display "flex"
+                         ::stylefy/media {{:max-width "768px"} {:flex-direction "column"}}})
+        [:div (use-style {:max-width "50%"
+                          ::stylefy/media {{:max-width "768px"} {:max-width "100%"}}})
          [:h3 (use-style {:font-size "3rem" :margin 0})
           "Answering health check questions 🥝"]
          [:h4 (str "Question/topic: " (:content (nth questions current-index)))]
@@ -141,6 +145,7 @@
                   :text "Submit answers"
                   :extra-styles {:width "100%"
                                  :color "#333"}}]]
-        [:div
+        [:div (use-style
+                {::stylefy/media {{:max-width "768px"} {:display "none"}}})
          [:img (use-style {:max-width "600px"}
                           {:src "assets/button.png"})]]]])))

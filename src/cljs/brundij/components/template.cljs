@@ -12,7 +12,8 @@
                   :font-family font-family
                   :width "100%"
                   :height "100vh"
-                  :max-width "1440px"})
+                  :max-width "1440px"
+                  ::stylefy/media {{:max-width "768px"} {:height "100%"}}})
 
 (def title-style {:color "#161313"
                   :cursor "pointer"
@@ -20,14 +21,17 @@
                   ::stylefy/mode {:hover {:color "#3ec762"}}})
 
 (def list-style {:display "flex"
-                 :list-style "none"})
+                 :list-style "none"
+                 ::stylefy/media {{:max-width "768px"} {:width "40%"
+                                                        :padding 0}}})
 
 (def nav-link-style {:margin-left "8%"
                      :font-weight 500
                      :text-transform "uppercase"
                      :color "#574A4D"
                      :cursor "pointer"
-                     ::stylefy/mode {:hover {:color "#3ec762"}}})
+                     ::stylefy/mode {:hover {:color "#3ec762"}}
+                     ::stylefy/media {{:max-width "768px"} {:margin-left 0}}})
 
 (def footer-link-style {:margin-right "3%"
                         :font-weight 500
@@ -44,7 +48,8 @@
   [:div (use-style outer-style)
    [:div (use-style {;:padding "1.5%"
                      :overflow "hidden"
-                     :width "100%"})
+                     :width "100%"
+                     ::stylefy/media {{:max-width "767px"} {:overflow "visible"}}})
     [:nav (use-style {:display "flex"
                       :justify-content "space-between"
                       :align-items "center"
@@ -55,16 +60,22 @@
       "Brundij"]
      [:ul (use-style list-style)
       [:li (use-style
-             nav-link-style
+             (merge nav-link-style
+                    {::stylefy/media {{:max-width "768px"} {:margin-right "5%"
+                                                            :margin-left 0}}})
              {:on-click #(re-frame/dispatch [::events/navigate :create])})
        "Create"]
       [:li (use-style
              nav-link-style
              {:on-click #(re-frame/dispatch [::events/navigate :export-results])})
        "Export"]]]
-    (into [:div (use-style {:padding "0 5%"})]
+    (into [:div (use-style {:padding "0 5%"
+                            :background "#F5F4F4"})]
+
           (reagent/children (reagent/current-component)))]
-   [:div (use-style {:padding "0 5%"})
+   [:div (use-style {:padding "0 5%"
+                     :background "#F5F4F4"})
+
     [:footer (use-style footer-style)
      [:a
       (use-style footer-link-style

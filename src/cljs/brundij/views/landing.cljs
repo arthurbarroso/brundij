@@ -9,13 +9,19 @@
                 :color "#574A4D"
                 :font-weight 400
                 :margin-bottom 0
-                :max-width "75%"})
+                :max-width "75%"
+                ::stylefy/media {{:max-width "768px"} {:font-size "3rem"
+                                                       :max-width "100%"
+                                                       :margin-top 0}}})
 
 (def made-easy-style {:font-size "4.5rem"
                       :color "#161313"
-                      :font-weight 700})
+                      :font-weight 700
+                      ::stylefy/media {{:max-width "768px"} {:font-size "3rem"}}})
 
-(def desc-style {:max-width "52%"})
+(def desc-style {:max-width "52%"
+                 ::stylefy/media {{:max-width "768px"} {:font-size "1rem"
+                                                        :max-width "100%"}}})
 
 (def button-custom-styles {:width "38%"
                            :background "#3ec762"
@@ -44,14 +50,23 @@
                       :width "100%"
                       :max-width "40%"
                       :align-items "center"
-                      :justify-content "center"})
-     [button {:text "Learn more" :extra-styles button-custom-styles
+                      :justify-content "center"
+                      ::stylefy/media
+                        {{:max-width "768px"} {:flex-direction "column"
+                                               :max-width "75%"}}})
+     [button {:text "Learn more"
               :title "Navigate to Brundij's docs"
-              :on-click #(navigate-to-brundi-gh)}]
+              :on-click #(navigate-to-brundi-gh)
+              :extra-styles (merge button-custom-styles
+                                   {::stylefy/media {{:max-width "768px"} {:width "100%"}}})}]
      [button {:text "Try it out"
               :title "Give Brundij a try!"
               :on-click #(re-frame/dispatch [::events/navigate :create])
               :extra-styles (merge
                               button-custom-styles {:background "#fff"
                                                     :border "1px solid #3ec762"
-                                                    :color "#161313"})}]]]])
+                                                    :color "#161313"
+                                                    ::stylefy/media
+                                                      {{:max-width "768px"} {:width "100%"
+                                                                             :margin-top "3%"
+                                                                             :margin-bottom "3%"}}})}]]]])
