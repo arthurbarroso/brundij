@@ -55,7 +55,7 @@
 
 (defn -main [& _args]
   (let [config {:driver (etaoin/chrome-headless)
-                :url "https://brundij-demo.netlify.app/"
+                :url "http://localhost:8080"
                 :template (slurp (io/resource "template.html"))}]
     (render-pages! config)
     (info "\n[Brundij]: Pre-rendered routes")))
