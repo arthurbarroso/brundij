@@ -6,7 +6,7 @@ if (workbox) {
   console.log(`Yay! Workbox is loaded 🎉`);
 
   workbox.routing.registerRoute(
-    new RegExp('https:.*\.(css|js)'),
+    new RegExp('https:.*\.(css|js|png)'),
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'cdn-cache'
     })
@@ -18,14 +18,6 @@ if (workbox) {
       cacheName: 'cdn-font-cache'
     })
   )
-
-  workbox.routing.registerRoute(
-    new RegExp('https://user-images.githubusercontent.com/*'),
-    workbox.strategies.staleWhileRevalidate({
-      cacheName: 'cdn-font-cache'
-    })
-  )
-
   workbox.precaching.precacheAndRoute([
   ]);
 } else {
