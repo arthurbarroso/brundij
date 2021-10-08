@@ -9,6 +9,12 @@
   (stylefy/font-face {:font-family font-family
                       :src "url('https://fonts.googleapis.com/css2?family=Roboto&display=swap')"}))
 
+(def app-base-style {:background "#F5F4F4"
+                     :display "flex"
+                     :justify-content "center"
+                     :align-items "center"
+                     :height "100vh"})
+
 (defn check-if-stylefy-was-initialized []
   (includes? (.-innerHTML (.querySelector js/document "head"))
              "._stylefy_-"))

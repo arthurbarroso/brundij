@@ -28,7 +28,7 @@
                      #(re-frame/dispatch
                         [::events/set-is-online (get-current-online-status!)])))
 
-(defn init []
+(defn ^:export init []
   (init-routes!)
   (initialize-ds!)
   (re-frame/dispatch-sync [::events/initialize-db])

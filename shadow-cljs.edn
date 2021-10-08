@@ -8,27 +8,51 @@
         :output-dir "resources/dev/public/js"
         :asset-path "/js"
         :jvm-opts ["-Xmx4G"]
-        :modules
-        {:app {:init-fn brundij.core/init}}
+        :module-loader true
+        :modules {:main {:entries [brundij.core
+                                   brundij.events
+                                   brundij.styles
+                                   brundij.views.landing
+                                   brundij.subs
+                                   brundij.db
+                                   brundij.lazy
+                                   brundij.utils]}
+
+                  :checks {:entries [brundij.views.checks.create
+                                     brundij.views.checks.download
+                                     brundij.views.checks.list]
+                           :depends-on #{:main}}
+
+                  :questions {:entries [brundij.views.questions.create
+                                        brundij.views.questions.success]
+                              :depends-on #{:main}}
+                  
+                  :answers {:entries [brundij.views.answers.create
+                                      brundij.views.answers.success]
+                            :depends-on #{:main}}}
+                  
+
+
         :devtools {:preloads [day8.re-frame-10x.preload]
-                   :watch-dir "resources/dev/public"}
-        :dev {:compiler-options
-               {:closure-defines {re-frame.trace.trace-enabled? true
-                                  day8.re-frame.tracing.trace-enabled? true
-                                  brundij.config/APIURL "https://brundij-api-demo.herokuapp.com"}}}
+                   :watch-dir "resources/dev/public"}}}
 
-        :release
-        {:output-dir "resources/public/js"
-         :closure-defines {brundij.config/APIURL #shadow/env "API_URL"}
-         :build-options 
-          {:ns-aliases
-            {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
+        ; :dev {:compiler-options
+        ;        {:closure-defines {re-frame.trace.trace-enabled? true
+        ;                           day8.re-frame.tracing.trace-enabled? true
+        ;                           brundij.config/APIURL "https://brundij-api-demo.herokuapp.com"}}}}}
 
-  :test {:target :browser-test
-         :test-dir "resources/test/public"
-         :devtools {:http-port 8016
-                    :http-root "resources/test/public"}}
+        ; :release
+        ; {:output-dir "resources/public/js"
+        ;  :closure-defines {brundij.config/APIURL #shadow/env "API_URL"}
+        ;  :build-options 
+        ;   {:ns-aliases
+        ;     {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
 
-  :ci {:target :karma
-       :output-to "target/ci.js"}}
+  ; :test {:target :browser-test
+        ;  :test-dir "resources/test/public"
+        ;  :devtools {:http-port 8016
+        ;             :http-root "resources/test/public"}}
+
+  ; :ci {:target :karma
+       ; :output-to "target/ci.js"}}
  :lein {:profile "cljs"}}
