@@ -4,6 +4,7 @@
 /resources/public/js/cljs-runtime/
 /resources/public/js/manifest.edn
 /public/assets/js/
+/public/assets/css/
 /resources/dev/public/js
 /resources/dev/public/js/
 /resources/test/public/
