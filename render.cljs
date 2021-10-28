@@ -26,21 +26,38 @@
 (defn listen! [& _args] nil)
 (defn transact [& _args] nil)
 (defn q [& _args] nil)
+(defn tempid [& _args] nil)
 
 (ns datascript.transit)
 (defn write-transit-str [& _args] nil)
 (defn read-transit-str [& _args] nil)
 
 (ns brundij.uuids)
-(defn random-uuid [& _args] nil)
-(defn generate-uuid [& _args] nil)
+(defn random-uuid [& _args]
+  (letfn [(hex [] (.toString (rand-int 16) 16))]
+    (let [rhex (.toString (bit-or 0x8 (bit-and 0x3 (rand-int 16))) 16)
+          final (str (hex) (hex) (hex) (hex)
+                     (hex) (hex) (hex) (hex) "-"
+                     (hex) (hex) (hex) (hex) "-"
+                     "4"   (hex) (hex) (hex) "-"
+                     rhex  (hex) (hex) (hex) "-"
+                     (hex) (hex) (hex) (hex)
+                     (hex) (hex) (hex) (hex)
+                     (hex) (hex) (hex) (hex))]
+      (.toLowerCase final))))
+(defn generate-uuid [& _args] (random-uuid))
+
+(ns brundij.utils)
+(defn get-health-id [& _args] "")
 
 (ns render
   (:require [brundij.landing.render :refer [pre-render]]
-            [brundij.healths.render :refer [pre-render-create]]))
+            [brundij.healths.render :refer [pre-render-create]]
+            [brundij.questions.render :as questions]))
 
 (defn render-server []
   (pre-render)
-  (pre-render-create))
+  (pre-render-create)
+  (questions/pre-render-create))
 
 (println (render-server))

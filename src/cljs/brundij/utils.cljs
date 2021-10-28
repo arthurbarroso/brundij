@@ -17,8 +17,8 @@
 
 (defn ^:export ready? []
   (and
-    (rendered?)
-    (= (.-readyState js/document) "complete")))
+   (rendered?)
+   (= (.-readyState js/document) "complete")))
 
 (defn ^:export get-rendered-db []
   (.-rendereddb js/window))
@@ -29,18 +29,18 @@
 (defn ^:export export-db []
   (with-out-str
     (pprint
-      (-> @(re-frame/subscribe [::subs/db])
-          (update-in [:current-route :data] dissoc :coercion)
-          (update-in [:current-route :data] dissoc :view)
-          (update-in [:current-route :data] dissoc :parameters)
-          (update-in [:current-route :result] dissoc :query)))))
+     (-> @(re-frame/subscribe [::subs/db])
+         (update-in [:current-route :data] dissoc :coercion)
+         (update-in [:current-route :data] dissoc :view)
+         (update-in [:current-route :data] dissoc :parameters)
+         (update-in [:current-route :result] dissoc :query)))))
 
 (defn dissoc-local-health-db-ids [health]
   (-> health
       (dissoc :db/id)
       (assoc :health/question
-               (->> (:health/question health)
-                    (map #(dissoc % :db/id))))))
+             (->> (:health/question health)
+                  (map #(dissoc % :db/id))))))
 
 (defn mount-shareable-link [health-id]
   (let [local-url (.-href js/window.location)]

@@ -41,7 +41,12 @@
     :healths {:entries [brundij.healths.events
                         brundij.healths.create
                         brundij.healths.render]
-              :depends-on #{:shared}}}
+              :depends-on #{:shared}}
+
+    :questions {:entries [brundij.questions.create
+                          brundij.questions.events
+                          brundij.questions.render]
+                :depends-on #{:shared}}}
 
    :build-hooks [(util.pre-render/hook)]}
 

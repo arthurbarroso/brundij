@@ -6,7 +6,6 @@
 (defn routes [environment]
   (let [database (:database environment)]
     [""
-     ["/create" (mount-serve environment "create.html")]
      ["/healths"
       [""
        {:post {:handler (handlers/create-health! database)

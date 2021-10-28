@@ -2,7 +2,7 @@
   (:require [brundij.shared.components.button :refer [button button-outlined]]
             [brundij.shared.components.link :refer [link-outlined]]
             [brundij.shared.layout :refer [layout]]
-            [brundij.shared.events :as events]
+            [brundij.landing.events :as events]
             [re-frame.core :as re-frame]))
 
 (defn navigate-to-brundi-gh []
@@ -15,7 +15,7 @@
      [:div {:class "page-container"}
       [:h3 {:class "landing-title"}
        "Brundij"]
-      [:div {:class "landing-container"}
+      [:div {:class "base-container"}
        [:p
         "Squad health checks "
         "in just "
@@ -31,7 +31,8 @@
           :title "Navigate to Brundij's docs"
           :on-click #(navigate-to-brundi-gh)
           :extra-style-class "button-mt-2-sized learn-button"}]
-        [link-outlined
+        [button-outlined
          {:text "Try it out"
-          :href "/create"
+          :extra-style-class "button-mt-2-sized"
+          :on-click #(re-frame/dispatch [::events/create-health])
           :title "Give Brundij a try!"}]]]]]))

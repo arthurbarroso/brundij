@@ -1,8 +1,13 @@
-(ns brundij.healths.events
+(ns brundij.landing.events
   (:require [brundij.date :as date]
             [brundij.shared.events :as events]
             [brundij.uuids :as uuids]
             [re-frame.core :as re-frame]))
+
+(re-frame/reg-event-db
+ ::initialize-db
+ (fn [_]
+   {:is-online? true}))
 
 (re-frame/reg-event-fx
  ::add-health-check-to-ds
@@ -20,11 +25,10 @@
    (if (true? (:is-online? db))
      {:db (assoc db :loading true)
       :http-cljs {:method :post
-                  :url (str  "http:://localhost:4000/v1/healths")
+                  :url "http://localhost:4000/v1/healths"
                   :timeout 8000
                   :on-success [::health-creation-success]
-                  :on-failure [::health-creation-failure]}
-      ::events/navigate! [:questions]}
+                  :on-failure [::health-creation-failure]}}
      {:db (assoc db :loading true)
       :dispatch [::add-health-check-to-ds]})))
 
@@ -33,7 +37,8 @@
  (fn [{:keys [db]} [_ response]]
    {:db (assoc db
                :loading false
-               :health-uuid (:health/uuid response))}))
+               :health-uuid (:health/uuid response))
+    ::events/navigate! [(str "/questions?q=" (-> response :body :health/uuid))]}))
 
 (re-frame/reg-event-fx
  ::health-creation-failure

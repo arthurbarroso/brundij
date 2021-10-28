@@ -13,8 +13,7 @@
             [reitit.swagger-ui :as swagger-ui]
             [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.gzip :as gzip]
-            [ring.util.response :refer [resource-response]]
-            [brundij.landing.routes :as landing-routes]))
+            [brundij.shared.client-routes :as client-routes]))
 
 (def router-config
   {:data {:coercion coercion-spec/coercion
@@ -43,8 +42,7 @@
       (ring/router
        [""
         ["/assets/*" (ring/create-resource-handler {:root "./assets/"})]
-        (landing-routes/routes environment)
-        (healths/routes environment)
+        (client-routes/routes environment)
         [swagger-docs
          ["/v1" {:middleware [swagger/swagger-feature]}
           (healths/routes environment)

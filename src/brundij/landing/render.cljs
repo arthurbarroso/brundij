@@ -1,10 +1,11 @@
 (ns brundij.landing.render
   (:require [brundij.shared.render :as render]
             [brundij.landing.page :as landing]
-            [reagent.dom.server :as dom-server]))
+            [reagent.dom.server :as dom-server]
+            [brundij.landing.events :as events]))
 
 (defn ^:export hydrate []
-  (render/hydrate-no-event landing/landing-page))
+  (render/hydrate landing/landing-page ::events/initialize-db))
 
 (defn pre-render []
   (render/pre-render

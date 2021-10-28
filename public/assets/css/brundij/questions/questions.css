@@ -1,0 +1,31 @@
+.questions-title {
+  margin: 0;
+  font-size: 2rem;
+  align-self: center;
+  margin-top: 10%;
+  max-width: 42.5%; }
+
+.input-holder {
+  display: flex;
+  width: 100%; }
+  .input-holder input {
+    width: 100%; }
+  .input-holder button {
+    background: none; }
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1%; }
+
+.list {
+  width: 100%;
+  height: 48%;
+  max-height: 48%;
+  margin-top: 3%;
+  overflow: auto; }
+
+.button-mt-3-sized {
+  width: 100%;
+  height: 36px;
+  margin-top: 3%; }
