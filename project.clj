@@ -19,24 +19,40 @@
                  [ring-cors "0.1.13"]
                  [org.clojure/core.match "1.0.0"]
                  [amalloy/ring-gzip-middleware "0.1.4"]
-                 [etaoin "0.4.6"]]
+                 [etaoin "0.4.6"]
+                 [binaryage/devtools "1.0.2"]
+                 [prismatic/dommy "1.1.0"]
+                 [org.clojure/clojurescript "1.10.879"]
+                 [org.clojure/core.async "1.3.618"]
+                 [reagent "1.1.0"]
+                 [re-frame "1.2.0"]
+                 [day8.re-frame/tracing "0.6.2"]
+                 [day8.re-frame/re-frame-10x "1.1.7"]
+                 [cljs-http/cljs-http "0.1.46"]
+                 [org.clojars.arthurbarroso/re-frame-cljs-http "0.1.0"]
+                 [stylefy/reagent "3.0.0"]
+                 [stylefy "3.0.0"]
+                 [metosin/reitit-spec "0.5.11"]
+                 [metosin/reitit-frontend "0.5.11"]
+                 [datascript "1.1.0"]
+                 [datascript-transit "0.3.0"]
+                 [thheller/shadow-cljs "2.15.3" :scope "provided"]]
 
   :profiles {:uberjar {:aot :all
-                       :source-paths ["src/clj" "src/cljc"]
-                       :resource-paths ["pre-render"]
+                       :source-paths ["src"]
+                       :resource-paths ["public"]
                        :env {:pre-render true}}
 
-             :test-overrides {:env {:database-backend "mem"
+             :test-overrides {:env {n:database-backend "mem"
                                     :database-id "brundij"
                                     :port "4003"
                                     :pre-render false}
                               :source-paths ["dev-resources"]}
              :test [:dev :test-overrides]
 
-             :dev {:source-paths ["src/clj"
-                                  "src/cljc"
+             :dev {:source-paths ["src"
                                   "test/clj"]
-                   :resource-paths ["pre-render"]
+                   :resource-paths ["public"]
 
                    :env {:environment "development"
                          :port "4000"
@@ -56,23 +72,7 @@
 
              :cljs {:source-paths ["src/cljs" "src/cljc"]
                     :jvm-opts ["-Xmx6G"]
-                    :resource-paths ["dev-resources/resources"]
-                    :dependencies [[binaryage/devtools "1.0.2"]
-                                   [prismatic/dommy "1.1.0"]
-                                   [org.clojure/clojurescript "1.10.879"]
-                                   [org.clojure/core.async "1.3.618"]
-                                   [reagent "1.1.0"]
-                                   [re-frame "1.2.0"]
-                                   [day8.re-frame/tracing "0.6.2"]
-                                   [day8.re-frame/re-frame-10x "1.1.7"]
-                                   [day8.re-frame/http-fx "0.2.3"]
-                                   [stylefy/reagent "3.0.0"]
-                                   [stylefy "3.0.0"]
-                                   [metosin/reitit-spec "0.5.11"]
-                                   [metosin/reitit-frontend "0.5.11"]
-                                   [datascript "1.1.0"]
-                                   [datascript-transit "0.3.0"]
-                                   [thheller/shadow-cljs "2.15.3" :scope "provided"]]}}
+                    :resource-paths ["dev-resources/resources"]}}
 
   :aliases {"test" ["with-profile" "test" "run" "-m" "circleci.test/dir" :project/test-paths]
             "tests" ["with-profile" "test" "run" "-m" "circleci.test"]

@@ -1,0 +1,21 @@
+.input {
+  color: #757575;
+  padding: 0.8%;
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  border: solid 1.5px #D3D3D3;
+  text-indent: 5px;
+  font-size: 16px;
+  height: 32px;
+}
+
+.input:focus {
+  box-shadow: 0 0 5pt 2pt #ededed;
+  outline-width: 0px;
+}
+
+.invalid-input {
+  box-shadow: 0 0 1pt 1pt #D4A54D;
+  border: solid 1.5px #D4A54D;
+  outline-width: 0px;
+}

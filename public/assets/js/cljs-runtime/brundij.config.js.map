@@ -1,0 +1,1 @@
+{"version":3,"sources":["brundij/config.cljs"],"mappings":";AAEA,AAAKA,8BACMC;AAEX;;;wBAAA,AAAAC,YAAA,wBAAA,5DAAaC;AAEb,AAAKC,qBACHD","names":["brundij.config/debug?","js/goog.DEBUG","js/goog.define","brundij.config/APIURL","brundij.config/url"],"sourcesContent":["(ns brundij.config)\n\n(def debug?\n  ^boolean goog.DEBUG)\n\n(goog-define APIURL \"\")\n\n(def url\n  APIURL)\n"]}

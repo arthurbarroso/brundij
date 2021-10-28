@@ -1,0 +1,11 @@
+@import 'layout', 'components/header', 
+'components/button', 'components/input', 
+'components/label', 'components/link', 
+'components/tip';
+
+.page-container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+}

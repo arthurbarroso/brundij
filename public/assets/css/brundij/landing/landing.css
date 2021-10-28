@@ -1,0 +1,30 @@
+.landing-container {
+  height: 100%;
+  width: 100%;
+  max-width: 42.5%;
+  border-top: 1px solid #D3D3D3;
+  padding: 2% 0;
+  margin-top: 2%;
+  display: flex;
+  align-items: center;
+  flex-direction: column; }
+
+.button-mt-2-sized {
+  height: 100%; }
+
+.landing-title {
+  margin: 0;
+  font-size: 2rem;
+  align-self: center;
+  margin-top: 10%; }
+
+.button-holder {
+  margin-top: 2%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 6%; }
+
+.learn-button {
+  margin-right: 4%;
+  font-size: 16px; }
