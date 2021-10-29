@@ -44,7 +44,7 @@
                        :resource-paths ["public"]
                        :env {:pre-render true}}
 
-             :test-overrides {:env {n:database-backend "mem"
+             :test-overrides {:env {:database-backend "mem"
                                     :database-id "brundij"
                                     :port "4003"
                                     :pre-render false}

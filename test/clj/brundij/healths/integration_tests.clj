@@ -12,6 +12,9 @@
                       :question/content "Test question"
                       :question/created_at (date/get-inst)}]})
 
+(comment
+  (println health-with-question))
+
 (deftest ^:integration health-tests
   (testing "Creating health-checks"
     (let [{:keys [status body]} (ts/endpoint-test :post "/v1/healths")]
@@ -20,13 +23,13 @@
   (testing "Listing a health's questions"
     (let [health-id (-> (ts/endpoint-test :post "/v1/healths") :body :health/uuid)
           {:keys [status body]} (ts/endpoint-test
-                                  :get (str "/v1/healths/" health-id))]
+                                 :get (str "/v1/healths/" health-id))]
       (is (= 200 status))
       (is (true? (th/match-health-list-response body)))))
   (testing "Listing a health's questions and answers"
     (let [health-id (-> (ts/endpoint-test :post "/v1/healths") :body :health/uuid)
           {:keys [status body]} (ts/endpoint-test
-                                  :get (str "/v1/healths/" health-id "/answers"))]
+                                 :get (str "/v1/healths/" health-id "/answers"))]
       (is (= 200 status))
       (is (true? (th/match-health-list-response body)))))
   (testing "Creates a health check with questions"
