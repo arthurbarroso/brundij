@@ -25,3 +25,16 @@
 
 (defn get-cookie! [k]
   (cookies/get k))
+
+(defn parse-json [j]
+  (-> j
+      js->clj))
+
+(defn json-parse [s]
+  (.parse js/JSON s))
+
+(defn ^:export parse-json-cookie [cookie-name]
+  (-> cookie-name
+      get-cookie!
+      js/decodeURIComponent
+      json-parse))

@@ -15,8 +15,7 @@
       [:h3 {:class "landing-title"}
        "brundij"]
       [:p {:class "sub-text"}
-       "Squad health checks "
-       "in just "
+       "Run squad health checks in under "
        [:span "three clicks!"]]
       [:div {:class "base-container"}
        [:p

@@ -71,7 +71,7 @@
                                   [circleci/circleci.test "0.5.0"]]
                    :plugins [[lein-environ "1.2.0"]]}
 
-             :cljs {:source-paths ["src/cljs" "src/cljc"]
+             :cljs {:source-paths ["src"]
                     :jvm-opts ["-Xmx6G"]
                     :resource-paths ["dev-resources/resources"]}}
 

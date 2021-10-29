@@ -1,6 +1,7 @@
 (ns brundij.shared.events
   (:require [brundij.shared.ds :as ds]
             [re-frame.core :as re-frame]
+            [brundij.shared.utils :as utils]
             [re-frame-cljs-http.http-fx]
             ["react-toastify" :refer (toast)]))
 
@@ -24,6 +25,11 @@
  ::retract-health
  (fn [_ [_ uuid]]
    {::retract-health-entity! uuid}))
+
+(re-frame/reg-cofx
+ ::cookies
+ (fn [coeffects key]
+   (assoc coeffects :cookies (utils/parse-json-cookie key))))
 
 ;; Reitit events and effects
 (re-frame/reg-event-fx

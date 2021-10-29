@@ -1,9 +1,15 @@
 (ns brundij.shared.client-routes
-  (:require [brundij.shared.mount :refer [mount-serve]]))
+  (:require [brundij.shared.mount :as mount]
+            [brundij.answers.handlers :refer [answer-questions-cookie-handler]]))
 
 (defn routes [env]
   [""
-   ["/" (mount-serve env "landing.html")]
-   ["/create" (mount-serve env "create.html")]
-   ["/questions" (mount-serve env "questions.html")]
-   ["/success" (mount-serve env "success.html")]])
+   ["/" (mount/mount-serve env "landing.html")]
+   ["/create" (mount/mount-serve env "create.html")]
+   ["/questions" (mount/mount-serve env "questions.html")]
+   ["/success" (mount/mount-serve env "success.html")]
+   ["/answer/:health-id" (mount/mount-serve-cookies
+                          env
+                          "answer.html"
+                          answer-questions-cookie-handler
+                          {:path {:health-id string?}})]])

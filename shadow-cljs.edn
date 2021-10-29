@@ -47,7 +47,14 @@
                           brundij.questions.events
                           brundij.questions.render
                           brundij.questions.success]
-                :depends-on #{:shared}}}
+                :depends-on #{:shared}}
+
+    :answers {:entries [brundij.answers.create
+                        brundij.answers.events
+                        brundij.answers.render
+                        brundij.answers.subs
+                        brundij.answers.options]
+              :depends-on #{:shared}}}
 
    :build-hooks [(util.pre-render/hook)]}
 

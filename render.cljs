@@ -3,6 +3,8 @@
 (defn reg-event-db [& _args])
 (defn reg-event-fx [& _args])
 (defn reg-fx [& _args])
+(defn reg-cofx [& _args])
+(defn inject-cofx [& _args])
 (defn reg-sub [& _args])
 (defn reg-sub-raw [& _args])
 (defn subscribe [& _args] (atom false))
