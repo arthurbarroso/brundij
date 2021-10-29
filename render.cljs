@@ -47,8 +47,13 @@
       (.toLowerCase final))))
 (defn generate-uuid [& _args] (random-uuid))
 
+(ns reagent.cookies)
+(defn set! [& _args] nil)
+(defn get [& _args] nil)
+
 (ns brundij.utils)
 (defn get-health-id [& _args] "")
+(defn set-cookie! [& _args] nil)
 
 (ns render
   (:require [brundij.landing.render :refer [pre-render]]
@@ -58,6 +63,7 @@
 (defn render-server []
   (pre-render)
   (pre-render-create)
-  (questions/pre-render-create))
+  (questions/pre-render-create)
+  (questions/pre-render-success))
 
 (println (render-server))

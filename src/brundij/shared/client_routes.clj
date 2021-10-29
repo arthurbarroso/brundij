@@ -5,4 +5,5 @@
   [""
    ["/" (mount-serve env "landing.html")]
    ["/create" (mount-serve env "create.html")]
-   ["/questions" (mount-serve env "questions.html")]])
+   ["/questions" (mount-serve env "questions.html")]
+   ["/success" (mount-serve env "success.html")]])

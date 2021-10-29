@@ -56,16 +56,14 @@
 
 (re-frame/reg-event-fx
  ::create-questions
- (fn [{:keys [db]} [_ health-id questions]]
-   (if (true? (:is-online? db))
-     {:db (assoc db :loading true)
-      :http-cljs {:method :post
-                  :url (str "/v1/questions/bulk/" health-id)
-                  :timeout 8000
-                  :params {:questions questions}
-                  :on-success [::question-creation-success :health-uuid health-id]
-                  :on-failure [::question-creation-failure]}}
-     {:dispatch [::add-question-to-ds health-id questions]})))
+ (fn [{:keys [db]} [_ questions]]
+   {:db (assoc db :loading true)
+    :http-cljs {:method :post
+                :url "/v1/questions/cookies"
+                :timeout 8000
+                :params {:questions questions}
+                :on-success [::question-creation-success :health-uuid]
+                :on-failure [::question-creation-failure]}}))
 
 (re-frame/reg-event-fx
  ::question-creation-success
@@ -73,7 +71,7 @@
    {:db (assoc db :loading false)
     ::events/transact! {:published/uuid health-uuid
                         :published/created_at (date/get-inst)}
-    ::events/navigate! ["/"]}))
+    ::events/navigate! ["/success"]}))
 
 (re-frame/reg-event-fx
  ::question-creation-failure

@@ -17,4 +17,9 @@
                :parameters {:body {:questions [{:content string?}]}
                             :path {:health-id string?}}
                :description "Adds multiple questions to a health check"
-               :responses {201 {:body responses/bulk-question-creation}}}}]]]))
+               :responses {201 {:body responses/bulk-question-creation}}}}]]
+     ["/cookies"
+      {:post {:handler (handlers/bulk-create-questions-using-cookie! database)
+              :parameters {:body {:questions [{:content string?}]}}
+              :description "Adds multiple questions to a health check"
+              :responses {201 {:body responses/bulk-question-creation}}}}]]))

@@ -13,6 +13,7 @@
             [reitit.swagger-ui :as swagger-ui]
             [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.gzip :as gzip]
+            [ring.middleware.cookies :as cookies]
             [brundij.shared.client-routes :as client-routes]))
 
 (def router-config
@@ -20,6 +21,7 @@
           :exception pretty/exception
           :muuntaja m/instance
           :middleware [gzip/wrap-gzip
+                       cookies/wrap-cookies
                        muuntaja/format-middleware
                        exception/exception-middleware
                        coercion/coerce-request-middleware

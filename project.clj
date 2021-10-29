@@ -36,7 +36,8 @@
                  [metosin/reitit-frontend "0.5.11"]
                  [datascript "1.1.0"]
                  [datascript-transit "0.3.0"]
-                 [thheller/shadow-cljs "2.15.3" :scope "provided"]]
+                 [thheller/shadow-cljs "2.15.3" :scope "provided"]
+                 [reagent-utils "0.3.4"]]
 
   :profiles {:uberjar {:aot :all
                        :source-paths ["src"]

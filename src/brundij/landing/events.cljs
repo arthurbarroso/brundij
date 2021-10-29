@@ -2,12 +2,18 @@
   (:require [brundij.date :as date]
             [brundij.shared.events :as events]
             [brundij.uuids :as uuids]
+            [brundij.shared.utils :as utils]
             [re-frame.core :as re-frame]))
 
 (re-frame/reg-event-db
  ::initialize-db
  (fn [_]
    {:is-online? true}))
+
+(re-frame/reg-fx
+ ::set-health-cookie
+ (fn [uuid]
+   (utils/set-cookie! "health-id" uuid)))
 
 (re-frame/reg-event-fx
  ::add-health-check-to-ds
@@ -38,7 +44,8 @@
    {:db (assoc db
                :loading false
                :health-uuid (:health/uuid response))
-    ::events/navigate! [(str "/questions?q=" (-> response :body :health/uuid))]}))
+    ::set-health-cookie (-> response :body :health/uuid)
+    ::events/navigate! ["/questions"]}))
 
 (re-frame/reg-event-fx
  ::health-creation-failure

@@ -24,12 +24,9 @@
                            (:id question)])}
      "❌"]]])
 
-;; (?![?q=]).*
-
 (defn create-questions-view []
   (let [questions (re-frame/subscribe [::subs/questions])
-        question-input (re-frame/subscribe [::subs/question-input])
-        health-id (utils/get-health-id)]
+        question-input (re-frame/subscribe [::subs/question-input])]
     (fn []
       [layout {}
        ^{:key "create-questions"}
@@ -56,7 +53,8 @@
              (for [question qevts/base-questions]
                ^{:key (:id question)}
                [question-item question])))]
-         [button {:on-click #(re-frame/dispatch [::qevts/create-questions health-id @questions])
+         [button {:on-click #(re-frame/dispatch [::qevts/create-questions
+                                                 @questions])
                   :text "Create questions"
                   :disabled false
                   :extra-style-class "button-mt-3-sized"}]]]])))
