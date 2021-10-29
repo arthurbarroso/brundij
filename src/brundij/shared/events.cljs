@@ -1,6 +1,5 @@
 (ns brundij.shared.events
-  (:require [brundij.date :as date]
-            [brundij.shared.ds :as ds]
+  (:require [brundij.shared.ds :as ds]
             [re-frame.core :as re-frame]
             [re-frame-cljs-http.http-fx]
             ["react-toastify" :refer (toast)]))
@@ -34,7 +33,7 @@
 
 (re-frame/reg-fx
  ::navigate!
- (fn [[route params query]]
+ (fn [[route]]
    (set! (.-location js/window) route)))
 
 ;; toasts
