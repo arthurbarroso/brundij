@@ -1,0 +1,37 @@
+.option-holder, .trend-option-holder {
+  display: flex;
+}
+
+.option-holder {
+}
+
+.controls {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    font-size: 18px;
+    cursor: pointer;
+    background: none;
+    margin: none;
+    border: none;
+    padding: 0;
+  }
+}
+
+.list-item-title {
+  width: 50%;
+}
+
+.trend-option-holder {
+  margin-left: 3%;
+}
+
+.list-item {
+  align-items: center;
+}
+
+.option-selected {
+  border: 1px solid red;
+}

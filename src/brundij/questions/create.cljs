@@ -4,24 +4,26 @@
             [brundij.shared.layout :refer [layout]]
             [brundij.uuids :as uuids]
             [brundij.questions.events :as qevts]
+            [brundij.shared.questions :refer [base-questions]]
             [brundij.questions.subs :as subs]
             [re-frame.core :as re-frame]))
 
 (defn add-question [question-text]
-  (re-frame/dispatch [::qevts/add-question {:id (uuids/generate-uuid)
-                                            :content question-text}])
+  (let [uuid (uuids/generate-uuid)]
+    (re-frame/dispatch [::qevts/add-question
+                        {:question/uuid uuid
+                         :question/content question-text}]))
   (re-frame/dispatch [::qevts/change-question-input nil]))
 
 (defn question-item [question]
-  [:<>
-   [:li {:class "list-item"}
-    [:p
-     (:content question)]
-    [:p
-     {:on-click
-      #(re-frame/dispatch [::qevts/remove-question-by-uuid
-                           (:id question)])}
-     "❌"]]])
+  [:li {:class "list-item"}
+   [:p
+    (:question/content question)]
+   [:p
+    {:on-click
+     #(re-frame/dispatch [::qevts/remove-question-by-uuid
+                          (:index question)])}
+    "❌"]])
 
 (defn create-questions-view []
   (let [questions (re-frame/subscribe [::subs/questions])
@@ -45,12 +47,12 @@
          [:ul {:class "list"}
           (if-not (false? @questions)
             (doall
-             (for [question @questions]
-               ^{:key (:id question)}
+             (for [[index question]  @questions]
+               ^{:key index}
                [question-item question]))
             (doall
-             (for [question qevts/base-questions]
-               ^{:key (:id question)}
+             (for [[index question] base-questions]
+               ^{:key index}
                [question-item question])))]
          [button {:on-click #(re-frame/dispatch [::qevts/create-questions
                                                  @questions])

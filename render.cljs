@@ -60,12 +60,14 @@
 (ns render
   (:require [brundij.landing.render :refer [pre-render]]
             [brundij.healths.render :refer [pre-render-create]]
-            [brundij.questions.render :as questions]))
+            [brundij.questions.render :as questions]
+            [brundij.answers.render :as answers]))
 
 (defn render-server []
   (pre-render)
   (pre-render-create)
   (questions/pre-render-create)
-  (questions/pre-render-success))
+  (questions/pre-render-success)
+  (answers/pre-render-create))
 
 (println (render-server))

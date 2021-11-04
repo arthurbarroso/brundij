@@ -1,13 +1,33 @@
 (ns brundij.answers.events
   (:require [brundij.shared.events :as events]
+            [brundij.shared.questions :refer [question-list-to-hash-map
+                                              sort-questions]]
+            [clojure.walk :as w]
             [re-frame.core :as re-frame]))
 
-
 (re-frame/reg-event-fx
-  ::initialize-db
-  [(re-frame/inject-cofx ::events/cookies "questions")]
-  (fn [{:keys [cookies]}]
-    {:db {:pre-existing-questions cookies}}))  
+ ::initialize-db
+ [(re-frame/inject-cofx ::events/cookies "questions")]
+ (fn [{:keys [cookies db]}]
+   {:db (assoc db :pre-existing-questions
+               (-> cookies
+                   js->clj
+                   first
+                   w/keywordize-keys
+                   :health/question
+                   sort-questions
+                   question-list-to-hash-map))}))
+
+(re-frame/reg-event-db
+ ::set-answer-option
+ (fn [db [_ {:keys [uuid rating]}]]
+   (let [questions (:pre-existing-questions db)
+         to-update (filter
+                    #(= (:question/uuid %)
+                        uuid)
+                    questions)]
+     (println {:to-update to-update})
+     db)))
 
 (re-frame/reg-event-db
  ::update-question-rating-at-index
@@ -34,18 +54,6 @@
        current-questions
        index
        (assoc question-to-update :trend trend))))))
-
-(re-frame/reg-event-db
- ::increment-current-question-index
- (fn [db [_ _]]
-   (let [current-question-index (:current-question-index db)]
-     (assoc db :current-question-index (inc current-question-index)))))
-
-(re-frame/reg-event-db
- ::decrement-current-question-index
- (fn [db [_ _]]
-   (let [current-question-index (:current-question-index db)]
-     (assoc db :current-question-index (dec current-question-index)))))
 
 (re-frame/reg-event-fx
  ::create-answers

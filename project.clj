@@ -29,6 +29,7 @@
                  [day8.re-frame/tracing "0.6.2"]
                  [day8.re-frame/re-frame-10x "1.1.7"]
                  [cljs-http/cljs-http "0.1.46"]
+                 [org.flatland/ordered "1.15.10"]
                  [org.clojars.arthurbarroso/re-frame-cljs-http "0.1.0"]
                  [stylefy/reagent "3.0.0"]
                  [stylefy "3.0.0"]

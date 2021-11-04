@@ -38,3 +38,8 @@
       get-cookie!
       js/decodeURIComponent
       json-parse))
+
+(defn parse-cookie-string [s]
+  (if (nil? s)
+    ""
+    (replace s "+" " ")))

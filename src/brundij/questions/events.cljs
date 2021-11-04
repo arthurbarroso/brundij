@@ -3,23 +3,8 @@
             [brundij.date :as date]
             [brundij.shared.events :as events]
             [re-frame.core :as re-frame]
+            [brundij.shared.questions :refer [base-questions]]
             [brundij.uuids :as uuids]))
-
-(defn remove-from-vec [vect uuid]
-  (filter #(not (= uuid (:id %))) vect))
-
-(def base-questions
-  [{:content "Support" :id (uuids/generate-uuid)}
-   {:content "Teamwork" :id (uuids/generate-uuid)}
-   {:content "Pawns or Players" :id (uuids/generate-uuid)}
-   {:content "Mission" :id (uuids/generate-uuid)}
-   {:content "Codebase health" :id (uuids/generate-uuid)}
-   {:content "Suitable process" :id (uuids/generate-uuid)}
-   {:content "Delivering value" :id (uuids/generate-uuid)}
-   {:content "Learning" :id (uuids/generate-uuid)}
-   {:content "Speed" :id (uuids/generate-uuid)}
-   {:content "Easy to release" :id (uuids/generate-uuid)}
-   {:content "Fun" :id (uuids/generate-uuid)}])
 
 (re-frame/reg-event-db
  ::initialize-db
@@ -31,14 +16,22 @@
 (re-frame/reg-event-db
  ::add-question
  (fn [db [_ question]]
-   (let [current-questions (:questions db)]
-     (assoc db :questions (conj current-questions question)))))
+   (let [questions (:questions db)
+         idxs (map (fn [[_k v]]
+                     (:index v)) questions)
+         max-idx (apply max idxs)
+         next-idx (inc max-idx)
+         new-questions (assoc questions
+                              next-idx
+                              (merge question
+                                     {:index next-idx}))]
+     (assoc db :questions new-questions))))
 
 (re-frame/reg-event-db
  ::remove-question-by-uuid
- (fn [db [_ uuid]]
+ (fn [db [_ index]]
    (let [current-questions (:questions db)]
-     (assoc db :questions (remove-from-vec current-questions uuid)))))
+     (assoc db :questions (dissoc current-questions index)))))
 
 (re-frame/reg-event-db
  ::change-question-input
@@ -54,14 +47,21 @@
     ::events/navigate! [:success]
     :db (assoc db :loading false)}))
 
+(defn parse-questions-for-post [questions]
+  (->> questions
+       (map
+        (fn [[_k v]]
+          v))))
+
 (re-frame/reg-event-fx
+;;TODO: sending questions should also parse em to the desired model
  ::create-questions
  (fn [{:keys [db]} [_ questions]]
    {:db (assoc db :loading true)
     :http-cljs {:method :post
                 :url "/v1/questions/cookies"
                 :timeout 8000
-                :params {:questions questions}
+                :params {:questions (parse-questions-for-post questions)}
                 :on-success [::question-creation-success :health-uuid]
                 :on-failure [::question-creation-failure]}}))
 
