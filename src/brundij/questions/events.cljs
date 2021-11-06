@@ -1,6 +1,5 @@
 (ns brundij.questions.events
-  (:require [brundij.common :as common]
-            [brundij.date :as date]
+  (:require [brundij.date :as date]
             [brundij.shared.events :as events]
             [re-frame.core :as re-frame]
             [brundij.shared.questions :refer [base-questions]]))
@@ -8,8 +7,7 @@
 (re-frame/reg-event-db
  ::initialize-db
  (fn [_]
-   {:is-online? true
-    :health-uuid ""
+   {:health-uuid ""
     :questions base-questions}))
 
 (re-frame/reg-event-db
@@ -36,15 +34,6 @@
  ::change-question-input
  (fn [db [_ new-input]]
    (assoc db :question-input new-input)))
-
-(re-frame/reg-event-fx
- ::add-question-to-ds
- (fn [{:keys [db]} [_ health-id questions]]
-   {::events/transact! (concat (common/mount-questions-txs health-id questions)
-                               [{:published/uuid health-id
-                                 :published/created_at (date/get-inst)}])
-    ::events/navigate! [:success]
-    :db (assoc db :loading false)}))
 
 (defn parse-questions-for-post [questions]
   (->> questions
@@ -75,6 +64,4 @@
  ::question-creation-failure
  (fn [{:keys [db]} [_ _res]]
    {:db (assoc db :loading false)
-    ::events/show-failure-toast
-    {:toast-content "Failure creating questions. Please try again later."}
     ::events/navigate! ["/"]}))

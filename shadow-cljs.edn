@@ -1,7 +1,7 @@
 {:nrepl {:port 8777}
 
  :dev-http
- {8280 "resources/dev/public"}
+ {8280 "public"}
 
  :builds
  {:app
@@ -41,9 +41,9 @@
    :build-hooks [(util.pre-render/hook)]}
 
   :test {:target :browser-test
-         :test-dir "resources/test/public"
+         :test-dir "dev-resources/test"
          :devtools {:http-port 8016
-                    :http-root "resources/test/public"}}
+                    :http-root "resources/test"}}
 
   :ci {:target :karma
        :output-to "target/ci.js"}}

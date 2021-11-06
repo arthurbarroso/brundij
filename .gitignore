@@ -5,14 +5,7 @@
 /resources/public/js/manifest.edn
 /public/assets/js/
 /public/assets/css/
-/resources/dev/public/js
-/resources/dev/public/js/
-/resources/test/public/
-/resouces/test/public/js
-/pre-render/resources/*.html
-/pre-render/resources/assets/
-!/pre-render/resources/assets/sw.js
-!/pre-render/resources/assets/favicon.ico
+/dev-resources/test/
 
 /target/
 /*-init.clj
@@ -39,6 +32,3 @@ pom.xml.asc
 .lsp
 .clj-kondo
 .cpcache
-/startrepl.sh
-/starttest.sh
-/startfront.sh

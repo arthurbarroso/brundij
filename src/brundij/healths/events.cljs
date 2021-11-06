@@ -23,10 +23,7 @@
 (re-frame/reg-event-fx
  ::health-creation-failure
  (fn [_]
-   {::events/navigate! [:create]
-    ::events/show-failure-toast
-    {:toast-content
-     "Failure creating your health check. Please try again later"}}))
+   {::events/navigate! [:create]}))
 
 (defn download-file!
   [data content-type file-name]
@@ -70,6 +67,4 @@
 (re-frame/reg-event-fx
  ::fetch-results-failure
  (fn [_]
-   {::events/show-failure-toast
-    {:toast-content
-     "Failure downloading your health check's results. Please try again later"}}))
+   {}))
