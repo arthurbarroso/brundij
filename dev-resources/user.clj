@@ -1,7 +1,6 @@
 (ns user
   (:require [brundij.server]
             [environ.core :refer [env]]
-            [hawk.core :as hawk]
             [integrant.core :as ig]
             [integrant.repl :as ig-repl]
             [integrant.repl.state :as state]))
@@ -34,14 +33,14 @@
     (reset)
     ctx))
 
-(defn auto-reset
-  "Copied from Duct
-  https://github.com/duct-framework/core/blob/master/src/duct/core/repl.clj"
-  []
-  (hawk/watch! [{:paths ["src/clj" "src/cljc" "dev-resources/user.clj"]
-                 :filter clojure-file?
-                 :handler auto-reset-handler}]))
+; (defn auto-reset
+;   "Copied from Duct
+;   https://github.com/duct-framework/core/blob/master/src/duct/core/repl.clj"
+;   []
+;   (hawk/watch! [{:paths ["src/clj" "src/cljc" "dev-resources/user.clj"]
+;                  :filter clojure-file?
+;                  :handler auto-reset-handler}]))
 (comment
   (go)
-  (reset-all)
-  (auto-reset))
+  (reset-all))
+  ; (auto-reset))
