@@ -1,0 +1,61 @@
+@import 'layout', 'components/header', 
+'components/button', 'components/input', 
+'components/label', 'components/link', 
+'components/tip';
+
+.page-container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.base-container {
+  height: 100%;
+  width: 100%;
+  max-width: 42.5%;
+  border-top: 1px solid #D3D3D3;
+  padding: 2% 0;
+  margin-top: 2%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+li {
+  list-style: none;
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1%;
+}
+
+.list {
+  width: 100%;
+  height: 48%;
+  max-height: 48%;
+  margin-top: 3%;
+  overflow: auto;
+}
+
+.page-title {
+  max-width: 42.5%;
+  margin: 0;
+  font-size: 2rem;
+  align-self: center;
+  margin-top: 10%;
+}
+
+.button-mt-3-sized {
+  width: 100%;
+  height: 36px;
+  margin-top: 3%;
+}

@@ -1,0 +1,40 @@
+.landing-title {
+  margin: 0;
+  font-size: 2rem;
+  align-self: center;
+  margin-top: 10%;
+}
+
+.button-holder {
+  margin-top: 2%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 6%;
+
+  button {
+    width: 40%;
+    height: 100%;
+    font-size: 16px;
+  }
+}
+
+.learn-button {
+  margin-right: 4%;
+}
+
+.points, .points-title {
+  align-self: flex-start;
+}
+
+.points {
+  padding: 2% 0%;
+}
+
+.sub-text {
+  margin-top: 2%;
+
+  span {
+    font-weight: 700;
+  }
+}

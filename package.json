@@ -7,24 +7,22 @@
 		"build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
 		"release-and-sw": "npx shadow-cljs release app && npx workbox injectManifest workbox-config.js",
 		"test": "npx shadow-cljs watch test",
-    "serve-pre-render": "http-server resources/public"
+		"css:watch": "node-sass --watch --recursive src/ -o public/assets/css"
 	},
 	"dependencies": {
 		"@js-joda/core": "3.2.0",
 		"@js-joda/locale_en-us": "3.1.1",
 		"@js-joda/timezone": "2.5.0",
 		"highlight.js": "10.7.2",
+		"node-sass": "6.0.1",
 		"react": "17.0.2",
-		"react-dom": "17.0.2",
-		"react-loading-skeleton": "^2.2.0",
-		"react-toastify": "^8.0.2"
+		"react-dom": "17.0.2"
 	},
 	"devDependencies": {
 		"karma": "^2.0.0",
 		"karma-chrome-launcher": "^2.2.0",
 		"karma-cljs-test": "^0.1.0",
 		"shadow-cljs": "2.14.5",
-		"spa-http-server": "^0.9.0",
 		"workbox-cli": "^3.4.1"
 	}
 }

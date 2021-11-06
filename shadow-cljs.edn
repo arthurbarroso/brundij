@@ -1,33 +1,53 @@
 {:nrepl {:port 8777}
 
  :dev-http
- {8280 "resources/dev/public"}
+ {8280 "public"}
 
  :builds
- {:app {:target     :browser
-        :output-dir "resources/dev/public/js"
-        :asset-path "/js"
-        :jvm-opts ["-Xmx4G"]
-        :modules
-        {:app {:init-fn brundij.core/init}}
-        :devtools {:preloads [day8.re-frame-10x.preload]
-                   :watch-dir "resources/dev/public"}
-        :dev {:compiler-options
-               {:closure-defines {re-frame.trace.trace-enabled? true
-                                  day8.re-frame.tracing.trace-enabled? true
-                                  brundij.config/APIURL "https://brundij-api-demo.herokuapp.com"}}}
+ {:app
+  {:target :browser
+   :output-dir "public/assets/js"
+   :asset-path "/js"
 
-        :release
-        {:output-dir "resources/public/js"
-         :closure-defines {brundij.config/APIURL #shadow/env "API_URL"}
-         :build-options 
-          {:ns-aliases
-            {day8.re-frame.tracing day8.re-frame.tracing-stubs}}}}
+   :jvm-opts ["-Xmx6G"]
+   :module-loader true
+
+   :modules
+   {:shared {}
+    :landing {:entries [brundij.landing.page
+                        brundij.landing.render]
+              :depends-on #{:shared}}
+
+    :healths {:entries [brundij.healths.events
+                        brundij.healths.create
+                        brundij.healths.results
+                        brundij.healths.render]
+              :depends-on #{:shared}}
+
+    :questions {:entries [brundij.questions.create
+                          brundij.questions.events
+                          brundij.questions.render
+                          brundij.questions.success]
+                :depends-on #{:shared}}
+
+    :answers {:entries [brundij.answers.create
+                        brundij.answers.success
+                        brundij.answers.events
+                        brundij.answers.render
+                        brundij.answers.subs
+                        brundij.answers.options]
+              :depends-on #{:shared}}
+    
+    :error {:entries [brundij.shared.error.page
+                      brundij.shared.error.render]
+            :depends-on #{:shared}}}
+
+   :build-hooks [(util.pre-render/hook)]}
 
   :test {:target :browser-test
-         :test-dir "resources/test/public"
+         :test-dir "dev-resources/test"
          :devtools {:http-port 8016
-                    :http-root "resources/test/public"}}
+                    :http-root "resources/test"}}
 
   :ci {:target :karma
        :output-to "target/ci.js"}}

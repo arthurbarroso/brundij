@@ -3,15 +3,9 @@
 /resources/public/js/
 /resources/public/js/cljs-runtime/
 /resources/public/js/manifest.edn
-
-/resources/dev/public/js
-/resources/dev/public/js/
-/resources/test/public/
-/resouces/test/public/js
-/pre-render/resources/*.html
-/pre-render/resources/assets/
-!/pre-render/resources/assets/sw.js
-!/pre-render/resources/assets/favicon.ico
+/public/assets/js/
+/public/assets/css/
+/dev-resources/test/
 
 /target/
 /*-init.clj
@@ -38,6 +32,3 @@ pom.xml.asc
 .lsp
 .clj-kondo
 .cpcache
-/startrepl.sh
-/starttest.sh
-/startfront.sh

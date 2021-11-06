@@ -1,23 +1,14 @@
 (ns brundij.input-test
-  (:require [brundij.components.input :refer [input]]
+  (:require [brundij.shared.components.input :refer [input]]
             [cljs.test :refer-macros [deftest is testing use-fixtures]]
             [dommy.core :as d]
             [reagent.core :as r]
-            [reagent.dom :as rdom]
-            [stylefy.core :as stylefy]
-            [stylefy.reagent :as stylefy-reagent]))
+            [reagent.dom :as rdom]))
 
 (defn create-app-element [f]
   (.appendChild (.-body js/document)
                 (doto (.createElement js/document "div")
                   (-> (.setAttribute "id" "app"))))
-  (.appendChild (.-head js/document)
-                (doto (.createElement js/document "style")
-                  (-> (.setAttribute "id" "_stylefy-constant-styles_"))))
-  (.appendChild (.-head js/document)
-                (doto (.createElement js/document "style")
-                  (-> (.setAttribute "id" "_stylefy-styles_"))))
-  (stylefy/init {:dom (stylefy-reagent/init)})
   (f))
 
 (defn dom-cleanup [f]

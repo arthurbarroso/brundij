@@ -1,0 +1,49 @@
+.header-style {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1% 5%;
+  margin-bottom: 3%;
+}
+
+$text-base-color: #1D2239;
+$text-base-margin: 0;
+
+
+.title-style, .link-style {
+  margin: $text-base-margin;
+  color: $text-base-color;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.title-style {
+  font-weight: 900;
+  width: 50%;
+  font-size: 2rem;
+}
+
+.title-style:hover {
+  color: #4b9efa;
+}
+
+.link-style {
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-left: 3%;
+  background: none;
+  border: none;
+  font-size: 1rem;
+}
+
+.header-container-style {
+ width: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: flex-end;
+}
+
+.button-extra {
+  margin-left: 3%;
+  color: #FFF;
+}
