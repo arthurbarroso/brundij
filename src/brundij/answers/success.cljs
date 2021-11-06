@@ -5,7 +5,7 @@
   [layout {}
    ^{:key "landing"}
    [:div {:class "page-container"}
-    [:h3
+    [:h3 {:class "page-title"}
      "Questions successfully answered! 🐝"]
     [:div {:class "base-container"}
      [:p

@@ -99,7 +99,7 @@
     [layout {}
      ^{:key "answers"}
      [:div {:class "page-container"}
-      [:h3 {:class "questions-title"}
+      [:h3 {:class "page-title"}
        "Answering health check questions"]
       [:div {:class "base-container"}
        [:p (str "Questions answered: " answered-count "/" total-count)]

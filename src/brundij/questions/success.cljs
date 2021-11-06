@@ -9,7 +9,7 @@
     [layout {}
      ^{:key "success"}
      [:div {:class "page-container"}
-      [:h3 {:class "questions-title"}
+      [:h3 {:class "page-title"}
        "Success!"]
       [:div {:class "base-container"}
        [:p "You should now be able to share this health
@@ -30,6 +30,3 @@
                              .-clipboard
                              (.writeText health-id))}
         [input {:value health-id :disabled true}]]]]]))
-            ; This ID also get's saved to your
-            ; browser's storage so you're able to check
-            ; it by navigating to your]]]]))

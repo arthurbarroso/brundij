@@ -40,6 +40,7 @@
 
     :healths {:entries [brundij.healths.events
                         brundij.healths.create
+                        brundij.healths.results
                         brundij.healths.render]
               :depends-on #{:shared}}
 

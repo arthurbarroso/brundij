@@ -59,13 +59,14 @@
 
 (ns render
   (:require [brundij.landing.render :refer [pre-render]]
-            [brundij.healths.render :refer [pre-render-create]]
+            [brundij.healths.render :as healths]
             [brundij.questions.render :as questions]
             [brundij.answers.render :as answers]))
 
 (defn render-server []
   (pre-render)
-  (pre-render-create)
+  (healths/pre-render-create)
+  (healths/pre-render-results)
   (questions/pre-render-create)
   (questions/pre-render-success)
   (answers/pre-render-create)

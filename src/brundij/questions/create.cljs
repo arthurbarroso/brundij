@@ -32,7 +32,7 @@
       [layout {}
        ^{:key "create-questions"}
        [:div {:class "page-container"}
-        [:h3 {:class "questions-title"}
+        [:h3 {:class "page-title"}
          "Add questions/topics to your health check"]
         [:div {:class "base-container"}
          [:p "Health checks come with a few default questions. You may add or remove questions as you wish"]
