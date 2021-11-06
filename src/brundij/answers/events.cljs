@@ -26,7 +26,6 @@
                     #(= (:question/uuid %)
                         uuid)
                     questions)]
-     (println {:to-update to-update})
      db)))
 
 (re-frame/reg-event-db
@@ -54,6 +53,18 @@
        current-questions
        index
        (assoc question-to-update :trend trend))))))
+
+(re-frame/reg-event-db
+ ::update-question-data
+ (fn [db [_ {:keys [index question]}]]
+   (let [current-questions (:pre-existing-questions db)]
+     (assoc
+      db
+      :pre-existing-questions
+      (assoc
+       current-questions
+       index
+       question)))))
 
 (re-frame/reg-event-fx
  ::create-answers

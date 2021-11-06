@@ -13,10 +13,9 @@
   button {
     font-size: 18px;
     cursor: pointer;
-    background: none;
     margin: none;
-    border: none;
     padding: 0;
+    border: none;
   }
 }
 
@@ -32,6 +31,17 @@
   align-items: center;
 }
 
+.option-not-selected {
+  background: none;
+}
+
 .option-selected {
-  border: 1px solid red;
+  background: lightblue;
+  border-radius: 4px;
+}
+
+.button-mt-3-sized {
+  width: 100%;
+  height: 36px;
+  margin-top: 3%;
 }
