@@ -3,8 +3,7 @@
             [brundij.date :as date]
             [brundij.shared.events :as events]
             [re-frame.core :as re-frame]
-            [brundij.shared.questions :refer [base-questions]]
-            [brundij.uuids :as uuids]))
+            [brundij.shared.questions :refer [base-questions]]))
 
 (re-frame/reg-event-db
  ::initialize-db
