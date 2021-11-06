@@ -43,12 +43,11 @@
   :profiles {:uberjar {:aot :all
                        :source-paths ["src"]
                        :resource-paths ["public"]
-                       :env {:pre-render true}}
+                       :env {}}
 
              :test-overrides {:env {:database-backend "mem"
                                     :database-id "brundij"
-                                    :port "4003"
-                                    :pre-render false}
+                                    :port "4003"}
                               :source-paths ["dev-resources"]}
              :test [:dev :test-overrides]
 
@@ -63,8 +62,7 @@
                          :database-host "localhost"
                          :database-port "5432"
                          :database-backend "pg"
-                         :database-name "brundij"
-                         :pre-render true}
+                         :database-name "brundij"}
 
                    :dependencies [[ring/ring-mock "0.4.0"]
                                   [hawk "0.2.11"]
@@ -78,8 +76,7 @@
 
   :aliases {"test" ["with-profile" "test" "run" "-m" "circleci.test/dir" :project/test-paths]
             "tests" ["with-profile" "test" "run" "-m" "circleci.test"]
-            "retest" ["with-profile" "test" "run" "-m" "circleci.test.retest"]
-            "pre-render" ["run" "-m" "brundij.pre-render"]}
+            "retest" ["with-profile" "test" "run" "-m" "circleci.test.retest"]}
 
   :test-selectors {:integration :integration}
   :uberjar-name "brundij.jar")
