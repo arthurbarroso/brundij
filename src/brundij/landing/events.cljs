@@ -35,4 +35,4 @@
 (re-frame/reg-event-fx
  ::health-creation-failure
  (fn [_]
-   {::events/navigate! [:create]}))
+   {::events/navigate! ["/error"]}))

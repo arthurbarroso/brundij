@@ -61,7 +61,8 @@
   (:require [brundij.landing.render :refer [pre-render]]
             [brundij.healths.render :as healths]
             [brundij.questions.render :as questions]
-            [brundij.answers.render :as answers]))
+            [brundij.answers.render :as answers]
+            [brundij.shared.error.render :as error]))
 
 (defn render-server []
   (pre-render)
@@ -70,6 +71,7 @@
   (questions/pre-render-create)
   (questions/pre-render-success)
   (answers/pre-render-create)
-  (answers/pre-render-success))
+  (answers/pre-render-success)
+  (error/pre-render-error))
 
 (println (render-server))

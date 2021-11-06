@@ -64,4 +64,4 @@
  ::question-creation-failure
  (fn [{:keys [db]} [_ _res]]
    {:db (assoc db :loading false)
-    ::events/navigate! ["/"]}))
+    ::events/navigate! ["/error"]}))

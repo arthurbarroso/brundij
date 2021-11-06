@@ -62,4 +62,4 @@
 (re-frame/reg-event-fx
  ::answer-creation-failure
  (fn [_]
-   {}))
+   {::events/navigate! ["/error"]}))

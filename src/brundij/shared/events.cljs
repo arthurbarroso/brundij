@@ -15,8 +15,8 @@
 
 (re-frame/reg-event-fx
  ::navigate
- (fn [_ [_ route params query]]
-   {::navigate! [route params query]}))
+ (fn [_ [_ route]]
+   {::navigate! [route]}))
 
 (re-frame/reg-fx
  ::navigate!

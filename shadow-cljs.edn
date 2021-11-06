@@ -36,7 +36,11 @@
                         brundij.answers.render
                         brundij.answers.subs
                         brundij.answers.options]
-              :depends-on #{:shared}}}
+              :depends-on #{:shared}}
+    
+    :error {:entries [brundij.shared.error.page
+                      brundij.shared.error.render]
+            :depends-on #{:shared}}}
 
    :build-hooks [(util.pre-render/hook)]}
 

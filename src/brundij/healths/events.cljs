@@ -23,7 +23,7 @@
 (re-frame/reg-event-fx
  ::health-creation-failure
  (fn [_]
-   {::events/navigate! [:create]}))
+   {::events/navigate! ["/error"]}))
 
 (defn download-file!
   [data content-type file-name]
@@ -67,4 +67,4 @@
 (re-frame/reg-event-fx
  ::fetch-results-failure
  (fn [_]
-   {}))
+   {::events/navigate! ["/error"]}))
