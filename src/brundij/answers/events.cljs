@@ -19,42 +19,6 @@
                    question-list-to-hash-map))}))
 
 (re-frame/reg-event-db
- ::set-answer-option
- (fn [db [_ {:keys [uuid rating]}]]
-   (let [questions (:pre-existing-questions db)
-         to-update (filter
-                    #(= (:question/uuid %)
-                        uuid)
-                    questions)]
-     db)))
-
-(re-frame/reg-event-db
- ::update-question-rating-at-index
- (fn [db [_ {:keys [index rating]}]]
-   (let [current-questions (:pre-existing-questions db)
-         question-to-update (nth current-questions index)]
-     (assoc
-      db
-      :pre-existing-questions
-      (assoc
-       current-questions
-       index
-       (assoc question-to-update :rating rating))))))
-
-(re-frame/reg-event-db
- ::update-question-trend-at-index
- (fn [db [_ {:keys [index trend]}]]
-   (let [current-questions (:pre-existing-questions db)
-         question-to-update (nth current-questions index)]
-     (assoc
-      db
-      :pre-existing-questions
-      (assoc
-       current-questions
-       index
-       (assoc question-to-update :trend trend))))))
-
-(re-frame/reg-event-db
  ::update-question-data
  (fn [db [_ {:keys [index question]}]]
    (let [current-questions (:pre-existing-questions db)]
@@ -66,14 +30,26 @@
        index
        question)))))
 
+(defn parse-questions-for-post [questions]
+  (->> questions
+       (map
+        (fn [[_k v]]
+          (let [answer (dissoc v :index :question/content)]
+            (-> answer
+                (assoc :question-id (:question/uuid answer))
+                (assoc :rating (:option answer))
+                (dissoc :option)
+                (dissoc :question/uuid)))))))
+
 (re-frame/reg-event-fx
  ::create-answers
  (fn [{:keys [db]} [_ answers]]
+   (println {:answers (parse-questions-for-post answers)})
    {:db (assoc db :loading true)
     :http-cljs {:method :post
-                :uri "http://localhost:4000/v1/answers/bulk"
+                :url "/v1/answers/bulk"
                 :timeout 8000
-                :params {:answers answers}
+                :params {:answers (parse-questions-for-post answers)}
                 :on-success [::answer-creation-success]
                 :on-failure [::answer-creation-failure]}}))
 

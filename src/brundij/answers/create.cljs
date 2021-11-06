@@ -13,16 +13,18 @@
                       {:index (:index question)
                        :question question}]))
 
-(defn get-option-style [{:keys [current target]}]
+(defn get-option-style [{:keys [current target type]}]
   (if (= current target)
-    "option-selected"
-    "option-not-selected"))
+    (str (name type) "-selected")
+    (str (name type) "-not-selected")))
 
 (defn get-values-by-option-type [{:keys [type option question]}]
   (if (= :trend type)
     {:current (:trend question)
+     :type type
      :target (:trend option)}
     {:current (:option question)
+     :type type
      :target (:rating option)}))
 
 (defn get-question-update-by-type [{:keys [type question option]}]
@@ -75,15 +77,32 @@
      (:question/content question))]
    [controls question]])
 
+(defn get-answered-count [questions]
+  (if (false? @questions)
+    0
+    (->> @questions
+         (filter (fn [[_k question]]
+                   (and
+                    (:trend question)
+                    (:option question))))
+         count)))
+
+(defn get-total-count [questions]
+  (if (false? @questions)
+    0
+    (count @questions)))
+
 (defn create-answers []
-  (let [questions (re-frame/subscribe [::subs/pre-existing-questions])]
+  (let [questions (re-frame/subscribe [::subs/pre-existing-questions])
+        answered-count (get-answered-count questions)
+        total-count (get-total-count questions)]
     [layout {}
      ^{:key "answers"}
      [:div {:class "page-container"}
       [:h3 {:class "questions-title"}
        "Answering health check questions"]
       [:div {:class "base-container"}
-       [:p "Questions answered: 0/N"]
+       [:p (str "Questions answered: " answered-count "/" total-count)]
        [:ul {:class "list"}
         (if-not (false? @questions)
           (doall
@@ -94,7 +113,7 @@
            (for [[uuid question] base-questions]
              ^{:key uuid}
              [question-item question])))]
-       [button {:on-click #(println "hi")
+       [button {:on-click #(re-frame/dispatch [::aevts/create-answers @questions])
                 :text "Submit answers"
-                :disabled false
+                :disabled false #_(not (= answered-count total-count))
                 :extra-style-class "button-mt-3-sized"}]]]]))

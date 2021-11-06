@@ -15,7 +15,6 @@
     cursor: pointer;
     margin: none;
     padding: 0;
-    border: none;
   }
 }
 
@@ -33,11 +32,22 @@
 
 .option-not-selected {
   background: none;
+    border: 1px solid #fff;
 }
 
 .option-selected {
   background: lightblue;
   border-radius: 4px;
+  border: 1px solid red;
+}
+
+.trend-not-selected {
+  border: 1px solid #fff;
+}
+
+.trend-selected {
+  border: 1px solid red;
+  background: lightblue;
 }
 
 .button-mt-3-sized {
