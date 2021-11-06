@@ -68,6 +68,7 @@
   (pre-render-create)
   (questions/pre-render-create)
   (questions/pre-render-success)
-  (answers/pre-render-create))
+  (answers/pre-render-create)
+  (answers/pre-render-success))
 
 (println (render-server))

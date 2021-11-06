@@ -50,6 +50,7 @@
                 :depends-on #{:shared}}
 
     :answers {:entries [brundij.answers.create
+                        brundij.answers.success
                         brundij.answers.events
                         brundij.answers.render
                         brundij.answers.subs

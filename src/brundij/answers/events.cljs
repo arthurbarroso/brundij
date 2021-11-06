@@ -57,7 +57,7 @@
  ::answer-creation-success
  (fn [{:keys [db]} [_ _response]]
    {:db (assoc db :loading false)
-    ::events/navigate! [:answers-success]}))
+    ::events/navigate! ["/answered"]}))
 
 (re-frame/reg-event-fx
  ::answer-creation-failure

@@ -54,7 +54,6 @@
           v))))
 
 (re-frame/reg-event-fx
-;;TODO: sending questions should also parse em to the desired model
  ::create-questions
  (fn [{:keys [db]} [_ questions]]
    {:db (assoc db :loading true)

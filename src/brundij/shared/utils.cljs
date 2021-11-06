@@ -10,8 +10,8 @@
 (defn mount-shareable-link [health-id]
   (let [local-url (get-local-url)]
     (condp #(includes? %2 %1) local-url
-      "/success" (replace local-url "/success" (str "?id=" health-id))
-      "/list" (replace local-url "/list" (str "?id=" health-id))
+      "/success" (replace local-url "/success" (str "/answer/" health-id))
+      "/list" (replace local-url "/list" (str "/answer/" health-id))
       (str local-url "?id=" health-id))))
 
 (defn get-health-id []
