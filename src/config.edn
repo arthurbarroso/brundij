@@ -1,0 +1,30 @@
+{:port #profile {:default #env PORT
+                 :dev 4000
+                 :test 4000}
+
+ :database_host #profile {:default #env DATABASE_HOST
+                          :dev "localhost"
+                          :test ""}
+
+ :database_port #profile {:default #env DATABASE_PORT
+                          :dev "5432"
+                          :test ""}
+
+ :database_user #profile {:default #env DATABASE_USER
+                          :dev "postgres"
+                          :test ""}
+
+ :database_password #profile {:default #env DATABASE_PASSWORD
+                              :dev "postgres"
+                              :test ""}
+
+ :database_name #profile {:default #env DATABASE_NAME
+                          :dev "brundij"
+                          :test ""}
+
+ :database_backend #profile {:default #env DATABASE_BACKEND
+                             :dev "pg"
+                             :test "mem"}
+ :database_id #profile {:default nil
+                        :dev nil
+                        :test "brundij"}}

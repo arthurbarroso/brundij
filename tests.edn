@@ -1,0 +1,11 @@
+#kaocha/v1
+ {:tests [{:id          :unit
+           :source-paths ["src"]
+           :test-paths  ["test"]
+           :ns-patterns [".*"]}]
+  :fail-fast? true
+  :color? true
+  :plugins [:kaocha.plugin/capture-output
+            :hooks]
+  :kaocha.hooks/pre-load [util.test-utils/start-fixture]}
+

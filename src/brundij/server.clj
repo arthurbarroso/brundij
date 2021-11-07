@@ -1,10 +1,11 @@
 (ns brundij.server
   (:require [brundij.database :as database]
             [brundij.router :as router]
-            [environ.core :refer [env]]
             [integrant.core :as ig]
             [ring.adapter.jetty :as jetty]
-            [taoensso.timbre :as timbre :refer [info]]))
+            [taoensso.timbre :as timbre :refer [info]]
+            [clojure.java.io :as io]
+            [aero.core :refer [read-config]]))
 
 (defn app
   [environment]
@@ -12,7 +13,7 @@
 
 (defmethod ig/prep-key :server/jetty
   [_ config]
-  (merge config {:port (Integer/parseInt (env :port))}))
+  (merge config {:port 4000}))
 
 (defmethod ig/init-key :server/jetty
   [_ {:keys [handler port]}]
@@ -24,15 +25,6 @@
   (info "\n[Brundij]: started application")
   (app config))
 
-(defmethod ig/init-key :brundij/render
-  [_ config]
-  (if (boolean (Boolean/valueOf (:render? config)))
-    (info "\n[Brundij]: `pre-render` set to true. Serving HTML
-             pages from resources...")
-    (info "\n[Brundij]: `pre-render` set to false. Not serving HTML
-             pages from resources..."))
-  {:config config})
-
 (defmethod ig/init-key :db/postgres
   [_ config]
   (info "\n[Brundij]: configured db")
@@ -43,18 +35,16 @@
   (.stop jetty))
 
 (defn -main []
-  (let [config-map
+  (let [environment-vars (read-config (io/resource "config.edn"))
+        config-map
         {:server/jetty {:handler (ig/ref :brundij/app)
-                        :port (Integer/parseInt (env :port))}
-         :brundij/app {:database (ig/ref :db/postgres)
-                       :renderer (ig/ref :brundij/render)}
-         :brundij/render {:render? (env :pre-render)
-                          :spa-url (env :spa-url)}
-         :db/postgres {:host (env :database-host)
-                       :port (env :database-port)
-                       :user (env :database-user)
-                       :backend (env :database-backend)
-                       :id (env :database-id)
-                       :password (env :database-password)
-                       :dbname (env :database-name)}}]
+                        :port (:port environment-vars)}
+         :brundij/app {:database (ig/ref :db/postgres)}
+         :db/postgres {:host (:database_host environment-vars)
+                       :port (:database_port environment-vars)
+                       :user (:database_user environment-vars)
+                       :backend (:database_backend environment-vars)
+                       :id (:database_id environment-vars)
+                       :password (:database_password environment-vars)
+                       :dbname (:database_name environment-vars)}}]
     (-> config-map ig/prep ig/init)))

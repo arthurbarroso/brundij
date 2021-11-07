@@ -1,13 +1,13 @@
-(ns user
-  (:require [brundij.server]
+(ns util.test-utils
+  (:require [integrant.repl :as ig-repl]
+            [taoensso.timbre :as timbre]
+            [brundij.server]
             [integrant.core :as ig]
-            [integrant.repl :as ig-repl]
-            [integrant.repl.state :as state]
             [clojure.java.io :as io]
             [aero.core :refer [read-config]]))
 
 (def environment-vars
-  (read-config (io/resource "config.edn") {:profile :dev}))
+  (read-config (io/resource "config.edn") {:profile :test}))
 
 (def config-map
   {:server/jetty {:handler (ig/ref :brundij/app)
@@ -24,12 +24,9 @@
 (ig-repl/set-prep!
  (fn [] config-map))
 
-(def app (-> state/system :brundij/app))
-(def go ig-repl/go)
-(def reset ig-repl/reset)
 (def reset-all ig-repl/reset-all)
 
-(comment
-  (go)
-  (reset-all))
-  ; (auto-reset))
+(defn start-fixture [config]
+  (timbre/set-level! :error)
+  (reset-all)
+  config)

@@ -33,7 +33,8 @@
    {:get {:no-doc true
           :swagger {:basePath "/"
                     :info {:title "Brundij API reference"
-                           :description "Rest API that returns JSON, Transit or EDN responses"
+                           :description "Rest API that returns JSON, 
+                                        Transit or EDN responses"
                            :version "0.1.0"}}
           :handler (swagger/create-swagger-handler)}}])
 
@@ -42,7 +43,7 @@
    (ring/ring-handler
     (ring/router
      [""
-      ["/assets/*" (ring/create-resource-handler {:root "./assets/"})]
+      ["/assets/*" (ring/create-resource-handler {:root "/assets"})]
       (client-routes/routes environment)
       [swagger-docs
        ["/v1" {:middleware [swagger/swagger-feature]}
