@@ -1,4 +1,5 @@
 {:nrepl {:port 8777}
+ :deps {:aliases [:cljs]}
 
  :dev-http
  {8280 "public"}
@@ -50,5 +51,4 @@
                     :http-root "resources/test"}}
 
   :ci {:target :karma
-       :output-to "target/ci.js"}}
- :lein {:profile "cljs"}}
+       :output-to "target/ci.js"}}}
