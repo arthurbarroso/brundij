@@ -37,7 +37,7 @@
                         brundij.answers.subs
                         brundij.answers.options]
               :depends-on #{:shared}}
-    
+
     :error {:entries [brundij.shared.error.page
                       brundij.shared.error.render]
             :depends-on #{:shared}}}

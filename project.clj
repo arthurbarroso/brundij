@@ -10,7 +10,6 @@
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [ring "1.8.1"]
                  [integrant "0.8.0"]
-                 [environ "1.2.0"]
                  [metosin/reitit "0.5.5"]
                  [org.postgresql/postgresql "42.2.14"]
                  [io.replikativ/datahike "0.3.7-SNAPSHOT"]
@@ -34,7 +33,8 @@
                  [datascript "1.1.0"]
                  [datascript-transit "0.3.0"]
                  [thheller/shadow-cljs "2.15.3" :scope "provided"]
-                 [reagent-utils "0.3.4"]]
+                 [reagent-utils "0.3.4"]
+                 [aero/aero "1.1.6"]]
 
   :profiles {:uberjar {:aot :all
                        :source-paths ["src"]

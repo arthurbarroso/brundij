@@ -1,21 +1,25 @@
 (ns user
   (:require [brundij.server]
-            [environ.core :refer [env]]
             [integrant.core :as ig]
             [integrant.repl :as ig-repl]
-            [integrant.repl.state :as state]))
+            [integrant.repl.state :as state]
+            [clojure.java.io :as io]
+            [aero.core :refer [read-config]]))
+
+(def environment-vars
+  (read-config (io/resource "config.edn") {:profile :dev}))
 
 (def config-map
   {:server/jetty {:handler (ig/ref :brundij/app)
-                  :port (Integer/parseInt (env :port))}
+                  :port (:port environment-vars)}
    :brundij/app {:database (ig/ref :db/postgres)}
-   :db/postgres {:host (env :database-host)
-                 :port (env :database-port)
-                 :user (env :database-user)
-                 :backend (env :database-backend)
-                 :id (env :database-id)
-                 :password (env :database-password)
-                 :dbname (env :database-name)}})
+   :db/postgres {:host (:database_host environment-vars)
+                 :port (:database_port environment-vars)
+                 :user (:database_user environment-vars)
+                 :backend (:database_backend environment-vars)
+                 :id (:database_id environment-vars)
+                 :password (:database_password environment-vars)
+                 :dbname (:database_name environment-vars)}})
 
 (ig-repl/set-prep!
  (fn [] config-map))
@@ -25,21 +29,6 @@
 (def reset ig-repl/reset)
 (def reset-all ig-repl/reset-all)
 
-(defn- clojure-file? [_ {:keys [file]}]
-  (re-matches #"[^.].*(\.clj|\.edn)$" (.getName file)))
-
-(defn- auto-reset-handler [ctx _event]
-  (binding [*ns* *ns*]
-    (reset)
-    ctx))
-
-; (defn auto-reset
-;   "Copied from Duct
-;   https://github.com/duct-framework/core/blob/master/src/duct/core/repl.clj"
-;   []
-;   (hawk/watch! [{:paths ["src/clj" "src/cljc" "dev-resources/user.clj"]
-;                  :filter clojure-file?
-;                  :handler auto-reset-handler}]))
 (comment
   (go)
   (reset-all))
