@@ -25,7 +25,7 @@ jobs:
        - name: Install Clojure
          uses: DeLaGuardo/setup-clojure@master
          with:
-           lein: 2.9.4
+           cli: 1.10.1.693
 
        - name: Setup Node
          uses: actions/setup-node@v2
@@ -50,10 +50,10 @@ jobs:
              ${{ runner.os }}-
 
        - name: Fetch clojure dependencies
-         run: lein deps
+         run: clojure -P
 
        - name: Run server tests
-         run: lein test
+         run: bin/kaocha
 
        - name: Fetch js dependencies
          run: npm i
