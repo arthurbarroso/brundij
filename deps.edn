@@ -24,12 +24,12 @@
         binaryage/devtools {:mvn/version "1.0.2"}
         reagent-utils/reagent-utils {:mvn/version "0.3.4"}}
 
- :paths ["src" "dev-resources"]
+ :paths ["src"]
 
  :aliases {:cljs {:main-opts ["-m" "shadow.cljs.devtools.cli"]
                   :extra-deps {}}
 
-           :repl {:extra-paths ["public"]
+           :repl {:extra-paths ["public" "dev-resources"]
                   :main-opts ["-m" "nrepl.cmdline"
                               "--interactive"
                               "--middleware"
@@ -37,7 +37,7 @@
                   :extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}
                                cider/cider-nrepl {:mvn/version "0.26.0"}}}
 
-           :reveal {:extra-paths ["public"]
+           :reveal {:extra-paths ["public" "dev-resources"]
                     :main-opts ["-m" "nrepl.cmdline"
                                 "--interactive"
                                 "--middleware"

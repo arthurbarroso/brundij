@@ -25,6 +25,6 @@
  :database_backend #profile {:default #env DATABASE_BACKEND
                              :dev "pg"
                              :test "mem"}
- :id #profile {:default nil
-               :dev nil
-               :test "brundij"}}
+ :database_id #profile {:default nil
+                        :dev nil
+                        :test "brundij"}}
