@@ -1,5 +1,5 @@
 {:nrepl {:port 8777}
- :deps {:aliases [:cljs]}
+ :deps true
 
  :dev-http
  {8280 "public"}
@@ -48,7 +48,7 @@
   :test {:target :browser-test
          :test-dir "dev-resources/test"
          :devtools {:http-port 8016
-                    :http-root "resources/test"}}
+                    :http-root "dev-resources/test"}}
 
   :ci {:target :karma
        :output-to "target/ci.js"}}}
