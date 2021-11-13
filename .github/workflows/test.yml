@@ -59,7 +59,7 @@ jobs:
          run: npm i
 
        - name: Compile frontend
-         run: npx shadow-cljs compile ci
+         run: clojure -A:cljs:cljs-test compile ci
        
        - name: Run karma tests
          run: npx karma start --single-run

@@ -6,7 +6,6 @@
 		"release": "npx shadow-cljs release app",
 		"build-report": "npx shadow-cljs run shadow.cljs.build-report app target/build-report.html",
 		"release-and-sw": "npx shadow-cljs release app && npx workbox injectManifest workbox-config.js",
-		"test": "npx shadow-cljs watch test",
 		"css:watch": "node-sass --watch --recursive src/ -o public/assets/css"
 	},
 	"dependencies": {
