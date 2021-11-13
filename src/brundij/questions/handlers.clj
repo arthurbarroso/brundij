@@ -7,7 +7,12 @@
 (defn create-question! [database]
   (fn [request]
     (let [question-params (-> request :parameters :body)
-          question (db/create-question! database question-params)]
+          question-tx (db/create-question! database question-params)
+          question (->> question-tx
+                        :tempids
+                        (first)
+                        (second)
+                        (db/pull-entity database))]
       (rr/created "" question))))
 
 (defn bulk-create-questions! [database]
