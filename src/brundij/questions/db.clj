@@ -19,7 +19,6 @@
 (defn pull-all-questions [db health-id]
   (d/pull @db '[* {:health/question [:question/uuid :db/id :question/content]}] [:health/uuid health-id]))
 
-
 (defn create-questions! [db health-id questions]
   (let [question-transactions (common/mount-questions-txs health-id questions)]
     (d/transact db question-transactions)))

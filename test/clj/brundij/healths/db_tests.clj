@@ -13,20 +13,38 @@
                       :question/content "Test question"
                       :question/created_at (date/get-inst)}]})
 
-(deftest ^:integration health-database-tests
+(deftest ^:integration health-database-creation-tests
   (testing "Creating health-checks"
-    (let [{:keys [db-before db-after tx-data tempids]} (database/create-health! (ts/database-atom))]
+    (let [{:keys [db-before db-after tx-data tempids]}
+          (database/create-health! (ts/database-atom))]
       (is (not (nil? db-before)))
       (is (not (nil? db-after)))
       (is (not (nil? tx-data)))
       (is (not (nil? tempids)))))
   (testing "Creating health checks with questions"
-    (let [{:keys [db-before db-after tx-data tempids]} (database/create-health-with-questions! (ts/database-atom) health-with-question)]
+    (let [{:keys [db-before db-after tx-data tempids]}
+          (database/create-health-with-questions! (ts/database-atom) health-with-question)]
       (is (not (nil? db-before)))
       (is (not (nil? db-after)))
       (is (not (nil? tx-data)))
-      (is (not (nil? tempids)))))
+      (is (not (nil? tempids))))))
+
+(deftest ^:integration health-database-list-tests
   (testing "Listing a health's questions"
-    (database/create-health-with-questions! (ts/database-atom) health-with-question)
-    (let [body (map first (database/get-health-questions (ts/database-atom) (:health/uuid health-with-question)))]
-      (is (true? (th/match-db-health-and-question-list-response (first body)))))))
+    (database/create-health-with-questions!
+     (ts/database-atom) health-with-question)
+    (let [body (map first
+                    (database/get-health-questions
+                     (ts/database-atom)
+                     (:health/uuid health-with-question)))]
+      (is (true?
+           (th/match-db-health-and-question-list-response
+            (first body))))))
+  (testing "Pulling a health check"
+    (database/create-health-with-questions!
+     (ts/database-atom) health-with-question)
+    (let [body (database/deep-pull-health
+                (ts/database-atom)
+                (:health/uuid health-with-question))
+          question (-> body :health/question first)]
+      (is (= (:question/content question) "Test question")))))
