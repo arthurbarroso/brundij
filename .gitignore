@@ -17,6 +17,8 @@ pom.xml
 pom.xml.asc
 *.jar
 *.class
+*.clj~
+*.cljs~
 
 
 # Leiningen

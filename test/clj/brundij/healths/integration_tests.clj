@@ -12,9 +12,6 @@
                       :question/content "Test question"
                       :question/created_at (date/get-inst)}]})
 
-(comment
-  (println health-with-question))
-
 (deftest ^:integration health-tests
   (testing "Creating health-checks"
     (let [{:keys [status body]} (ts/endpoint-test :post "/v1/healths")]

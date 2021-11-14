@@ -14,20 +14,22 @@
         ;; Server database
         org.postgresql/postgresql {:mvn/version "42.2.14"}
         io.replikativ/datahike {:mvn/version "0.3.7-SNAPSHOT"}
-        io.replikativ/datahike-postgres {:mvn/version "0.1.0"}
-        ;; Client
-        thheller/shadow-cljs {:mvn/version "2.15.10"}
-        cljs-http/cljs-http {:mvn/version "0.1.46"}
-        org.clojars.arthurbarroso/re-frame-cljs-http {:mvn/version "0.1.0"}
-        re-frame/re-frame {:mvn/version "1.2.0"}
-        reagent/reagent {:mvn/version "1.0.0"}
-        binaryage/devtools {:mvn/version "1.0.2"}
-        reagent-utils/reagent-utils {:mvn/version "0.3.4"}}
+        io.replikativ/datahike-postgres {:mvn/version "0.1.0"}}
 
  :paths ["src"]
 
  :aliases {:cljs {:main-opts ["-m" "shadow.cljs.devtools.cli"]
-                  :extra-deps {}}
+                  :extra-deps {thheller/shadow-cljs {:mvn/version "2.15.10"}
+                               cljs-http/cljs-http {:mvn/version "0.1.46"}
+                               org.clojars.arthurbarroso/re-frame-cljs-http {:mvn/version "0.1.0"}
+                               re-frame/re-frame {:mvn/version "1.2.0"}
+                               reagent/reagent {:mvn/version "1.0.0"}
+                               binaryage/devtools {:mvn/version "1.0.2"}
+                               reagent-utils/reagent-utils {:mvn/version "0.3.4"}}}
+
+           :cljs-test {:extra-paths ["test/cljs"]
+                       :main-opts ["-m" "shadow.cljs.devtools.cli"]
+                       :extra-deps {prismatic/dommy {:mvn/version "1.1.0"}}}
 
            :repl {:extra-paths ["public" "dev-resources"]
                   :main-opts ["-m" "nrepl.cmdline"

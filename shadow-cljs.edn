@@ -1,5 +1,5 @@
 {:nrepl {:port 8777}
- :deps true
+ :deps {:aliases [:cljs]}
 
  :dev-http
  {8280 "public"}
