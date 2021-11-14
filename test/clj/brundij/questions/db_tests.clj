@@ -1,9 +1,7 @@
 (ns brundij.questions.db-tests
-  (:require [brundij.date :as date]
-            [brundij.questions.db :as database]
+  (:require [brundij.questions.db :as database]
             [brundij.healths.db :as healths-database]
             [brundij.test-system :as ts]
-            [brundij.uuids :as uuids]
             [clojure.test :refer [deftest testing is]]))
 
 (defn create-health [db]
