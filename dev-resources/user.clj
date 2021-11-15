@@ -32,4 +32,3 @@
 (comment
   (go)
   (reset-all))
-  ; (auto-reset))

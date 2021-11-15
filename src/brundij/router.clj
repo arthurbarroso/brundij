@@ -14,6 +14,7 @@
             [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.gzip :as gzip]
             [ring.middleware.cookies :as cookies]
+            [ring.middleware.ratelimit :as ratelimit]
             [brundij.shared.client-routes :as client-routes]))
 
 (def router-config
@@ -32,27 +33,35 @@
   ["/swagger.json"
    {:get {:no-doc true
           :swagger {:basePath "/"
-                    :info {:title "Brundij API reference"
-                           :description "Rest API that returns JSON, 
-                                        Transit or EDN responses"
-                           :version "0.1.0"}}
+                    :info
+                    {:title "Brundij API documentation"
+                     :description "Brundij's REST api"
+                     :version "0.1.0"}}
           :handler (swagger/create-swagger-handler)}}])
 
+(defn api-router [environment]
+  [swagger-docs
+   ["/v1" {:middleware [swagger/swagger-feature]}
+    (healths/routes environment)
+    (questions/routes environment)
+    (answers/routes environment)]])
+
+(defn client-router [environment]
+  ["" {:no-doc true}
+   ["/assets/*" (ring/create-resource-handler {:root "/assets"})]
+   (client-routes/routes environment)])
+
 (defn routes [environment]
-  (wrap-cors
-   (ring/ring-handler
-    (ring/router
-     [""
-      ["/assets/*" (ring/create-resource-handler {:root "/assets"})]
-      (client-routes/routes environment)
-      [swagger-docs
-       ["/v1" {:middleware [swagger/swagger-feature]}
-        (healths/routes environment)
-        (questions/routes environment)
-        (answers/routes environment)]]]
-     router-config)
-    (ring/routes
-     (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))
-    (ring/create-default-handler))
-   :access-control-allow-origin [#".*"]
-   :access-control-allow-methods [:get :put :post :delete]))
+  (ratelimit/wrap-ratelimit {:limits [(ip-limit 100)]}
+    (wrap-cors
+      (ring/ring-handler
+       (ring/router
+        [""
+         (api-router environment)
+         (client-router environment)]
+        router-config)
+       (ring/routes
+        (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))
+       (ring/create-default-handler))
+      :access-control-allow-origin [#".*"]
+       :access-control-allow-methods [:get :put :post :delete])))
