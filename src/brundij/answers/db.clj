@@ -12,12 +12,8 @@
                   {:db/id [:question/uuid (uuids/uuid-from-string question-id)]
                    :question/answer -1}]))
 
-(defn extract-answer [db tx]
-  (->> tx
-       :tempids
-       (first)
-       (second)
-       (d/pull @db '[*])))
+(defn extract-answer [db eid]
+  (d/pull @db '[*] eid))
 
 (defn extract-bulk-answers [db question-id]
   (d/q

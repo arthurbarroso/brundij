@@ -8,7 +8,8 @@
 (defn create-answer! [database]
   (fn [request]
     (let [answer-params (-> request :parameters :body)
-          created-answer (db/create-answer! database answer-params)
+          created-answer-tx (db/create-answer! database answer-params)
+          created-answer (-> created-answer-tx :tempids first second)
           answer (db/extract-answer database created-answer)]
       (rr/created "" answer))))
 

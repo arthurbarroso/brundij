@@ -14,7 +14,6 @@
             [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.gzip :as gzip]
             [ring.middleware.cookies :as cookies]
-            [ring.middleware.ratelimit :as ratelimit]
             [brundij.shared.client-routes :as client-routes]))
 
 (def router-config
@@ -52,16 +51,15 @@
    (client-routes/routes environment)])
 
 (defn routes [environment]
-  (ratelimit/wrap-ratelimit {:limits [(ip-limit 100)]}
-    (wrap-cors
-      (ring/ring-handler
-       (ring/router
-        [""
-         (api-router environment)
-         (client-router environment)]
-        router-config)
-       (ring/routes
-        (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))
-       (ring/create-default-handler))
-      :access-control-allow-origin [#".*"]
-       :access-control-allow-methods [:get :put :post :delete])))
+  (wrap-cors
+    (ring/ring-handler
+     (ring/router
+      [""
+       (api-router environment)
+       (client-router environment)]
+      router-config)
+     (ring/routes
+      (swagger-ui/create-swagger-ui-handler {:path "/swagger"}))
+     (ring/create-default-handler))
+    :access-control-allow-origin [#".*"]
+     :access-control-allow-methods [:get :put :post :delete]))
