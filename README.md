@@ -3,7 +3,7 @@ _Santirix Gremioni's robot, from Isaac's Asimov [The Robots of Dawn](https://www
 
 - [Brundij 🦾](#brundij)
     + [About 📖](#about)
-    + [Development 🪡](#development)
+    + [Development 🧶](#development)
       - [Testing ⛳️](#testing)
       - [Building 👷](#building)
   
