@@ -3,10 +3,9 @@
             [brundij.healths.db :as healths-database]
             [brundij.questions.db :as questions-database]
             [brundij.test-system :as ts]
-            [clojure.test :refer [deftest testing is]]))
+            [clojure.test :refer [deftest testing is]]
+            [brundij.uuids :as uuids]))
 
-;; prepare-answers
-;; answer-questions-cookie-handler
 (defn create-health [db]
   (let [health-tx (healths-database/create-health! db)]
     (->> health-tx
@@ -57,3 +56,11 @@
                   {:database (ts/database-atom)}
                   {:parameters {:path {:health-id health-id}}})]
       (is (= "questions" (:cookie-key result))))))
+
+(deftest ^:integration answer-handler-pure-tests
+  (testing "Prepares answer transactions"
+    (let [answers [{:rating 1 :trend "up"
+                    :question-id (str (uuids/generate-uuid))}]
+          answer-ids [1 2 3]
+          result (handlers/prepare-answers answers answer-ids)]
+      (is (= (-> result first :question/answer) 1)))))
