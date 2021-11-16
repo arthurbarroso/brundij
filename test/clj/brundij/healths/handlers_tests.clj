@@ -1,6 +1,5 @@
 (ns brundij.healths.handlers-tests
   (:require [brundij.healths.handlers :as handlers]
-            [brundij.healths.test-helpers :as th]
             [brundij.healths.db :as healths-database]
             [brundij.questions.db :as questions-database]
             [brundij.answers.db :as answers-database]

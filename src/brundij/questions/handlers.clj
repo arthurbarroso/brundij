@@ -27,7 +27,6 @@
       (rr/created "" (db/pull-all-questions database
                                             health-id)))))
 
-
 (defn bulk-create-questions-using-cookie! [database]
   (fn [request]
     (let [questions (-> request :parameters :body :questions)
@@ -37,6 +36,6 @@
                         uuids/uuid-from-string)]
       (db/create-questions!
        database
-       (uuids/uuid-from-string health-id) questions)
+       health-id questions)
       (rr/created "" (db/pull-all-questions database
                                             health-id)))))
