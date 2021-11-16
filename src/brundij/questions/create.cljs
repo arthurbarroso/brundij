@@ -25,6 +25,12 @@
                           (:index question)])}
     "❌"]])
 
+(defn create-questions [questions]
+  (re-frame/dispatch [::qevts/create-questions questions]))
+
+(defn change-input [v]
+  (re-frame/dispatch [::qevts/change-question-input v]))
+
 (defn create-questions-view []
   (let [questions (re-frame/subscribe [::subs/questions])
         question-input (re-frame/subscribe [::subs/question-input])]
@@ -38,7 +44,7 @@
          [:p "Health checks come with a few default questions. You may add or remove questions as you wish"]
          [:div {:class "input-holder"}
           [input {:value @question-input
-                  :on-change #(re-frame/dispatch [::qevts/change-question-input %])
+                  :on-change #(change-input %)
                   :disabled false
                   :type "text"
                   :placeholder "New question"}]
@@ -54,8 +60,7 @@
              (for [[index question] base-questions]
                ^{:key index}
                [question-item question])))]
-         [button {:on-click #(re-frame/dispatch [::qevts/create-questions
-                                                 @questions])
+         [button {:on-click #(create-questions @questions)
                   :text "Create questions"
                   :disabled false
                   :extra-style-class "button-mt-3-sized"}]]]])))

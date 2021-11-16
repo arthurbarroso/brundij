@@ -44,7 +44,6 @@
 (re-frame/reg-event-fx
  ::create-answers
  (fn [{:keys [db]} [_ answers]]
-   (println {:answers (parse-questions-for-post answers)})
    {:db (assoc db :loading true)
     :http-cljs {:method :post
                 :url "/v1/answers/bulk"

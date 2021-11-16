@@ -6,6 +6,12 @@
             [brundij.healths.events :as events]
             [brundij.healths.subs :as subs]))
 
+(defn change-input [v]
+  (re-frame/dispatch [::events/change-health-id-input v]))
+
+(defn fetch-results [health-id]
+    (re-frame/dispatch [::events/fetch-results health-id]))
+
 (defn results-view []
   (let [health-id-input (re-frame/subscribe [::subs/health-id-input])]
     [layout {}
@@ -17,11 +23,11 @@
        [:p
         "Type in your health check's id and press the button to download it's results"]
        [input {:value @health-id-input
-               :on-change #(re-frame/dispatch [::events/change-health-id-input %])
+               :on-change #(change-input %)
                :type "text"
                :placeholder "Your health check's id"
                :extra-styles {:width "100%"}}]
-       [button {:on-click #(re-frame/dispatch [::events/fetch-results @health-id-input])
+       [button {:on-click #(fetch-results @health-id-input)
                 :text "Download health check's results"
                 :disabled false
                 :title "Download results"
