@@ -1,6 +1,5 @@
 (ns brundij.questions.db
-  (:require [brundij.common :as common]
-            [brundij.date :as date]
+  (:require [brundij.date :as date]
             [brundij.uuids :as uuids]
             [datahike.api :as d]))
 
@@ -19,6 +18,5 @@
 (defn pull-all-questions [db health-id]
   (d/pull @db '[* {:health/question [:question/uuid :db/id :question/content]}] [:health/uuid health-id]))
 
-(defn create-questions! [db health-id questions]
-  (let [question-transactions (common/mount-questions-txs health-id questions)]
-    (d/transact db question-transactions)))
+(defn create-questions! [db question-transactions]
+  (d/transact db question-transactions))
