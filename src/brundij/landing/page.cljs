@@ -7,6 +7,10 @@
 (defn navigate-to-brundi-gh []
   (.open js/window "https://github.com/arthurbarroso/brundij"))
 
+(defn create-health []
+  (re-frame/dispatch [::events/create-health]))
+
+
 (defn landing-page []
   (fn []
     [layout {}
@@ -39,5 +43,5 @@
           :extra-style-class "learn-button"}]
         [button-outlined
          {:text "Try it out"
-          :on-click #(re-frame/dispatch [::events/create-health])
+          :on-click #(create-health)
           :title "Give Brundij a try!"}]]]]]))

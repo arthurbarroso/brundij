@@ -66,7 +66,6 @@
 
 (defn render-server []
   (pre-render)
-  (healths/pre-render-create)
   (healths/pre-render-results)
   (questions/pre-render-create)
   (questions/pre-render-success)
