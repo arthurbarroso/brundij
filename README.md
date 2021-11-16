@@ -1,39 +1,43 @@
-# Brundij
+# Brundij 🦾
 _Santirix Gremioni's robot, from Isaac's Asimov [The Robots of Dawn](https://www.amazon.com/Robots-Dawn-Robot-Isaac-Asimov/dp/0553299492)_
 
-An open source tool to help teams host squad health checks. Written in Clojure and Clojurescript and powered by awesome libraries such as datahike and re-frame. An attempt on having a working, self-hosted and easy to use squad health check platform. Brundij tries to handle a few main features:
+Brundij is an open source tool to help teams host squad health checks. It is written in Clojure and Clojurescript and powered by awesome tools such as datahike, re-frame and nbb. It started as a side project and turned into an attempt on having a working, self-hosted and easy to use squad health check platform. Brundij tries to handle a few main features:
 
-- Users needed to be able to create health checks and share those using it's UUID
+- Users needed to be able to create health checks and share those using UUIDs
 - Health checks could be assigned questions (users could choose whether to use the pre-defined ones or mix them with custom ones)
 - Users should be able to answer a health check's questions by using the health check's UUID
 
 ### Development
 In order to get a development server up, you'll want to follow these steps:
 - Set up a local postgres database
-  - `docker-compose up -d` does this for you
+  - This can be done by running `docker-compose up -d`
 - Start the REPL
   - which can be done by running `clj -M:repl`
 - Run Integrant's `go` function, which is available from whithin the `user` namespace.
 
-To start the web client in development mode, run `yarn watch` or `npm run watch`. Shadow will automatically reload the application whenever there are changes to `.cljs` and `.cljc` files.
+To start the web client in development mode, run `clj -A:cljs watch app`, which will start `shadow-cljs`.
 
 #### Testing
 Server tests can be started by running `.bin/kaocha`, which runs kaocha with a fixture that sets up a test server using an in-memory database.
 
-Client tests can be started using `yarn test`. It is also possible to generate a compiled version of the client tests by running `npx shadow-cljs compile ci`. This compiled version of the tests can be ran using `npx karma start --single-run` - this version is specially useful for CIs.
-
-It is also possible to run tests by namespace. This can done by `, t n` in Conjure or by calling `run namespace tests` from within cursive's command palette and is especially useful when some test is failing for some obscure reason.
+Client tests can be started using `clj -A:cljs-test watch test`. It is also possible to generate a compiled version of the client tests by running `clj -A:cljs-test compile ci`. This compiled version of the tests can be ran using `npx karma start --single-run` - this version is specially useful for CIs.
 
 #### Building
 It is possible to create release/production builds of the server and the application. To do so, run:
 ```bash
-# for the server
-clj -T:build uber
-# a docker image can also be built for the server
-docker build .
-# for the client
-yarn release
+clj -A:cljs release app # creates a release version of the app's client
+clj -T:build uber # creates an uberjar that serves the whole application
+docker build . # a docker image can also be built for the whole application
 ```
+
+### Misc
+Brundij is the first "real world" application I build with Clojure. I decided to create a health check application because I was having a bit of trouble finding a tool I liked to run my squad's health checks.
+
+This application served as a personal playground for trying out stuff I wanted to understand in Clojure(script), such as the following:
+- [React pre-rendering in Clojure(script)](https://www.arthurbrrs.me/prerendering-react-clojurescript-land.html)
+- [Testing Reagent elements in Clojurescript](https://www.arthurbrrs.me/testing-the-dom-using-shadow-and-reagent.html)
+
+I still plan on using it to try out new stuff while I learn Clojure(script).
 
 ### License
 
