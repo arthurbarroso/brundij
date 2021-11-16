@@ -1,6 +1,6 @@
 {:port #profile {:default #env PORT
                  :dev 4000
-                 :test 4000}
+                 :test 4001}
 
  :database_host #profile {:default #env DATABASE_HOST
                           :dev "localhost"

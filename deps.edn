@@ -11,6 +11,7 @@
         ring/ring {:mvn/version "1.8.1"}
         ring-cors/ring-cors {:mvn/version "0.1.13"}
         amalloy/ring-gzip-middleware {:mvn/version "0.1.4"}
+        ring-ratelimit/ring-ratelimit {:mvn/version "0.2.2"}
         ;; Server database
         org.postgresql/postgresql {:mvn/version "42.2.14"}
         io.replikativ/datahike {:mvn/version "0.3.7-SNAPSHOT"}
