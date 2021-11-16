@@ -6,9 +6,8 @@ _Santirix Gremioni's robot, from Isaac's Asimov [The Robots of Dawn](https://www
     + [Development 🪡](#development)
       - [Testing ⛳️](#testing)
       - [Building 👷](#building)
-    + [License 📃](#license)
   
-### About
+### About 📖
 
 Brundij is an open source tool to help teams host squad health checks. It is written in Clojure and Clojurescript and powered by awesome tools such as datahike, re-frame and nbb. It started as a side project and turned into an attempt on having a working, self-hosted and easy to use squad health check platform. Brundij tries to handle a few main features:
 
@@ -24,7 +23,7 @@ This application served as a personal playground for trying out stuff I wanted t
 
 I still plan on using it to try out new stuff while I learn Clojure(script).
 
-### Development
+### Development 🪡
 In order to get a development server up, you'll want to follow these steps:
 - Set up a local postgres database
   - This can be done by running `docker-compose up -d`
@@ -34,12 +33,16 @@ In order to get a development server up, you'll want to follow these steps:
 
 To start the web client in development mode, run `clj -A:cljs watch app`, which will start `shadow-cljs`.
 
+<<<<<<< HEAD
 #### Testing️
+=======
+#### Testing ⛳️
+>>>>>>> c3d13ab685cef2f7ea614367759bd4861cdfc75b
 Server tests can be started by running `.bin/kaocha`, which runs kaocha with a fixture that sets up a test server using an in-memory database.
 
 Client tests can be started using `clj -A:cljs-test watch test`. It is also possible to generate a compiled version of the client tests by running `clj -A:cljs-test compile ci`. This compiled version of the tests can be ran using `npx karma start --single-run` - this version is specially useful for CIs.
 
-#### Building
+#### Building 👷
 It is possible to create release/production builds of the server and the application. To do so, run:
 ```bash
 clj -A:cljs release app # creates a release version of the app's client
