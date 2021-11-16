@@ -1,4 +1,4 @@
-name: build
+name: test
 
 on:
   push:
@@ -43,10 +43,10 @@ jobs:
            cache-name: cache-node
          with:
            path: ~/.npm
-           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+           key: ${{ runner.os }}-test-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
            restore-keys: |
-             ${{ runner.os }}-build-${{ env.cache-name }}-
-             ${{ runner.os }}-build-
+             ${{ runner.os }}-test-${{ env.cache-name }}-
+             ${{ runner.os }}-test-
              ${{ runner.os }}-
 
        - name: Fetch clojure dependencies
