@@ -1,12 +1,12 @@
 # Brundij 🦾
 _Santirix Gremioni's robot, from Isaac's Asimov [The Robots of Dawn](https://www.amazon.com/Robots-Dawn-Robot-Isaac-Asimov/dp/0553299492)_
 
-- [Brundij 🦾](#brundij---)
-    + [About](#about)
-    + [Development](#development)
-      - [Testing](#testing)
-      - [Building](#building)
-    + [License](#license)
+- [Brundij 🦾](#brundij)
+    + [About 📖](#about)
+    + [Development 🪡](#development)
+      - [Testing ⛳️](#testing)
+      - [Building 👷](#building)
+    + [License 📃](#license)
   
 ### About
 
@@ -34,7 +34,7 @@ In order to get a development server up, you'll want to follow these steps:
 
 To start the web client in development mode, run `clj -A:cljs watch app`, which will start `shadow-cljs`.
 
-#### Testing
+#### Testing️
 Server tests can be started by running `.bin/kaocha`, which runs kaocha with a fixture that sets up a test server using an in-memory database.
 
 Client tests can be started using `clj -A:cljs-test watch test`. It is also possible to generate a compiled version of the client tests by running `clj -A:cljs-test compile ci`. This compiled version of the tests can be ran using `npx karma start --single-run` - this version is specially useful for CIs.
@@ -47,7 +47,7 @@ clj -T:build uber # creates an uberjar that serves the whole application
 docker build . # a docker image can also be built for the whole application
 ```
 
-### License
+### License 📃
 
 Copyright © 2021 Arthur Barroso.
 
