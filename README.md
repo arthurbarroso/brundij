@@ -43,6 +43,7 @@ It is possible to create release/production builds of the server and the applica
 ```bash
 clj -A:cljs release app # creates a release version of the app's client
 clj -T:build uber # creates an uberjar that serves the whole application
+clj -A:native-image # creates a graal native-image
 docker build . # a docker image can also be built for the whole application
 ```
 

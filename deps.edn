@@ -52,7 +52,18 @@
                                org.clojure/core.match {:mvn/version "1.0.0"}
                                prismatic/dommy {:mvn/version "1.1.0"}
                                ring/ring-mock {:mvn/version "0.4.0"}}}
+           :native-image
+           {:extra-paths ["public"]
+            :main-opts ["-m" "clj.native-image" "brundij.server"
+                        "--initialize-at-build-time"
+                        "-H:+ReportExceptionStackTraces"
+                        "-H:Name=server"]
+            :jvm-opts ["-Dclojure.compiler.direct-linking=true"]
+            :extra-deps
+            {clj.native-image/clj.native-image
+              {:git/url "https://github.com/taylorwood/clj.native-image.git"
+               :sha "7708e7fd4572459c81f6a6b8e44c96f41cdd92d4"}}}
 
- :build ;; added by neil
- {:deps {io.github.clojure/tools.build {:git/tag "v0.6.6" :git/sha "4d41c26"}}
-  :ns-default build}}}
+           :build ;; added by neil
+           {:deps {io.github.clojure/tools.build {:git/tag "v0.6.6" :git/sha "4d41c26"}}
+            :ns-default build}}}

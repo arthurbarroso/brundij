@@ -19,7 +19,9 @@ pom.xml.asc
 *.class
 *.clj~
 *.cljs~
-
+*.build_artifacts.txt
+run.sh
+server
 
 # Leiningen
 /.lein-*

@@ -5,7 +5,8 @@
             [ring.adapter.jetty :as jetty]
             [taoensso.timbre :as timbre :refer [info]]
             [clojure.java.io :as io]
-            [aero.core :refer [read-config]]))
+            [aero.core :refer [read-config]])
+  (:gen-class))
 
 (defn app
   [environment]

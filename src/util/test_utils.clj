@@ -4,7 +4,8 @@
             [brundij.server]
             [integrant.core :as ig]
             [clojure.java.io :as io]
-            [aero.core :refer [read-config]]))
+            [aero.core :refer [read-config]])
+  (:gen-class))
 
 (def environment-vars
   (read-config (io/resource "config.edn") {:profile :test}))
