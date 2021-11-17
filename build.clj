@@ -32,12 +32,3 @@
   (b/uber {:class-dir class-dir
            :uber-file uber-file
            :basis basis}))
-
-(defn deploy [opts]
-  (jar opts)
-  ((requiring-resolve 'deps-deploy.deps-deploy/deploy)
-    (merge {:installer :remote
-                       :artifact jar-file
-                       :pom-file (b/pom-path {:lib lib :class-dir class-dir})}
-                    opts))
-  opts)
