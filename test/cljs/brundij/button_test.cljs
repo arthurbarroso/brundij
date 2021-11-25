@@ -38,7 +38,7 @@
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (deftest button-component-click-test
-  (testing "Passes on-click prop to the component"
+  (testing "Passes `on-click` prop to the component"
     (let [ra (r/atom 1)]
       (rdom/render [button {:on-click #(swap! ra inc)
                             :text "Click me"
@@ -48,3 +48,15 @@
       (.click dom-test-utils/Simulate (d/sel1 :button))
       (is (= (d/html (d/sel1 :button)) "Click me"))
       (is (= 2 @ra)))))
+
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
+(deftest button-component-class-test
+  (testing "Passes `extra-style-class` prop to the component"
+    (rdom/render [button {:on-click #()
+                          :extra-style-class "test-class"
+                          :text "Click me"
+                          :disabled false}]
+                 (appended-container (.getElementById js/document "app")
+                                     "button2"))
+    (is (= (d/html (d/sel1 :button)) "Click me"))
+    (is (= (d/class (d/sel1 :button)) "test-class button"))))

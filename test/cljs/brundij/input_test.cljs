@@ -27,15 +27,14 @@
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (deftest input-component-test
-  (testing "Renders correctly"
+  (testing "renders correctly"
     (let [ra @(r/atom "chiclete")]
       (rdom/render [input {:value ra
                            :on-change #(println "x")
                            :disabled false
                            :type "text"
-                           :placeholder "Input placeholder"
-                           :extra-styles {}}]
+                           :placeholder "input placeholder"}]
                    (appended-container (d/sel1 :#app)
                                        "input"))
-      (is (= (d/attr (d/sel1 :input) :placeholder) "Input placeholder"))
+      (is (= (d/attr (d/sel1 :input) :placeholder) "input placeholder"))
       (is (= (d/value (d/sel1 :input)) "chiclete")))))

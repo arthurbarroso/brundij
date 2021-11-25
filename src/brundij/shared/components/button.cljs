@@ -17,13 +17,3 @@
     :title title
     :on-click #(on-click)}
    text])
-
-(defn button-text [{:keys [on-click text disabled title extra-style-class]}]
-  [:button
-   {:class (str "button-text " extra-style-class)
-    :type "button"
-    :disabled disabled
-    :title title
-    :on-click #(on-click)}
-   text])
-
