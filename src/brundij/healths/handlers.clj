@@ -1,15 +1,14 @@
 (ns brundij.healths.handlers
   (:require [brundij.healths.db :as db]
             [brundij.uuids :as uuids]
+            [brundij.shared.common :as common]
             [ring.util.response :as rr]))
 
 (defn create-health! [database]
   (fn [_request]
     (let [health-tx (db/create-health! database)
           health (->> health-tx
-                      :tempids
-                      (first)
-                      (second)
+                      (common/extract-tx-tempid)
                       (db/pull-entity database))]
       (rr/created "" health))))
 

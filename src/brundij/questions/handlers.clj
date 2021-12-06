@@ -1,6 +1,7 @@
 (ns brundij.questions.handlers
   (:require [brundij.questions.db :as db]
             [brundij.uuids :as uuids]
+            [brundij.shared.common :as common]
             [ring.util.response :as rr]
             [clojure.walk :as walk]
             [brundij.date :as date]
@@ -28,9 +29,7 @@
     (let [question-params (-> request :parameters :body)
           question-tx (db/create-question! database question-params)
           question (->> question-tx
-                        :tempids
-                        (first)
-                        (second)
+                        (common/extract-tx-tempid)
                         (db/pull-entity database))]
       (rr/created "" question))))
 
